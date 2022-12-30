@@ -10,12 +10,16 @@ import {InputTextarea} from 'primereact/inputtextarea';
 
 import {Chips} from 'primereact/chips';
 
+import { Dropdown } from 'primereact/dropdown';
+
 const Form = ({currentId, setCurrentId}) => {
-    const [postData, setPostData] = useState({title: '', message: '', tags: [], selectedFile: []});
+    const [postData, setPostData] = useState({title: '', message: '', cellphone: '', city: '', tags: [], selectedFile: []});
     const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
     const history = useNavigate();
+
+    const [selectedCountry, setSelectedCountry] = useState(null);
 
     const clear = () => {
         setCurrentId(0);
@@ -80,11 +84,52 @@ const Form = ({currentId, setCurrentId}) => {
     //      }
     //  }
 
+    const countries = [
+        { name: 'Australia', code: 'AU' },
+        { name: 'Brazil', code: 'BR' },
+        { name: 'China', code: 'CN' },
+        { name: 'Egypt', code: 'EG' },
+        { name: 'France', code: 'FR' },
+        { name: 'Germany', code: 'DE' },
+        { name: 'India', code: 'IN' },
+        { name: 'Japan', code: 'JP' },
+        { name: 'Spain', code: 'ES' },
+        { name: 'United States', code: 'US' }
+    ];
+
+    const onCountryChange = (e) => {
+        setSelectedCountry(e.value);
+    }
+
+    const selectedCountryTemplate = (option, props) => {
+        if (option) {
+            return (
+                <div className="country-item country-item-value">
+                    <div>{option.name}</div>
+                </div>
+            );
+        }
+
+        return (
+            <span>
+                {props.placeholder}
+            </span>
+        );
+    }
+
+    const countryOptionTemplate = (option) => {
+        return (
+            <div className="country-item">
+                <div>{option.name}</div>
+            </div>
+        );
+    }
+
     return (
         <div className="card">
             <span className="block text-900 font-bold text-xl mb-4">¡Publica gratis siguiendo unos pocos pasos!</span>
             <div className="grid">
-                <div className="col-12 lg:col-8">
+                <div className="col-12 lg:col-12">
                     <form autoComplete="off" noValidate onSubmit={handleSubmit}>
                         <div className="flex flex-column p-fluid">
                             <div className="mb-4">
@@ -98,7 +143,15 @@ const Form = ({currentId, setCurrentId}) => {
                                 <InputTextarea name="message" label="Contenido" rows={6} placeholder="Contenido" autoResize value={postData.message} onChange={(e) => setPostData({...postData, message: e.target.value})}></InputTextarea>
                             </div>
 
+                            <div className="mb-4">
+                                <InputText name="celular" label="Célular" placeholder="Célular" value={postData.cellphone} onChange={(e) => setPostData({...postData, celular: e.target.value})}/>
+                            </div>
 
+                            <div className="mb-4">
+
+                            <Dropdown value={selectedCountry} options={countries} onChange={onCountryChange} optionLabel="name" filter showClear filterBy="name" placeholder="Seleccione una ciudad."
+                                      valueTemplate={selectedCountryTemplate} itemTemplate={countryOptionTemplate} />
+                            </div>
                             {/* <div>
                             <Chips name="tags" value={postData.tags}
                             onAdd={(chip) => handleAddChip(chip)}

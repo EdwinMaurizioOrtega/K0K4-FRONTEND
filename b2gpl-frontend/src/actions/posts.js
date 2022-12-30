@@ -105,3 +105,16 @@ export const deletePost = (id) => async (dispatch) => {
     console.log(error);
   }
 };
+
+//Buscar los posts por el id del creador
+export const getPostsByIdCreator = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING });
+        const { data: { data } } = await api.fetchPostsByIdCreator(id);
+
+        dispatch({ type: FETCH_BY_CREATOR, payload: { data } });
+        dispatch({ type: END_LOADING });
+    } catch (error) {
+        console.log(error);
+    }
+};

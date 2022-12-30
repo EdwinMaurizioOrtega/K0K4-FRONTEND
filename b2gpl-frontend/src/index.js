@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter } from 'react-router-dom';
+import {HashRouter} from 'react-router-dom';
 import AppWrapper from './AppWrapper';
 import reportWebVitals from './reportWebVitals';
-import { createStore, applyMiddleware, compose } from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
-import { reducers } from './reducers';
-import { Provider } from 'react-redux';
+import {reducers} from './reducers';
+import {Provider} from 'react-redux';
 
 const store = createStore(reducers, {}, compose(applyMiddleware(thunk)));
 
@@ -14,11 +14,11 @@ const store = createStore(reducers, {}, compose(applyMiddleware(thunk)));
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <HashRouter >
+        <HashRouter>
             <Provider store={store}>
-            <AppWrapper></AppWrapper>
+                <AppWrapper></AppWrapper>
             </Provider>
-        
+
         </HashRouter>
     </React.StrictMode>
 );
