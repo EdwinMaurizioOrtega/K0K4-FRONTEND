@@ -9,12 +9,11 @@ import { Button } from 'primereact/button';
 
 const Post = ({ post, setCurrentId }) => {
     const user = JSON.parse(localStorage.getItem('profile'));
-    console.log('punto: ' + user);
     const [likes, setLikes] = useState(post?.likes);
     const dispatch = useDispatch();
     const history = useNavigate();
 
-    const userId = user?.result.googleId || user?.result?._id;
+    const userId = user?.result?._id;
     const hasLikedPost = post.likes.find((like) => like === userId);
 
     const handleLike = async () => {
@@ -57,7 +56,7 @@ const Post = ({ post, setCurrentId }) => {
     };
 
     return (
-        <div className="p-3">
+        <div key={post._id} className="p-3">
             <div className="relative">
                 <img src={post.selectedFile[0] || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} className="w-full" title={post.title} onClick={openPost} />
                 {/* <img src={contextPath + blog.profile} className="flex absolute w-4rem h-4rem" style={{ bottom: '-1.5rem', right: '1.5rem' }} alt={blog.description.split(' ', 1)} /> */}
@@ -106,19 +105,19 @@ const Post = ({ post, setCurrentId }) => {
                     </span>
                     <span className="flex align-items-center text-900">
                         {( user?.result?._id === post?.creator) && (
-                            
+
                                 <Button
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         setCurrentId(post._id);
                                     }}
                                     className="p-button-rounded p-button-secondary"
-                                    
+
                                     icon="pi pi-fw pi-pencil"
                                 >
                                    Editar
                                 </Button>
-                           
+
                         )}
                     </span>
                 </div>

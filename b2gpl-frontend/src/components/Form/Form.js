@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import FileBase from 'react-file-base64';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
-import { createPost, updatePost } from '../../actions/posts';
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
+import {createPost, updatePost} from '../../actions/posts';
+import {Button} from 'primereact/button';
+import {InputText} from 'primereact/inputtext';
+import {InputTextarea} from 'primereact/inputtextarea';
 
-import { Chips } from 'primereact/chips';
+import {Chips} from 'primereact/chips';
 
-const Form = ({ currentId, setCurrentId }) => {
-    const [postData, setPostData] = useState({ title: '', message: '', tags: [], selectedFile: [] });
+const Form = ({currentId, setCurrentId}) => {
+    const [postData, setPostData] = useState({title: '', message: '', tags: [], selectedFile: []});
     const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -19,12 +19,13 @@ const Form = ({ currentId, setCurrentId }) => {
 
     const clear = () => {
         setCurrentId(0);
-        setPostData({ title: '', message: '', tags: [], selectedFile: [] });
+        setPostData({title: '', message: '', tags: [], selectedFile: []});
     };
 
     function refreshPage() {
         window.location.reload(false);
     }
+
     useEffect(() => {
         if (!post?.title) clear();
         if (post) setPostData(post);
@@ -34,11 +35,11 @@ const Form = ({ currentId, setCurrentId }) => {
         e.preventDefault();
 
         if (currentId === 0) {
-            dispatch(createPost({ ...postData, name: user?.result?.name }, history));
+            dispatch(createPost({...postData, name: user?.result?.name}, history));
             clear();
         } else {
             console.log(postData);
-            dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
+            dispatch(updatePost(currentId, {...postData, name: user?.result?.name}));
             clear();
             refreshPage();
         }
@@ -47,14 +48,14 @@ const Form = ({ currentId, setCurrentId }) => {
     if (!user?.result?.name) {
         return <h3>Inicie sesión para crear sus propios recuerdos y darle me gusta a los recuerdos de otros.</h3>;
     }
-   
+
     const handleAddChip = (tag) => {
-      console.log(tag);
-    setPostData({ ...postData, tags: [...postData.tags, tag] });
-  };
+        console.log(tag);
+        setPostData({...postData, tags: [...postData.tags, tag]});
+    };
 
     const handleDeleteChip = (chipToDelete) => {
-        setPostData({ ...postData, tags: postData.tags.filter((tag) => tag !== chipToDelete) });
+        setPostData({...postData, tags: postData.tags.filter((tag) => tag !== chipToDelete)});
     };
 
     const handleAddImage = (img) => {
@@ -68,7 +69,7 @@ const Form = ({ currentId, setCurrentId }) => {
         });
 
         //console.log(pictutes);
-        setPostData({ ...postData, selectedFile: pictutes });
+        setPostData({...postData, selectedFile: pictutes});
         console.log(postData);
     };
 
@@ -81,31 +82,34 @@ const Form = ({ currentId, setCurrentId }) => {
 
     return (
         <div className="card">
-            <span className="block text-900 font-bold text-xl mb-4">Create a new post</span>
+            <span className="block text-900 font-bold text-xl mb-4">¡Publica gratis siguiendo unos pocos pasos!</span>
             <div className="grid">
                 <div className="col-12 lg:col-8">
                     <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-                        <span variant="h6">{currentId ? `Editing "${post?.title}"` : 'Creating a Memory'}</span>
-
                         <div className="flex flex-column p-fluid">
                             <div className="mb-4">
-                                <InputText name="title" label="Title" value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
+                                <span variant="h6">{currentId ? `Editando "${post?.title}"` : 'Crear una memoria-anuncio'}</span>
+                            </div>
+
+                            <div className="mb-4">
+                                <InputText name="title" label="Título" placeholder="Título" value={postData.title} onChange={(e) => setPostData({...postData, title: e.target.value})}/>
                             </div>
                             <div className="mb-4">
-                                <InputTextarea name="message" label="Message" rows={6} placeholder="Content" autoResize value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })}></InputTextarea>
+                                <InputTextarea name="message" label="Contenido" rows={6} placeholder="Contenido" autoResize value={postData.message} onChange={(e) => setPostData({...postData, message: e.target.value})}></InputTextarea>
                             </div>
-                        </div>
 
-                        {/* <div>
-                            <Chips name="tags" value={postData.tags} 
+
+                            {/* <div>
+                            <Chips name="tags" value={postData.tags}
                             onAdd={(chip) => handleAddChip(chip)}
                             onRemove={(chip) => handleDeleteChip(chip)}
                             variant="outlined" />
                         </div> */}
-                        <div>
-                            <FileBase type="file" multiple={true} onDone={(base64) => handleAddImage(base64)} />
-                        </div>
+                            <div className="mb-4">
+                                <FileBase type="file" multiple={true} onDone={(base64) => handleAddImage(base64)}/>
+                            </div>
 
+                        </div>
                         <div className="flex justify-content-between gap-3">
                             <Button className="p-button-danger flex-1 p-button-outlined" label="Descartar" icon="pi pi-fw pi-trash" onClick={clear}></Button>
                             <Button type="submit" className="p-button-primary flex-1" label="Publicar" icon="pi pi-fw pi-check"></Button>

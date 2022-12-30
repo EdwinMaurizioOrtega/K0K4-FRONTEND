@@ -3,7 +3,7 @@
     "version": "8.0.1",
     "homepage": ".",
     "private": true,
-    "proxy": "http://192.168.1.16:3000",
+    "proxy": "http://localhost:3000",
     "dependencies": {
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",

@@ -34,7 +34,6 @@ import TimelineDemo from './pages/TimelineDemo';
 import Invoice from './pages/Invoice';
 import Help from './pages/Help';
 import EmptyPage from './pages/EmptyPage';
-import BlocksDemo from './components/BlocksDemo';
 
 import PrimeReact from 'primereact/api';
 import {Tooltip} from 'primereact/tooltip';
@@ -48,6 +47,7 @@ import './App.scss';
 import PostDetails from './components/PostDetails/PostDetails';
 import {Login} from './pages/Login';
 import CreatorOrTag from './components/CreatorOrTag/CreatorOrTag';
+import Anuncio from "./components/Anuncio";
 
 
 const App = (props) => {
@@ -98,8 +98,8 @@ const App = (props) => {
     ];
 
     const routes = [
-        {parent: 'Dashboard', label: 'Sales Dashboard'},
-        {parent: 'PostDetails', label: 'fffffffff'},
+        {parent: 'Posts', label: 'Posts'},
+        {parent: 'PostDetails', label: 'PostDetails'},
         {parent: 'UI Kit', label: 'Form Layout'},
         {parent: 'UI Kit', label: 'Input'},
         {parent: 'UI Kit', label: 'Float Label'},
@@ -406,11 +406,14 @@ const App = (props) => {
                         <Route path="/posts/:id"  element={<PostDetails/>} />
                         <Route path="/tags/:name" element={<CreatorOrTag/>} />
                         <Route path="/creators/:name" element={<CreatorOrTag/>} />
-                        <Route path="/posts/search"  element={<Dashboard/>} /> 
+                        <Route path="/posts/search"  element={<Dashboard/>} />
                         <Route path="/login" element={() => (!user ? <Login /> : <Navigate to="/" />)} />
+                        <Route path="/anuncio"  element={<Anuncio/>} />
+                        <Route path="/anuncio/:id"  element={<Anuncio/>} />
+
 
                         {/* <Route path="/chart" element={<ChartDemo colorMode={props.colorScheme} location={location}/>}/>
-                        
+
                         <Route path="/invoice" element={<Invoice colorMode={props.colorScheme} location={location}/>}/> */}
                         <Route path="/empty" element={<EmptyPage/>}/>
                     </Routes>

@@ -7,8 +7,6 @@ import { getPost, getPostsBySearch } from '../../actions/posts';
 import { Button } from 'primereact/button';
 
 const PostDetails = () => {
-  
-  console.log("En el detalle del producto.");
 
   // const contextPath = getConfig().publicRuntimeConfig.contextPath;
 
@@ -78,7 +76,7 @@ const PostDetails = () => {
         <Button onClick={() => history('/apps/blog/edit')} icon="pi pi-pencil" className="sm:ml-auto" label="Edit Post"></Button>
     </div>
 
-   
+
 </div>
   );
 };
