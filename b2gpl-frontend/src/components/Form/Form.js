@@ -98,7 +98,11 @@ const Form = ({currentId, setCurrentId}) => {
     ];
 
     const onCountryChange = (e) => {
-        setSelectedCountry(e.value);
+        console.log(e.value.name);
+
+        setPostData({...postData, city: e.target.value.name});
+        console.log(postData);
+
     }
 
     const selectedCountryTemplate = (option, props) => {
@@ -112,7 +116,7 @@ const Form = ({currentId, setCurrentId}) => {
 
         return (
             <span>
-                {props.placeholder}
+                {props.placeholder}hhhhhhh
             </span>
         );
     }
@@ -149,7 +153,7 @@ const Form = ({currentId, setCurrentId}) => {
 
                             <div className="mb-4">
 
-                            <Dropdown value={selectedCountry} options={countries} onChange={onCountryChange} optionLabel="name" filter showClear filterBy="name" placeholder="Seleccione una ciudad."
+                            <Dropdown value={postData.city} options={countries} onChange={onCountryChange} optionLabel="name" filter showClear filterBy="name" placeholder="Seleccione una ciudad."
                                       valueTemplate={selectedCountryTemplate} itemTemplate={countryOptionTemplate} />
                             </div>
                             {/* <div>

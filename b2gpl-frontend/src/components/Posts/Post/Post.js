@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
 import {useNavigate, Link} from 'react-router-dom';
@@ -6,12 +6,34 @@ import {useNavigate, Link} from 'react-router-dom';
 import {likePost, deletePost} from '../../../actions/posts';
 
 import {Button} from 'primereact/button';
+import {Galleria} from 'primereact/galleria';
+import ProductService from "../../../service/ProductService";
+import PhotoService from "../../../service/PhotoService";
+
 
 const Post = ({post, setCurrentId}) => {
     const user = JSON.parse(localStorage.getItem('profile'));
     const [likes, setLikes] = useState(post?.likes);
     const dispatch = useDispatch();
     const history = useNavigate();
+    const galleriaResponsiveOptions = [
+        {
+            breakpoint: '1024px',
+            numVisible: 5
+        },
+        {
+            breakpoint: '960px',
+            numVisible: 4
+        },
+        {
+            breakpoint: '768px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '560px',
+            numVisible: 1
+        }
+    ];
 
     const userId = user?.result?._id;
     const hasLikedPost = post.likes.find((like) => like === userId);
@@ -59,10 +81,15 @@ const Post = ({post, setCurrentId}) => {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
 
+    const galleriaItemTemplate = (item) => {
+        return <img src={item} style={{width: '100%', display: 'block'}}/>
+    }
+
     return (
         <div key={post._id} className="p-3">
-            <div className="relative">
-                <img src={post.selectedFile[0] || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} className="w-full" title={post.title} onClick={openPost}/>
+            <div className="relative" onClick={openPost}>
+                {/*<img src={post.selectedFile[0] || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} className="w-full" title={post.title} onClick={openPost}/>*/}
+                <Galleria value={post.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions} numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false} showIndicators showItemNavigators></Galleria>
                 {/* <img src={contextPath + blog.profile} className="flex absolute w-4rem h-4rem" style={{ bottom: '-1.5rem', right: '1.5rem' }} alt={blog.description.split(' ', 1)} /> */}
             </div>
             <div className="p-3">
@@ -84,11 +111,11 @@ const Post = ({post, setCurrentId}) => {
                 <p className="text-700 text-lg mt-0 mb-5">{post.message.split(' ').splice(0, 20).join(' ')}...</p>
 
                 <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-                    <span className="flex align-items-center text-900" href={'tel:'+ post.cellphone}>
+                    <span className="flex align-items-center text-900" href={'tel:' + post.cellphone}>
                         <i className="pi pi-phone mr-2"></i>
                         <span className="font-semibold">Llámame</span>
                     </span>
-                    <span className="flex align-items-center text-900" onClick={() => openInNewTab('http://web.whatsapp.com/send?phone=+593'+post.cellphone)}>
+                    <span className="flex align-items-center text-900" onClick={() => openInNewTab('http://web.whatsapp.com/send?phone=+593' + post.cellphone)}>
                         <i className="pi pi-whatsapp mr-2"></i>
                         <span className="font-semibold">Whatsapp</span>
                     </span>
