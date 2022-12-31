@@ -7,7 +7,7 @@ import BlockViewer from '../BlockViewer';
 import Form from "./Form/Form";
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {getPost, getPostsByCreator, getPostsByIdCreator, getPostsBySearch} from "../actions/posts";
+import {deletePost, getPost, getPostsByCreator, getPostsByIdCreator, getPostsBySearch} from "../actions/posts";
 import {ProgressSpinner} from "primereact/progressspinner";
 
 import {DataTable} from 'primereact/datatable';
@@ -60,11 +60,16 @@ const Anuncio = () => {
 
     const filaPostseleccionado = (rowData) => {
         console.log(rowData._id);
-        return <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => setCurrentId(rowData._id)}>
-            Editar
-        </Button>
-
+        return (
+            <div className="actions">
+                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => setCurrentId(rowData._id)}>
+                    Editar
+                </Button>
+                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mt-2" onClick={() => dispatch(deletePost(rowData._id))}>Borrar</Button>
+            </div>
+        );
     }
+
 
     return (
 

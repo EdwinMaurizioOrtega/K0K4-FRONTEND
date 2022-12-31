@@ -93,12 +93,20 @@ const Post = ({post, setCurrentId}) => {
                 {/* <img src={contextPath + blog.profile} className="flex absolute w-4rem h-4rem" style={{ bottom: '-1.5rem', right: '1.5rem' }} alt={blog.description.split(' ', 1)} /> */}
             </div>
             <div className="p-3">
+                {/*<p className="text-700 text-lg mt-0 mb-5">*/}
+                {/*    {post.tags.map((tag) => (*/}
+                {/*        <Link to={`/tags/${tag}`} style={{textDecoration: 'none', color: '#3f51b5'}}>*/}
+                {/*            {` #${tag} `}*/}
+                {/*        </Link>*/}
+                {/*    ))}*/}
+                {/*</p>*/}
+
                 <p className="text-700 text-lg mt-0 mb-5">
-                    {post.tags.map((tag) => (
-                        <Link to={`/tags/${tag}`} style={{textDecoration: 'none', color: '#3f51b5'}}>
-                            {` #${tag} `}
+
+                        <Link to={`/cities/${post.city}`} style={{textDecoration: 'none', color: '#3f51b5'}}>
+                            {` #${post.city} `}
                         </Link>
-                    ))}
+
                 </p>
 
                 <span className="flex align-items-center text-900">
@@ -117,7 +125,7 @@ const Post = ({post, setCurrentId}) => {
                     </span>
                     <span className="flex align-items-center text-900" onClick={() => openInNewTab('http://web.whatsapp.com/send?phone=+593' + post.cellphone)}>
                         <i className="pi pi-whatsapp mr-2"></i>
-                        <span className="font-semibold">Whatsapp</span>
+                        <span className="font-semibold">WhatsApp</span>
                     </span>
                     <span className="flex align-items-center text-900">
                         <i className="pi pi-clock mr-2"></i>
@@ -132,7 +140,7 @@ const Post = ({post, setCurrentId}) => {
                     <span className="flex align-items-center text-900">
                         {user?.result?._id === post?.creator && (
                             <Button icon="pi pi-fw pi-trash" className="p-button-rounded p-button-secondary" onClick={() => dispatch(deletePost(post._id))}>
-                                &nbsp; Delete
+                                &nbsp; Borrar
                             </Button>
                         )}
                     </span>

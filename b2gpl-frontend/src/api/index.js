@@ -15,6 +15,9 @@ export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
 export const fetchPostsByCreator = (name) => API.get(`/posts/creator?name=${name}`);
 //Listar por el id del creador del los post
 export const fetchPostsByIdCreator = (creator) => API.get(`/posts/id_creator?creator=${creator}`);
+
+export const fetchPostsByCity = (city) => API.get(`/posts/city?city=${city}`);
+
 export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
 export const createPost = (newPost) => API.post('/posts', newPost);
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`);

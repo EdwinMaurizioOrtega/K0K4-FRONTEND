@@ -5,7 +5,7 @@ import {useParams, useNavigate, Link} from 'react-router-dom';
 import {ProgressSpinner} from 'primereact/progressspinner';
 import {getPost, getPostsBySearch} from '../../actions/posts';
 import {Button} from 'primereact/button';
-import { Galleria } from 'primereact/galleria';
+import {Galleria} from 'primereact/galleria';
 import PhotoService from "../../service/PhotoService";
 
 const PostDetails = () => {
@@ -67,15 +67,17 @@ const PostDetails = () => {
     ];
 
 
-
     const itemTemplate = (item) => {
-        return <img src={item.itemImageSrc} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
+        return <img src={item.itemImageSrc} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={item.alt} style={{width: '100%', display: 'block'}}/>;
     }
 
     const thumbnailTemplate = (item) => {
-        return <img src={item.thumbnailImageSrc} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={item.alt} style={{ display: 'block' }} />;
+        return <img src={item.thumbnailImageSrc} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={item.alt} style={{display: 'block'}}/>;
     }
 
+    const openInNewTab = url => {
+        window.open(url, '_blank', 'noopener,noreferrer');
+    };
     return (
         <div className="card">
             <div className="flex justify-content-between flex-column-reverse md:flex-row align-items-center">
@@ -86,13 +88,13 @@ const PostDetails = () => {
                     <i className="pi pi-clock text-primary mr-2"></i>
                     <span className="text-900">{moment(post.createdAt).fromNow()}</span>
                 </span>
-                        <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">
-                    <i className="pi pi-comments text-primary mr-2"></i>
-                    <span className="text-900">....</span>
+                <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
+                    <i className="pi pi-phone text-primary mr-2" href={'tel:' + post.cellphone}></i>
+                    <span className="text-900" href={'tel:' + post.cellphone}>Llámame</span>
                 </span>
-                        <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">
-                    <i className="pi pi-eye text-primary mr-2"></i>
-                    <span className="text-900">.....</span>
+                <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
+                    <i className="pi pi-whatsapp text-primary mr-2" onClick={() => openInNewTab('http://web.whatsapp.com/send?phone=+593' + post.cellphone)}></i>
+                    <span className="text-900" onClick={() => openInNewTab('http://web.whatsapp.com/send?phone=+593' + post.cellphone)}>WhatsApp</span>
                 </span>
                     </div>
                 </div>
@@ -118,25 +120,25 @@ const PostDetails = () => {
                 {/*<Button onClick={() => history('/apps/blog/edit')} icon="pi pi-pencil" className="sm:ml-auto" label="Edit Post"></Button>*/}
             </div>
 
-                {/*<img src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt="Image" className="w-full"/>*/}
-                {/*<Galleria ref={galleria3} value={images} responsiveOptions={responsiveOptions} numVisible={7} style={{ maxWidth: '850px' }}*/}
-                {/*          activeIndex={activeIndex} onItemChange={(e) => setActiveIndex(e.index)}*/}
-                {/*          circular fullScreen showItemNavigators showThumbnails={false} item={itemTemplate} thumbnail={thumbnailTemplate} />*/}
+            {/*<img src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt="Image" className="w-full"/>*/}
+            {/*<Galleria ref={galleria3} value={images} responsiveOptions={responsiveOptions} numVisible={7} style={{ maxWidth: '850px' }}*/}
+            {/*          activeIndex={activeIndex} onItemChange={(e) => setActiveIndex(e.index)}*/}
+            {/*          circular fullScreen showItemNavigators showThumbnails={false} item={itemTemplate} thumbnail={thumbnailTemplate} />*/}
 
-                <div className="grid">
-                    {
-                        post.selectedFile.map((picture, index) => {
-                            let imgEl = <img src={picture} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}
-                                             style={{ maxWidth: '100%' }} />
+            <div className="grid">
+                {
+                    post.selectedFile.map((picture, index) => {
+                        let imgEl = <img src={picture} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}
+                                         style={{maxWidth: '100%'}}/>
 
-                            return (
-                                <div className="col-6" key={index}>
-                                    {imgEl}
-                                </div>
-                            )
-                        })
-                    }
-                </div>
+                        return (
+                            <div className="col-6" key={index}>
+                                {imgEl}
+                            </div>
+                        )
+                    })
+                }
+            </div>
 
         </div>
     );

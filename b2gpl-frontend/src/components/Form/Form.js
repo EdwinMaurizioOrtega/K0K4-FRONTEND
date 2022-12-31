@@ -10,7 +10,10 @@ import {InputTextarea} from 'primereact/inputtextarea';
 
 import {Chips} from 'primereact/chips';
 
-import { Dropdown } from 'primereact/dropdown';
+import {Dropdown} from 'primereact/dropdown';
+
+import { ListBox } from 'primereact/listbox';
+
 
 const Form = ({currentId, setCurrentId}) => {
     const [postData, setPostData] = useState({title: '', message: '', cellphone: '', city: '', tags: [], selectedFile: []});
@@ -85,22 +88,32 @@ const Form = ({currentId, setCurrentId}) => {
     //  }
 
     const countries = [
-        { name: 'Australia', code: 'AU' },
-        { name: 'Brazil', code: 'BR' },
-        { name: 'China', code: 'CN' },
-        { name: 'Egypt', code: 'EG' },
-        { name: 'France', code: 'FR' },
-        { name: 'Germany', code: 'DE' },
-        { name: 'India', code: 'IN' },
-        { name: 'Japan', code: 'JP' },
-        { name: 'Spain', code: 'ES' },
-        { name: 'United States', code: 'US' }
+        {name: 'Ambato', code: 'Ambato'},
+        {name: 'Cuenca', code: 'Cuenca'},
+        {name: 'Durán', code: 'Durán'},
+        {name: 'Esmeraldas', code: 'Esmeraldas'},
+        {name: 'Guayaquil', code: 'Guayaquil'},
+        {name: 'Ibarra', code: 'Ibarra'},
+        {name: 'Latacunga', code: 'Latacunga'},
+        {name: 'Loja', code: 'Loja'},
+        {name: 'Machala', code: 'Machala'},
+        {name: 'Manta', code: 'Manta'},
+        {name: 'Portoviejo', code: 'Portoviejo'},
+        {name: 'Quevedo', code: 'Quevedo'},
+        {name: 'Quito', code: 'Quito'},
+        {name: 'Riobamba', code: 'Riobamba'},
+        {name: 'Salinas', code: 'Salinas'},
+        {name: 'Sangolqui', code: 'Sangolqui'},
+        {name: 'Santo Domingo', code: 'Santo Domingo'},
     ];
 
     const onCountryChange = (e) => {
-        console.log(e.value.name);
 
-        setPostData({...postData, city: e.target.value.name});
+        setSelectedCountry(e.value)
+
+        console.log(e.target.value.name);
+        const aux = e.target.value.name;
+        setPostData({...postData, city: aux})
         console.log(postData);
 
     }
@@ -116,7 +129,7 @@ const Form = ({currentId, setCurrentId}) => {
 
         return (
             <span>
-                {props.placeholder}hhhhhhh
+                {props.placeholder}
             </span>
         );
     }
@@ -148,13 +161,20 @@ const Form = ({currentId, setCurrentId}) => {
                             </div>
 
                             <div className="mb-4">
-                                <InputText name="celular" label="Célular" placeholder="Célular" value={postData.cellphone} onChange={(e) => setPostData({...postData, celular: e.target.value})}/>
+                                <InputText name="cellphone" label="Célular" placeholder="Célular" value={postData.cellphone} onChange={(e) => setPostData({...postData, cellphone: e.target.value})}/>
                             </div>
 
                             <div className="mb-4">
 
-                            <Dropdown value={postData.city} options={countries} onChange={onCountryChange} optionLabel="name" filter showClear filterBy="name" placeholder="Seleccione una ciudad."
-                                      valueTemplate={selectedCountryTemplate} itemTemplate={countryOptionTemplate} />
+                                {/*<Dropdown value={postData.city} options={countries} onChange={*/}
+                                {/*    (e) => {*/}
+                                {/*        setPostData({...postData, city: e.target.value});*/}
+
+                                {/*    }*/}
+                                {/*} optionLabel="name" placeholder="Seleccione una ciudad."/>*/}
+
+                                <ListBox filter value={selectedCountry} options={countries} onChange={onCountryChange} optionLabel="name" style={{ width: '15rem' }} listStyle={{ maxHeight: '250px' }} />
+
                             </div>
                             {/* <div>
                             <Chips name="tags" value={postData.tags}

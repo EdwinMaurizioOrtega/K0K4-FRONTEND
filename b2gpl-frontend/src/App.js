@@ -405,6 +405,7 @@ const App = (props) => {
                         <Route path="/" exact="true" element={<Dashboard/>}/>
                         <Route path="/posts/:id"  element={<PostDetails/>} />
                         <Route path="/tags/:name" element={<CreatorOrTag/>} />
+                        <Route path="/cities/:name" element={<CreatorOrTag/>} />
                         <Route path="/creators/:name" element={<CreatorOrTag/>} />
                         <Route path="/posts/search"  element={<Dashboard/>} />
                         <Route path="/login" element={() => (!user ? <Login /> : <Navigate to="/" />)} />

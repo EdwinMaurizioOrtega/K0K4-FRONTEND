@@ -59,6 +59,18 @@ export const getPostsByIdCreator = async (req, res) => {
     }
 }
 
+export const getPostsByCity = async (req, res) => {
+    const { city } = req.query;
+
+    try {
+        const posts = await PostMessage.find({ city });
+
+        res.json({ data: posts });
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const getPost = async (req, res) => {
     const { id } = req.params;
 
