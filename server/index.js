@@ -16,6 +16,10 @@ app.use(cors());
 app.use('/posts', postRoutes);
 app.use("/user", userRouter);
 
+app.get('/', (req, res) => {
+    res.send('APP IS RUNNING.');
+})
+
 //const CONNECTION_URL = 'mongodb://localhost:27017/memories';
 const CONNECTION_URL = 'mongodb+srv://lidenar:MsNMrMrXBpiY7Nml@cluster0.mq3f7dd.mongodb.net/memories?retryWrites=true&w=majority';
 const PORT = process.env.PORT|| 3000;
