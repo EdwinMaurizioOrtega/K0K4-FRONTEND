@@ -3,7 +3,7 @@
     "version": "8.0.1",
     "homepage": ".",
     "private": true,
-    "proxy": "http://localhost:3000",
+    "proxy": "https://memories-2ycp.onrender.com",
     "dependencies": {
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
