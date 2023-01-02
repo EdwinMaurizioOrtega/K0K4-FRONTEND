@@ -1,3 +1,3 @@
 node_modules
-build
 .idea
+/b2gpl-frontend/build/

@@ -119,13 +119,13 @@ const Post = ({post, setCurrentId}) => {
                 <p className="text-700 text-lg mt-0 mb-5">{post.message.split(' ').splice(0, 20).join(' ')}...</p>
 
                 <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-                    <span className="flex align-items-center text-900" href={'tel:' + post.cellphone}>
+                    <span className="flex align-items-center text-900" >
                         <i className="pi pi-phone mr-2"></i>
-                        <span className="font-semibold">Llámame</span>
+                        <span className="font-semibold" onClick={() => openInNewTab('tel:0' + post.cellphone)}>Llámame</span>
                     </span>
-                    <span className="flex align-items-center text-900" onClick={() => openInNewTab('http://web.whatsapp.com/send?phone=+593' + post.cellphone)}>
+                    <span className="flex align-items-center text-900" >
                         <i className="pi pi-whatsapp mr-2"></i>
-                        <span className="font-semibold">WhatsApp</span>
+                        <span className="font-semibold" onClick={() => openInNewTab('https://wa.me/593' + post.cellphone + '?text='+post.title)}>WhatsApp</span>
                     </span>
                     <span className="flex align-items-center text-900">
                         <i className="pi pi-clock mr-2"></i>

@@ -89,12 +89,12 @@ const PostDetails = () => {
                     <span className="text-900">{moment(post.createdAt).fromNow()}</span>
                 </span>
                 <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
-                    <i className="pi pi-phone text-primary mr-2" href={'tel:' + post.cellphone}></i>
-                    <span className="text-900" href={'tel:' + post.cellphone}>Llámame</span>
+                    <i className="pi pi-phone text-primary mr-2" ></i>
+                    <span className="text-900" onClick={() => openInNewTab('tel:0' + post.cellphone)}>Llámame</span>
                 </span>
                 <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
-                    <i className="pi pi-whatsapp text-primary mr-2" onClick={() => openInNewTab('http://web.whatsapp.com/send?phone=+593' + post.cellphone)}></i>
-                    <span className="text-900" onClick={() => openInNewTab('http://web.whatsapp.com/send?phone=+593' + post.cellphone)}>WhatsApp</span>
+                    <i className="pi pi-whatsapp text-primary mr-2"></i>
+                    <span className="text-900" onClick={() => openInNewTab('https://wa.me/593' + post.cellphone + '?text='+post.title)}>WhatsApp</span>
                 </span>
                     </div>
                 </div>

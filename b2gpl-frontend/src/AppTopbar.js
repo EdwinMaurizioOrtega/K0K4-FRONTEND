@@ -97,14 +97,16 @@ const AppTopbar = (props) => {
                             <li id="profile" className={classNames('profile-item', { 'active-topmenuitem': props.topbarMenuActive })}>
                                  <Link to={'/anuncio'} style={{ width: 'unset' }}>
                                      <i className="pi pi-fw pi-camera"></i>
-                                     +CREAR ANUNCIO
+                                     +PUBLICAR
                                  </Link>
-                                <button className="p-link" onClick={props.onTopbarItemClick}>
+                                {/*<button className="p-link" onClick={props.onTopbarItemClick}>*/}
 
-                                    <img src="assets/layout/images/profile-image.png" alt="profile" />
+                                {/*    <img src="assets/layout/images/profile-image.png" alt="profile" />*/}
 
-                                </button>
-                                <span variant="h6">{user?.result.name}</span>
+                                {/*</button>*/}
+                                <span onClick={props.onTopbarItemClick} className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">{user?.result.name}
+
+                                </span>
 
                                 <ul className="fadeInDown">
                                     {/*<li role="menuitem">*/}
