@@ -7,6 +7,7 @@ import {getPost, getPostsBySearch} from '../../actions/posts';
 import {Button} from 'primereact/button';
 import {Galleria} from 'primereact/galleria';
 import PhotoService from "../../service/PhotoService";
+import { Divider } from 'primereact/divider';
 
 const PostDetails = () => {
 
@@ -114,11 +115,11 @@ const PostDetails = () => {
             </p>
 
 
-            <div className="flex flex-column sm:flex-row my-8 w-full gap-3">
-                <Button icon="pi pi-twitter" className="p-button-secondary" label="Twitter"></Button>
-                <Button icon="pi pi-facebook" className="p-button-secondary" label="Facebook"></Button>
+            {/*<div className="flex flex-column sm:flex-row my-8 w-full gap-3">*/}
+                {/*<Button icon="pi pi-twitter" className="p-button-secondary" label="Twitter"></Button>*/}
+                {/*<Button icon="pi pi-facebook" className="p-button-secondary" label="Facebook"></Button>*/}
                 {/*<Button onClick={() => history('/apps/blog/edit')} icon="pi pi-pencil" className="sm:ml-auto" label="Edit Post"></Button>*/}
-            </div>
+            {/*</div>*/}
 
             {/*<img src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt="Image" className="w-full"/>*/}
             {/*<Galleria ref={galleria3} value={images} responsiveOptions={responsiveOptions} numVisible={7} style={{ maxWidth: '850px' }}*/}
@@ -140,6 +141,23 @@ const PostDetails = () => {
                 }
             </div>
 
+            {!!recommendedPosts.length && (
+                <div >
+                    <span >You might also like:</span>
+                    <Divider />
+                    <div >
+                        {recommendedPosts.map(({ title, name, message, likes, selectedFile, _id }) => (
+                            <div style={{ margin: '20px', cursor: 'pointer' }} onClick={() => openPost(_id)} key={_id}>
+                                <span >{title}</span>
+                                <span >{name}</span>
+                                <span >{message}</span>
+                                <span >Likes: {likes.length}</span>
+                                <img src={selectedFile[0]} width="200px" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

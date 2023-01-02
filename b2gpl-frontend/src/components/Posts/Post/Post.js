@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
+import 'moment/locale/es'
 import {useNavigate, Link} from 'react-router-dom';
 
 import {likePost, deletePost} from '../../../actions/posts';
@@ -12,6 +13,8 @@ import PhotoService from "../../../service/PhotoService";
 
 
 const Post = ({post, setCurrentId}) => {
+
+    moment.locale('es')
     const user = JSON.parse(localStorage.getItem('profile'));
     const [likes, setLikes] = useState(post?.likes);
     const dispatch = useDispatch();
@@ -109,28 +112,29 @@ const Post = ({post, setCurrentId}) => {
 
                 </p>
 
+
+
                 <span className="flex align-items-center text-900">
-                        <Button icon="pi pi-fw pi-thumbs-up-fill" className="p-button-rounded p-button-secondary" disabled={!user?.result} onClick={handleLike}>
-                            <Likes/>
-                        </Button>
+                        <i className="pi pi-clock mr-2"></i>
+                        <span className="font-semibold">{moment(post.createdAt).fromNow()}</span>
                     </span>
 
                 <div className="text-900 font-semibold text-xl mb-3">{post.title}</div>
                 <p className="text-700 text-lg mt-0 mb-5">{post.message.split(' ').splice(0, 20).join(' ')}...</p>
 
                 <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-                    <span className="flex align-items-center text-900" >
+                    <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
                         <i className="pi pi-phone mr-2"></i>
                         <span className="font-semibold" onClick={() => openInNewTab('tel:0' + post.cellphone)}>Llámame</span>
                     </span>
-                    <span className="flex align-items-center text-900" >
+                    <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
                         <i className="pi pi-whatsapp mr-2"></i>
                         <span className="font-semibold" onClick={() => openInNewTab('https://wa.me/593' + post.cellphone + '?text='+post.title)}>WhatsApp</span>
                     </span>
                     <span className="flex align-items-center text-900">
-                        <i className="pi pi-clock mr-2"></i>
-                        {/* <span className="font-semibold mr-1">{moment(post.createdAt).fromNow()}</span> */}
-                        <span className="font-semibold">{moment(post.createdAt).fromNow()}</span>
+                        <Button icon="pi pi-fw pi-thumbs-up-fill" className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" disabled={!user?.result} onClick={handleLike}>
+                            <Likes/>
+                        </Button>
                     </span>
                 </div>
 
