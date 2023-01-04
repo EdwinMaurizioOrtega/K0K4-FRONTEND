@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://memories-2ycp.onrender.com' });
+const API = axios.create({ baseURL: 'https://coral-app-bsb86.ondigitalocean.app' });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {

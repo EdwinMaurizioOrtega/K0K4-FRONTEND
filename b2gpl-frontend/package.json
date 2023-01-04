@@ -3,7 +3,7 @@
     "version": "8.0.1",
     "homepage": ".",
     "private": true,
-    "proxy": "https://memories-2ycp.onrender.com",
+    "proxy": "https://coral-app-bsb86.ondigitalocean.app",
     "dependencies": {
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
