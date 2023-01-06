@@ -99,8 +99,8 @@ const App = (props) => {
 
     const routes = [
         {parent: 'Posts', label: 'Posts'},
-        {parent: 'PostDetails', label: 'PostDetails'},
-        {parent: 'UI Kit', label: 'Form Layout'},
+        {parent: 'cities', label: 'cities'},
+        {parent: 'Anuncio', label: 'Anuncio'},
         {parent: 'UI Kit', label: 'Input'},
         {parent: 'UI Kit', label: 'Float Label'},
         {parent: 'UI Kit', label: 'Invalid State'},

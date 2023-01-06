@@ -7,7 +7,9 @@ import {getPost, getPostsBySearch} from '../../actions/posts';
 import {Button} from 'primereact/button';
 import {Galleria} from 'primereact/galleria';
 import PhotoService from "../../service/PhotoService";
-import { Divider } from 'primereact/divider';
+import {Divider} from 'primereact/divider';
+import {Image} from 'primereact/image';
+
 
 const PostDetails = () => {
 
@@ -89,13 +91,13 @@ const PostDetails = () => {
                     <i className="pi pi-clock text-primary mr-2"></i>
                     <span className="text-900">{moment(post.createdAt).fromNow()}</span>
                 </span>
-                <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
-                    <i className="pi pi-phone text-primary mr-2" ></i>
+                        <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">
+                    <i className="pi pi-phone text-primary mr-2"></i>
                     <span className="text-900" onClick={() => openInNewTab('tel:0' + post.cellphone)}>Llámame</span>
                 </span>
-                <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
+                        <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">
                     <i className="pi pi-whatsapp text-primary mr-2"></i>
-                    <span className="text-900" onClick={() => openInNewTab('https://wa.me/593' + post.cellphone + '?text='+post.title)}>WhatsApp</span>
+                    <span className="text-900" onClick={() => openInNewTab('https://wa.me/593' + post.cellphone + '?text=' + post.title)}>WhatsApp</span>
                 </span>
                     </div>
                 </div>
@@ -116,9 +118,9 @@ const PostDetails = () => {
 
 
             {/*<div className="flex flex-column sm:flex-row my-8 w-full gap-3">*/}
-                {/*<Button icon="pi pi-twitter" className="p-button-secondary" label="Twitter"></Button>*/}
-                {/*<Button icon="pi pi-facebook" className="p-button-secondary" label="Facebook"></Button>*/}
-                {/*<Button onClick={() => history('/apps/blog/edit')} icon="pi pi-pencil" className="sm:ml-auto" label="Edit Post"></Button>*/}
+            {/*<Button icon="pi pi-twitter" className="p-button-secondary" label="Twitter"></Button>*/}
+            {/*<Button icon="pi pi-facebook" className="p-button-secondary" label="Facebook"></Button>*/}
+            {/*<Button onClick={() => history('/apps/blog/edit')} icon="pi pi-pencil" className="sm:ml-auto" label="Edit Post"></Button>*/}
             {/*</div>*/}
 
             {/*<img src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt="Image" className="w-full"/>*/}
@@ -126,14 +128,14 @@ const PostDetails = () => {
             {/*          activeIndex={activeIndex} onItemChange={(e) => setActiveIndex(e.index)}*/}
             {/*          circular fullScreen showItemNavigators showThumbnails={false} item={itemTemplate} thumbnail={thumbnailTemplate} />*/}
 
-            <div className="grid">
+            <div className="p-fluid grid formgrid">
                 {
                     post.selectedFile.map((picture, index) => {
-                        let imgEl = <img src={picture} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}
-                                         style={{maxWidth: '100%'}}/>
+                        let imgEl = <Image src={picture} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}
+                                           width="100%" preview/>
 
                         return (
-                            <div className="col-6" key={index}>
+                            <div className="field col-12 md:col-4" key={index}>
                                 {imgEl}
                             </div>
                         )
@@ -142,17 +144,17 @@ const PostDetails = () => {
             </div>
 
             {!!recommendedPosts.length && (
-                <div >
-                    <span >You might also like:</span>
-                    <Divider />
-                    <div >
-                        {recommendedPosts.map(({ title, name, message, likes, selectedFile, _id }) => (
-                            <div style={{ margin: '20px', cursor: 'pointer' }} onClick={() => openPost(_id)} key={_id}>
-                                <span >{title}</span>
-                                <span >{name}</span>
-                                <span >{message}</span>
-                                <span >Likes: {likes.length}</span>
-                                <img src={selectedFile[0]} width="200px" />
+                <div>
+                    <span>You might also like:</span>
+                    <Divider/>
+                    <div>
+                        {recommendedPosts.map(({title, name, message, likes, selectedFile, _id}) => (
+                            <div style={{margin: '20px', cursor: 'pointer'}} onClick={() => openPost(_id)} key={_id}>
+                                <span>{title}</span>
+                                <span>{name}</span>
+                                <span>{message}</span>
+                                <span>Likes: {likes.length}</span>
+                                <img src={selectedFile[0]} width="200px"/>
                             </div>
                         ))}
                     </div>

@@ -62,8 +62,8 @@ export const Login = () => {
                 <div className="flex flex-column">
                     <Link to={'/'}>
                     <div className="flex align-items-center mb-6 logo-container">
-                        <img src={`assets/layout/images/logo-dark.png`} className="login-logo" alt="login-logo" />
-                        <img src={`assets/layout/images/appname-dark.png`} className="login-appname" alt="login-appname" />
+                        {/*<img src={`assets/layout/images/logo-dark.png`} className="login-logo" alt="login-logo" />*/}
+                        <img src={`assets/layout/images/appname-dark.png`} style={{height: '60px'}} alt="login-appname" />
                     </div>
                     </Link>
                     <form onSubmit={handleSubmit}>
@@ -108,8 +108,8 @@ export const Login = () => {
 
                 <div className="login-footer flex align-items-center">
                     <div className="flex align-items-center login-footer-logo-container">
-                        <img src="assets/layout/images/logo-gray.png" className="login-footer-logo" alt="login-footer-logo" />
-                        <img src="assets/layout/images/appname-gray.png" className="login-footer-appname" alt="login-footer-appname" />
+                        {/*<img src="assets/layout/images/logo-dark.png" className="login-footer-logo" alt="login-footer-logo" />*/}
+                        <img src="assets/layout/images/appname-dark.png" className="login-footer-appname" alt="login-footer-appname" />
                     </div>
                     <span>&#169; B2|GPL - 2023</span>
                 </div>

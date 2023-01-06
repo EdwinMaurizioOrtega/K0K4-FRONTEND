@@ -24,8 +24,12 @@ const AppBreadcrumb = (props) => {
     if (location.pathname === '/') {
         items = [{label: 'Posts'}, {label: 'Posts'}];
     } else if (!activeRoute.length) {
+        console.log(activeRoute + "imprimir")
+
         items = [{label: ''}, {label: ''}];
     } else {
+        console.log(activeRoute + "imprimir")
+
         items = [{label: activeRoute[0].parent}, {label: activeRoute[0].label}];
     }
 

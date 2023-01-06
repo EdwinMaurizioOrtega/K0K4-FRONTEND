@@ -43,18 +43,18 @@ const AppTopbar = (props) => {
                     {/*    <i className="pi pi-bars"></i>*/}
                     {/*</button>*/}
 
-                    <button className="logo p-link" onClick={() => {
-                        navigate('/')
-                        window.location.reload(false);
-                    }}>
-                        <img src={`assets/layout/images/logo-${props.colorScheme === 'light' ? 'dark' : 'light'}.png`} alt="logo" />
-                    </button>
+                    {/*<button className="logo p-link" onClick={() => {*/}
+                    {/*    navigate('/')*/}
+                    {/*    window.location.reload(false);*/}
+                    {/*}}>*/}
+                    {/*    <img src={`assets/layout/images/logo-${props.colorScheme === 'light' ? 'dark' : 'light'}.png`} alt="logo" />*/}
+                    {/*</button>*/}
 
                     <button className="p-link" onClick={() =>{
                         navigate('/')
                         window.location.reload(false);
                     }}>
-                        <img src={`assets/layout/images/appname-${props.colorScheme === 'light' ? 'dark' : 'light'}.png`} className="app-name" alt="app-name" />
+                        <img src={`assets/layout/images/appname-${props.colorScheme === 'light' ? 'dark' : 'light'}.png`} style={{height: '40px'}} alt="app-name" />
                     </button>
                 </div>
 

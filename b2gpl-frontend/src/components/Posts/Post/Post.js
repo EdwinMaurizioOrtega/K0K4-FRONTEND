@@ -92,7 +92,7 @@ const Post = ({post, setCurrentId}) => {
         <div key={post._id} className="p-3">
             <div className="relative" onClick={openPost}>
                 {/*<img src={post.selectedFile[0] || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} className="w-full" title={post.title} onClick={openPost}/>*/}
-                <Galleria value={post.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions} numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false} showIndicators showItemNavigators></Galleria>
+                <Galleria value={post.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions} numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false} showIndicators ></Galleria>
                 {/* <img src={contextPath + blog.profile} className="flex absolute w-4rem h-4rem" style={{ bottom: '-1.5rem', right: '1.5rem' }} alt={blog.description.split(' ', 1)} /> */}
             </div>
             <div className="p-3">
