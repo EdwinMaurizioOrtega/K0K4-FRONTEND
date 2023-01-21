@@ -48,7 +48,7 @@ const Form = ({currentId, setCurrentId}) => {
             console.log(postData);
             dispatch(updatePost(currentId, {...postData, name: user?.result?.name}));
             clear();
-            refreshPage();
+            //refreshPage();
         }
     };
 
