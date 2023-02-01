@@ -18,7 +18,7 @@ import {
 const router = express.Router();
 import auth from "../middleware/auth.js";
 
-router.get('/incarousel', getPostsInCarousel);
+router.get('/in_carousel', getPostsInCarousel);
 
 router.get('/creator', getPostsByCreator);
 router.get('/city', getPostsByCity);
