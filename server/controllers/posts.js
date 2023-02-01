@@ -21,6 +21,18 @@ export const getPosts = async (req, res) => {
     }
 }
 
+export const getPostsInCarousel = async (req, res) => {
+
+
+    try {
+        const posts = await PostMessage.find({ inCarousel : true });
+
+        res.json({ data: posts });
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const getPostsBySearch = async (req, res) => {
     const { searchQuery, tags } = req.query;
 

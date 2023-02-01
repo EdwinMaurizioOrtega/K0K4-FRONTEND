@@ -2,6 +2,7 @@ import express from 'express';
 
 import {
     getPosts,
+    getPostsInCarousel,
     getPostsBySearch,
     getPostsByCreator,
     getPostsByIdCreator,
@@ -17,12 +18,15 @@ import {
 const router = express.Router();
 import auth from "../middleware/auth.js";
 
+router.get('/incarousel', getPostsInCarousel);
+
 router.get('/creator', getPostsByCreator);
 router.get('/city', getPostsByCity);
 router.get('/id_creator', getPostsByIdCreator);
 router.get('/search', getPostsBySearch);
 router.get('/', getPosts);
 router.get('/:id', getPost);
+
 
 router.post('/', auth,  createPost);
 router.patch('/:id', auth, updatePost);

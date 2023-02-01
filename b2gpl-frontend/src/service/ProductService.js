@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default class ProductService {
     getProductsSmall() {
-        return axios.get('assets/demo/data/products-small.json').then((res) => res.data.data);
+        return axios.get('http://localhost:3000/posts/incarousel').then((res) => res.data.data);
     }
 
     getProducts() {
