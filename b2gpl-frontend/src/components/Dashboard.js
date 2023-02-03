@@ -6,7 +6,6 @@ import {getPostsBySearch, getPostsInCarousel} from '../actions/posts';
 import Posts from '../components/Posts/Posts';
 import Pagination from './Pagination';
 
-import ProductService from '../service/ProductService';
 import {Galleria} from "primereact/galleria";
 
 function useQuery() {
@@ -65,19 +64,11 @@ const Dashboard = () => {
         }
     ];
 
-    const productService = new ProductService();
-    const [products, setProducts] = useState([]);
-    const {postsAAAAAAA, isLoading} = useSelector((state) => state.postsAAAAAAA);
-    console.log(postsAAAAAAA);
+    const {posts, isLoading} = useSelector((state) => state.posts);
+    console.log("1 "+posts);
 
-    // if (posts.length > 0 ){
-    //     setProducts(posts);
-    // }
-
-    const aux1 = "aaa";
     useEffect(() => {
-        dispatch(getPostsInCarousel(aux1));
-        console.log("hola hola");
+        dispatch(getPostsInCarousel());
 
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -110,18 +101,28 @@ const Dashboard = () => {
         history(`/posts/${e._id}`);
     };
 
-    const productTemplate = (product) => {
+    //Número de teléfono WhatsApp
+    const openInNewTab = url => {
+        window.open(url, '_blank', 'noopener,noreferrer');
+    };
+
+    const productTemplate = (posts) => {
         return (
             <div className="product-item">
                 <div className="product-item-content">
-                    <div className="mb-3" onClick={() => openPost(product)}>
+                    <div className="mb-3" onClick={() => openPost(posts)}>
                         {/*<img src={`images/product/${product.image}`} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={product.name} className="product-image" />*/}
-                        <Galleria value={product.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions} numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false}
+                        <Galleria value={posts.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions} numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false}
                                   showIndicators></Galleria>
 
                     </div>
                     <div>
-                        <h4 className="mb-1">{product.title}</h4>
+                        {/*<h4 className="mb-1">{posts.title}</h4>*/}
+                        <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
+                        <i className="pi pi-whatsapp mr-2"></i>
+                        <span className="font-semibold" onClick={() => openInNewTab('https://wa.me/593' + posts.cellphone + '?text='+posts.title)}>WhatsApp</span>
+                    </span>
+                        <div className="text-900 font-semibold text-xl mb-3">{posts.title}</div>
                         {/*<h6 className="mt-0 mb-3">${product.price}</h6>*/}
                         {/*<span className={`product-badge status-${product.inventoryStatus.toLowerCase()}`}>{product.inventoryStatus}</span>*/}
                         {/*<div className="car-buttons mt-5">*/}
@@ -135,14 +136,26 @@ const Dashboard = () => {
         );
     }
 
+    //Image ok site
+    //https://gelbooru.com/index.php?page=post&s=view&id=687839
+
     return (
         <div>
 
             <div className="card">
 
-                <Carousel value={products} numVisible={4} numScroll={1} responsiveOptions={responsiveOptions}
-                          autoplayInterval={3000} itemTemplate={productTemplate} header={<h5>Model VIP K4ndy</h5>}/>
-
+                {
+                isLoading ?
+                    <img src={`assets/layout/images/5db61a9d71fa2c97ffff30c83dcaa6e5.gif`} style={{
+                        height: '100%',
+                        display: "block",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        width: "50%"}}  />
+                    : (
+                <Carousel value={posts} numVisible={4} numScroll={1} responsiveOptions={responsiveOptions}
+                          autoplayInterval={3000} itemTemplate={productTemplate} header={<h5 style={{textAlign: "center"}}>🍭K4NDY ♥️ 🍑PARÁ CUMPLIR 🔥😈🍑TUS FANTASÍAS 🍭💯🍓</h5>}/>
+)}
             </div>
 
             <div className="card">

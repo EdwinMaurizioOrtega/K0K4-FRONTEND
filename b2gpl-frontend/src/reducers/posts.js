@@ -48,7 +48,7 @@ export default (state = {isLoading: true, posts: []}, action) => {
         case DELETE:
             return {...state, posts: state.posts.filter((post) => post._id !== action.payload)};
         case FETCH_CAROUSEL_POST:
-            return {...state, postsAAAAAAA: action.payload.data};
+            return {...state, posts: action.payload.data};
         default:
             return state;
     }

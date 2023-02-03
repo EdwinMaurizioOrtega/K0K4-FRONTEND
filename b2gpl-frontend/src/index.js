@@ -3,26 +3,22 @@ import ReactDOM from 'react-dom/client';
 import {HashRouter} from 'react-router-dom';
 import AppWrapper from './AppWrapper';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import reportWebVitals from './reportWebVitals';
-import {createStore, applyMiddleware, compose} from 'redux';
+import { createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import {reducers} from './reducers';
 import {Provider} from 'react-redux';
 
-
 const store = createStore(reducers, {}, compose(applyMiddleware(thunk)));
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
+    // <React.StrictMode>
         <HashRouter>
             <Provider store={store}>
                 <AppWrapper></AppWrapper>
             </Provider>
-
         </HashRouter>
-    </React.StrictMode>
+    // </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change

@@ -7,7 +7,7 @@ import { NotFound } from './pages/NotFound';
 import { Access } from './pages/Access';
 
 const AppWrapper = (props) => {
-    const [colorScheme, setColorScheme] = useState('light');
+    const [colorScheme, setColorScheme] = useState('dark');
     const [theme, setTheme] = useState('magenta');
     const [componentTheme, setComponentTheme] = useState('magenta');
 

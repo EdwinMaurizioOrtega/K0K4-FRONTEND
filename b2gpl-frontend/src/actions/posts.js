@@ -37,12 +37,11 @@ export const getPosts = (page) => async (dispatch) => {
 };
 
 //Post en el Carousel / Slider home
-export const getPostsInCarousel = (aux1) => async (dispatch) => {
-
+export const getPostsInCarousel = () => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         const { data: { data } } = await api.fetchPostsInCarouselSlider();
-        dispatch({ type: FETCH_CAROUSEL_POST, payload: { data} });
+        dispatch({ type: FETCH_CAROUSEL_POST, payload: { data } });
         dispatch({ type: END_LOADING });
     } catch (error) {
         console.log(error);
