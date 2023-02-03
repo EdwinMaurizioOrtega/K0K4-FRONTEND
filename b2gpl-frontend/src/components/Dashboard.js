@@ -8,6 +8,9 @@ import Pagination from './Pagination';
 
 import {Galleria} from "primereact/galleria";
 
+
+import CarouselPosts from '../service/CarouselPosts';
+
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
@@ -45,7 +48,14 @@ const Dashboard = () => {
     const handleDeleteChip = (chipToDelete) => setTags(tags.filter((tag) => tag !== chipToDelete));
 
 
-    // Demo Ejemplo
+    //Ejemplo sin utilizar Redux React
+    const [postsInCarousel, setProducts, isLoading] = useState([])
+    const productService = new CarouselPosts();
+
+    useEffect(() => {
+        productService.getProductsSmall().then(data => setProducts(data.slice(0,9)));
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
     const responsiveOptions = [
         {
             breakpoint: '1024px',
@@ -64,14 +74,13 @@ const Dashboard = () => {
         }
     ];
 
-    const {posts, isLoading} = useSelector((state) => state.posts);
-    console.log("1 "+posts);
+    //Ejemplo utilizar Redux React || Revisar inconvenientes.
+    // const {postsInCarousel, isLoading} = useSelector((state) => state.posts);
+    // console.log("1 "+postsInCarousel);
 
-    useEffect(() => {
-        dispatch(getPostsInCarousel());
-
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+    // useEffect(() => {
+    //     dispatch(getPostsInCarousel());
+    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const galleriaResponsiveOptions = [
         {
@@ -106,13 +115,13 @@ const Dashboard = () => {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
 
-    const productTemplate = (posts) => {
+    const productTemplate = (postsInCarousel) => {
         return (
             <div className="product-item">
                 <div className="product-item-content">
-                    <div className="mb-3" onClick={() => openPost(posts)}>
+                    <div className="mb-3" onClick={() => openPost(postsInCarousel)}>
                         {/*<img src={`images/product/${product.image}`} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={product.name} className="product-image" />*/}
-                        <Galleria value={posts.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions} numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false}
+                        <Galleria value={postsInCarousel.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions} numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false}
                                   showIndicators></Galleria>
 
                     </div>
@@ -120,9 +129,9 @@ const Dashboard = () => {
                         {/*<h4 className="mb-1">{posts.title}</h4>*/}
                         <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
                         <i className="pi pi-whatsapp mr-2"></i>
-                        <span className="font-semibold" onClick={() => openInNewTab('https://wa.me/593' + posts.cellphone + '?text='+posts.title)}>WhatsApp</span>
+                        <span className="font-semibold" onClick={() => openInNewTab('https://wa.me/593' + postsInCarousel.cellphone + '?text='+postsInCarousel.title)}>WhatsApp</span>
                     </span>
-                        <div className="text-900 font-semibold text-xl mb-3">{posts.title}</div>
+                        <div className="text-900 font-semibold text-xl mb-3">{postsInCarousel.title}</div>
                         {/*<h6 className="mt-0 mb-3">${product.price}</h6>*/}
                         {/*<span className={`product-badge status-${product.inventoryStatus.toLowerCase()}`}>{product.inventoryStatus}</span>*/}
                         {/*<div className="car-buttons mt-5">*/}
@@ -153,25 +162,12 @@ const Dashboard = () => {
                         marginRight: "auto",
                         width: "50%"}}  />
                     : (
-                <Carousel value={posts} numVisible={4} numScroll={1} responsiveOptions={responsiveOptions}
+                <Carousel value={postsInCarousel} numVisible={4} numScroll={1} responsiveOptions={responsiveOptions}
                           autoplayInterval={3000} itemTemplate={productTemplate} header={<h5 style={{textAlign: "center"}}>🍭K4NDY ♥️ 🍑PARÁ CUMPLIR 🔥😈🍑TUS FANTASÍAS 🍭💯🍓</h5>}/>
 )}
             </div>
 
             <div className="card">
-
-
-                {/*<InputText onKeyDown={handleKeyPress} name="search" variant="outlined" label="Search Memories"  value={search} onChange={(e) => setSearch(e.target.value)} />*/}
-                {/* <ChipInput
-
-                  value={tags}
-                  onAdd={(chip) => handleAddChip(chip)}
-                  onDelete={(chip) => handleDeleteChip(chip)}
-                  label="Search Tags"
-                  variant="outlined"
-                /> */}
-                {/*<Button onClick={searchPost}  variant="contained" color="primary">Search</Button>*/}
-
 
                 <Posts setCurrentId={setCurrentId}/>
                 {(!searchQuery && !tags.length) && (
@@ -179,29 +175,6 @@ const Dashboard = () => {
                         <Pagination page={page}/>
                     </div>
                 )}
-
-                {/* <Grid item xs={12} sm={6} md={3}>
-              <AppBar className={classes.appBarSearch} position="static" color="inherit">
-                <TextField onKeyDown={handleKeyPress} name="search" variant="outlined" label="Search Memories" fullWidth value={search} onChange={(e) => setSearch(e.target.value)} />
-                <ChipInput
-                  style={{ margin: '10px 0' }}
-                  value={tags}
-                  onAdd={(chip) => handleAddChip(chip)}
-                  onDelete={(chip) => handleDeleteChip(chip)}
-                  label="Search Tags"
-                  variant="outlined"
-                />
-                <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary">Search</Button>
-              </AppBar>
-              <Form currentId={currentId} setCurrentId={setCurrentId} />
-              {(!searchQuery && !tags.length) && (
-                <Paper className={classes.pagination} elevation={6}>
-                  <Pagination page={page} />
-                </Paper>
-              )}
-            </Grid> */}
-
-                {/*<Form currentId={currentId} setCurrentId={setCurrentId} />*/}
 
             </div>
 

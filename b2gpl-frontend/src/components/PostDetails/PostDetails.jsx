@@ -2,10 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 import {useParams, useNavigate, Link} from 'react-router-dom';
-import {ProgressSpinner} from 'primereact/progressspinner';
 import {getPost, getPostsBySearch} from '../../actions/posts';
-import {Button} from 'primereact/button';
-import {Galleria} from 'primereact/galleria';
 import PhotoService from "../../service/PhotoService";
 import {Divider} from 'primereact/divider';
 import {Image} from 'primereact/image';
@@ -48,7 +45,12 @@ const PostDetails = () => {
 
     if (isLoading) {
         return (
-            <ProgressSpinner/>
+            <img src={`assets/layout/images/5db61a9d71fa2c97ffff30c83dcaa6e5.gif`} style={{
+                height: '100%',
+                display: "block",
+                marginLeft: "auto",
+                marginRight: "auto",
+                width: "50%"}}  />
         );
     }
 
