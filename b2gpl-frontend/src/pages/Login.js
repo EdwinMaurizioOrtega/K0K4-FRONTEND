@@ -7,10 +7,12 @@ import { useDispatch } from 'react-redux';
 // import { GoogleLogin } from 'react-google-login';
 import { signin, signup } from '../actions/auth';
 import { AUTH } from '../constants/actionTypes';
+import {Messages} from "primereact/messages";
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
 export const Login = () => {
+    const message = useRef();
     const [form, setForm] = useState(initialState);
     const [isSignup, setIsSignup] = useState(false);
     const dispatch = useDispatch();
@@ -28,11 +30,28 @@ export const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        console.log("Botón handleSubmit: "+ e);
+            //Registrarse
         if (isSignup) {
-            dispatch(signup(form, history));
+            console.log("Registrarse: "+form);
+            if (form.firstName !== '' && form.lastName !== '' && form.email !== '' && form.password !== '' && form.confirmPassword !== ''){
+                dispatch(signup(form, history));
+
+            }else {
+                message.current.show({ severity: 'warn', content: 'Hola! 👋🏻 Todos los datos son necesarios.' });
+            }
         } else {
-          console.log(form);
-            dispatch(signin(form, history));
+            //Iniciar sesión
+          console.log("Iniciar sesión: "+form);
+          if ( form.email !== '' && form.password !== ''){
+              console.log(form.email);
+              console.log(form.password);
+              dispatch(signin(form, history));
+          }else {
+              console.log("Verificar el correo y la contraseña.")
+              message.current.show({ severity: 'warn', content: ' Hola! 👋🏻 Verificar el correo y la contraseña.' });
+
+          }
         }
     };
 
@@ -90,7 +109,14 @@ export const Login = () => {
                                 <InputText  placeholder="Contraseña" name="password" onChange={handleChange} />
                             </span>
 
-                            {isSignup && <InputText name="confirmPassword" placeholder="Repite la contraseña" onChange={handleChange}  />}
+                            {isSignup &&
+                                <span className="p-input-icon-left">
+                                <i className="pi pi-key"></i>
+                                <InputText name="confirmPassword" placeholder="Repite la contraseña" onChange={handleChange}  />
+                             </span>
+                            }
+
+                            <Messages ref={message} />
 
                             <button className="flex p-link">¿Olvidaste tu contraseña?</button>
                         </div>
@@ -106,13 +132,13 @@ export const Login = () => {
                     </form>
                 </div>
 
-                <div className="login-footer flex align-items-center">
-                    <div className="flex align-items-center login-footer-logo-container">
-                        {/*<img src="assets/layout/images/logo-dark.png" className="login-footer-logo" alt="login-footer-logo" />*/}
-                        <img src="assets/layout/images/appname-dark.png" className="login-footer-appname" alt="login-footer-appname" />
-                    </div>
-                    <span>&#169; B2|GPL - 2023</span>
-                </div>
+                {/*<div className="login-footer flex align-items-center">*/}
+                {/*    <div className="flex align-items-center login-footer-logo-container">*/}
+                {/*        /!*<img src="assets/layout/images/logo-dark.png" className="login-footer-logo" alt="login-footer-logo" />*!/*/}
+                {/*        <img src="assets/layout/images/appname-dark.png" className="login-footer-appname" alt="login-footer-appname" />*/}
+                {/*    </div>*/}
+                {/*    <span>&#169; B2|GPL - 2023</span>*/}
+                {/*</div>*/}
             </div>
         </div>
     );
