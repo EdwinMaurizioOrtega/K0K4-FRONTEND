@@ -13,6 +13,9 @@ API.interceptors.request.use((req) => {
 
 export const fetchPost = (id) => API.get(`/posts/${id}`);
 export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
+
+//Listar los Post que van en el Carousel / Slider
+export const fetchPostsInCarouselSlider = () => API.get(`/posts/in_carousel`);
 export const fetchPostsByCreator = (name) => API.get(`/posts/creator?name=${name}`);
 //Listar por el id del creador del los post
 export const fetchPostsByIdCreator = (creator) => API.get(`/posts/id_creator?creator=${creator}`);

@@ -1,4 +1,15 @@
-import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_POST, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, LIKE, COMMENT, FETCH_BY_CREATOR } from '../constants/actionTypes';
+import { START_LOADING,
+    END_LOADING,
+    FETCH_ALL,
+    FETCH_POST,
+    FETCH_BY_SEARCH,
+    CREATE, UPDATE,
+    DELETE,
+    LIKE,
+    COMMENT,
+    FETCH_BY_CREATOR,
+    FETCH_CAROUSEL_POST} from '../constants/actionTypes';
+
 import * as api from '../api/index.js';
 
 export const getPost = (id) => async (dispatch) => {
@@ -23,6 +34,19 @@ export const getPosts = (page) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+//Post en el Carousel / Slider home
+export const getPostsInCarousel = (aux1) => async (dispatch) => {
+
+    try {
+        dispatch({ type: START_LOADING });
+        const { data: { data } } = await api.fetchPostsInCarouselSlider();
+        dispatch({ type: FETCH_CAROUSEL_POST, payload: { data} });
+        dispatch({ type: END_LOADING });
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const getPostsByCreator = (name) => async (dispatch) => {

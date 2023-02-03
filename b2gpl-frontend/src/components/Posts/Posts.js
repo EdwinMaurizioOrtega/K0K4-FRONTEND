@@ -7,7 +7,7 @@ import Post from './Post/Post';
 const Posts = ({ setCurrentId }) => {
   const { posts, isLoading } = useSelector((state) => state.posts);
 
-  if (!posts.length && !isLoading) return 'No posts';
+  if (!posts.length && !isLoading) return 'No se ha encontrado publicaciones.';
 
   return (
     isLoading ? <ProgressSpinner /> : (

@@ -1,35 +1,13 @@
 import React, {useState, useRef, useEffect} from 'react';
-
-import {Divider} from 'primereact/divider';
-
-import {Button} from 'primereact/button';
-import {Chart} from 'primereact/chart';
-import {Dropdown} from 'primereact/dropdown';
-import {ProgressBar} from 'primereact/progressbar';
-import {Avatar} from 'primereact/avatar';
-import {Badge} from 'primereact/badge';
-import {Column} from 'primereact/column';
-import {DataTable} from 'primereact/datatable';
 import {Carousel} from 'primereact/carousel';
-import {Timeline} from 'primereact/timeline';
-import CustomerService from '../service/CustomerService';
-
-import {ListBox} from "primereact/listbox";
-
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useLocation} from 'react-router-dom';
-import {getPostsBySearch} from '../actions/posts';
+import {getPostsBySearch, getPostsInCarousel} from '../actions/posts';
 import Posts from '../components/Posts/Posts';
-import Form from '../components/Form/Form';
 import Pagination from './Pagination';
-import {InputText} from 'primereact/inputtext';
-
 
 import ProductService from '../service/ProductService';
 import {Galleria} from "primereact/galleria";
-
-
-
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -68,14 +46,7 @@ const Dashboard = () => {
     const handleDeleteChip = (chipToDelete) => setTags(tags.filter((tag) => tag !== chipToDelete));
 
 
-
-
-
-
-
     // Demo Ejemplo
-
-    const [products, setProducts] = useState([]);
     const responsiveOptions = [
         {
             breakpoint: '1024px',
@@ -95,10 +66,21 @@ const Dashboard = () => {
     ];
 
     const productService = new ProductService();
+    const [products, setProducts] = useState([]);
+    const {postsAAAAAAA, isLoading} = useSelector((state) => state.postsAAAAAAA);
+    console.log(postsAAAAAAA);
 
+    // if (posts.length > 0 ){
+    //     setProducts(posts);
+    // }
+
+    const aux1 = "aaa";
     useEffect(() => {
-        productService.getProductsSmall().then(data => setProducts(data.slice(0,9)));
+        dispatch(getPostsInCarousel(aux1));
+        console.log("hola hola");
+
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
 
     const galleriaResponsiveOptions = [
         {
@@ -124,8 +106,8 @@ const Dashboard = () => {
 
     const openPost = (e) => {
         // dispatch(getPost(post._id, history));
-console.log(e._id);
-       history(`/posts/${e._id}`);
+        console.log(e._id);
+        history(`/posts/${e._id}`);
     };
 
     const productTemplate = (product) => {
@@ -134,7 +116,8 @@ console.log(e._id);
                 <div className="product-item-content">
                     <div className="mb-3" onClick={() => openPost(product)}>
                         {/*<img src={`images/product/${product.image}`} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={product.name} className="product-image" />*/}
-                        <Galleria value={product.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions} numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false} showIndicators ></Galleria>
+                        <Galleria value={product.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions} numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false}
+                                  showIndicators></Galleria>
 
                     </div>
                     <div>
@@ -158,7 +141,7 @@ console.log(e._id);
             <div className="card">
 
                 <Carousel value={products} numVisible={4} numScroll={1} responsiveOptions={responsiveOptions}
-                          autoplayInterval={3000} itemTemplate={productTemplate} header={<h5>Model VIP K4ndy</h5>} />
+                          autoplayInterval={3000} itemTemplate={productTemplate} header={<h5>Model VIP K4ndy</h5>}/>
 
             </div>
 
