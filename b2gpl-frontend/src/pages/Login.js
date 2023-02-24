@@ -3,15 +3,20 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 
 import {Link, useNavigate} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 // import { GoogleLogin } from 'react-google-login';
 import { signin, signup } from '../actions/auth';
 import { AUTH } from '../constants/actionTypes';
 import {Messages} from "primereact/messages";
+import {signIn} from "../api";
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
 export const Login = () => {
+
+    let respuestaError  = useSelector((state) => state.auth.authData?.response.data.message);
+    console.log("Error: "+respuestaError);
+
     const message = useRef();
     const [form, setForm] = useState(initialState);
     const [isSignup, setIsSignup] = useState(false);
@@ -47,6 +52,15 @@ export const Login = () => {
               console.log(form.email);
               console.log(form.password);
               dispatch(signin(form, history));
+
+              //Validamos los errores
+              if (respuestaError != undefined){
+
+                  message.current.show({ severity: 'warn', content: ' Hola! 👋🏻 '+ respuestaError });
+                  respuestaError = undefined;
+
+              }
+
           }else {
               console.log("Verificar el correo y la contraseña.")
               message.current.show({ severity: 'warn', content: ' Hola! 👋🏻 Verificar el correo y la contraseña.' });
@@ -102,7 +116,7 @@ export const Login = () => {
 
                             <span className="p-input-icon-left">
                                 <i className="pi pi-envelope"></i>
-                                <InputText type="text" name="email" placeholder="Correo electrónico" onChange={handleChange} />
+                                <InputText keyfilter={/[^s]/} name="email" placeholder="Correo electrónico" onChange={handleChange} />
                             </span>
                             <span className="p-input-icon-left">
                                 <i className="pi pi-key"></i>
