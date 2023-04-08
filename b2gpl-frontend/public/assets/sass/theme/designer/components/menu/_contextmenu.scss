@@ -42,5 +42,6 @@
 
     .p-submenu-icon {
         font-size: $menuitemSubmenuIconFontSize;
+        transition: transform $transitionDuration;
     }
 }

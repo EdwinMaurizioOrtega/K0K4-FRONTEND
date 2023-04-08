@@ -2,6 +2,7 @@ import {
     FETCH_ALL,
     FETCH_BY_SEARCH,
     FETCH_BY_CREATOR,
+    FETCH_BY_ID_CREATOR,
     FETCH_POST,
     CREATE,
     UPDATE,
@@ -26,6 +27,9 @@ export default (state = {isLoading: true, posts: []}, action) => {
             };
         case FETCH_BY_SEARCH:
         case FETCH_BY_CREATOR:
+            return {...state, posts: action.payload.data};
+
+        case FETCH_BY_ID_CREATOR:
             return {...state, posts: action.payload.data};
         case FETCH_POST:
             return {...state, post: action.payload.post};

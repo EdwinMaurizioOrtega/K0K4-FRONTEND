@@ -8,6 +8,7 @@ import { START_LOADING,
     LIKE,
     COMMENT,
     FETCH_BY_CREATOR,
+    FETCH_BY_ID_CREATOR,
     FETCH_CAROUSEL_POST} from '../constants/actionTypes';
 
 import * as api from '../api/index.js';
@@ -147,7 +148,7 @@ export const getPostsByIdCreator = (id) => async (dispatch) => {
         dispatch({ type: START_LOADING });
         const { data: { data } } = await api.fetchPostsByIdCreator(id);
 
-        dispatch({ type: FETCH_BY_CREATOR, payload: { data } });
+        dispatch({ type: FETCH_BY_ID_CREATOR, payload: { data } });
         dispatch({ type: END_LOADING });
     } catch (error) {
         console.log(error);

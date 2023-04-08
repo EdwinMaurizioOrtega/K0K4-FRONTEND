@@ -83,4 +83,89 @@
         width: $menuWidth;
         padding: $verticalMenuPadding;
     }
+
+    .p-megamenu-button {
+        width: $actionIconWidth;
+        height: $actionIconHeight;
+        color: $horizontalMenuRootMenuitemIconColor;
+        border-radius: $actionIconBorderRadius;
+        transition: $actionIconTransition;
+    
+        &:hover {
+            color: $horizontalMenuRootMenuitemIconHoverColor;
+            background: $horizontalMenuRootMenuitemHoverBg;
+        }
+    
+        &:focus {
+            @include focused();
+        }
+    }
+
+    .p-submenu-icon {
+        transition: transform $transitionDuration;
+    }
+
+    &.p-megamenu-mobile-active {
+        .p-megamenu-root-list {
+            padding: $verticalMenuPadding;
+            background: $overlayMenuBg;
+            border: $overlayMenuBorder;
+            box-shadow: $overlayMenuShadow;
+
+            .p-menu-separator {
+                border-top: $divider;
+                margin: $menuSeparatorMargin;
+            }
+
+            .p-submenu-icon {
+                font-size: $menuitemSubmenuIconFontSize;
+            }
+
+            > .p-menuitem {
+                width: 100%;
+                position: static;
+
+                > .p-menuitem-link {
+                    @include menuitem-link();
+
+                    > .p-submenu-icon {
+                        margin-left: auto;
+                    }
+                }
+
+                &.p-menuitem-active {
+                    > .p-menuitem-link {
+                        > .p-submenu-icon {
+                            transform: rotate(-180deg);
+                        }
+                    }
+                }
+            }
+
+            .p-submenu-list {
+                width: 100%;
+                position: static;
+                box-shadow: none;
+                border: 0 none;
+
+                .p-submenu-icon {
+                    transition: transform $transitionDuration;
+                    transform: rotate(90deg);
+                }
+
+                .p-menuitem-active {
+                    > .p-menuitem-link {
+                        > .p-submenu-icon {
+                            transform: rotate(-90deg);
+                        }
+                    }
+                }
+            }
+
+            .p-menuitem {
+                width: 100%;
+                position: static;
+            }
+        }
+    }
 }
