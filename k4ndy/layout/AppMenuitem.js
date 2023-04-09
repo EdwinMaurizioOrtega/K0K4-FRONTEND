@@ -1,14 +1,14 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { Ripple } from 'primereact/ripple';
-import { classNames } from 'primereact/utils';
-import { useContext, useEffect } from 'react';
-import { LayoutContext } from './context/layoutcontext';
-import { MenuContext } from './context/menucontext';
+import {useRouter} from 'next/router';
+import {Ripple} from 'primereact/ripple';
+import {classNames} from 'primereact/utils';
+import {useContext, useEffect} from 'react';
+import {LayoutContext} from './context/layoutcontext';
+import {MenuContext} from './context/menucontext';
 
 const AppMenuitem = (props) => {
-    const { activeMenu, setActiveMenu } = useContext(MenuContext);
-    const { isSlim, isHorizontal, isDesktop, setLayoutState, layoutState, layoutConfig } = useContext(LayoutContext);
+    const {activeMenu, setActiveMenu} = useContext(MenuContext);
+    const {isSlim, isHorizontal, isDesktop, setLayoutState, layoutState, layoutConfig} = useContext(LayoutContext);
     const router = useRouter();
     const item = props.item;
     const key = props.parentKey ? props.parentKey + '-' + props.index : String(props.index);
@@ -18,7 +18,7 @@ const AppMenuitem = (props) => {
     useEffect(() => {
         if (layoutState.resetMenu) {
             setActiveMenu('');
-            setLayoutState((prevLayoutState) => ({ ...prevLayoutState, resetMenu: false }));
+            setLayoutState((prevLayoutState) => ({...prevLayoutState, resetMenu: false}));
         }
     }, [layoutState]);
 
@@ -48,12 +48,15 @@ const AppMenuitem = (props) => {
 
         // navigate with hover
         if ((props.root && isSlim()) || isHorizontal()) {
-            setLayoutState((prevLayoutState) => ({ ...prevLayoutState, menuHoverActive: !prevLayoutState.menuHoverActive }));
+            setLayoutState((prevLayoutState) => ({
+                ...prevLayoutState,
+                menuHoverActive: !prevLayoutState.menuHoverActive
+            }));
         }
 
         //execute command
         if (item.command) {
-            item.command({ originalEvent: event, item: item });
+            item.command({originalEvent: event, item: item});
         }
 
         // toggle active state
@@ -61,15 +64,18 @@ const AppMenuitem = (props) => {
             setActiveMenu(active ? props.parentKey : key);
 
             if (props.root && !active && (isSlim() || isHorizontal())) {
-                setLayoutState((prevLayoutState) => ({ ...prevLayoutState, overlaySubmenuActive: true }));
+                setLayoutState((prevLayoutState) => ({...prevLayoutState, overlaySubmenuActive: true}));
             }
         } else {
             if (!isDesktop()) {
-                setLayoutState((prevLayoutState) => ({ ...prevLayoutState, staticMenuMobileActive: !prevLayoutState.staticMenuMobileActive }));
+                setLayoutState((prevLayoutState) => ({
+                    ...prevLayoutState,
+                    staticMenuMobileActive: !prevLayoutState.staticMenuMobileActive
+                }));
             }
 
             if (isSlim() || isHorizontal()) {
-                setLayoutState((prevLayoutState) => ({ ...prevLayoutState, menuHoverActive: false }));
+                setLayoutState((prevLayoutState) => ({...prevLayoutState, menuHoverActive: false}));
             }
 
             setActiveMenu(key);
@@ -85,18 +91,23 @@ const AppMenuitem = (props) => {
         }
     };
 
-    const badge = item.badge ? <span className={classNames('layout-menu-badge p-tag p-tag-rounded ml-2 uppercase', { [`${badge}`]: true, 'p-tag-success': badge === 'new', 'p-tag-info': badge === 'updated' })}>{badge}</span> : null;
+    const badge = item.badge ? <span className={classNames('layout-menu-badge p-tag p-tag-rounded ml-2 uppercase', {
+        [`${badge}`]: true,
+        'p-tag-success': badge === 'new',
+        'p-tag-info': badge === 'updated'
+    })}>{badge}</span> : null;
     const subMenu =
         item.items && item.visible !== false ? (
             <ul>
                 {item.items.map((child, i) => {
-                    return <AppMenuitem item={child} index={i} className={child.badgeClass} parentKey={key} key={child.label} />;
+                    return <AppMenuitem item={child} index={i} className={child.badgeClass} parentKey={key}
+                                        key={child.label}/>;
                 })}
             </ul>
         ) : null;
 
     return (
-        <li className={classNames({ 'layout-root-menuitem': props.root, 'active-menuitem': active })}>
+        <li className={classNames({'layout-root-menuitem': props.root, 'active-menuitem': active})}>
             {props.root && item.visible !== false && <div className="layout-menuitem-root-text">{item.label}</div>}
             {(!item.to || item.items) && item.visible !== false ? (
                 <>
@@ -113,7 +124,7 @@ const AppMenuitem = (props) => {
                         <i className={classNames('layout-menuitem-icon', item.icon)}></i>
                         <span className="layout-menuitem-text">{item.label}</span>
                         {item.items && <i className="pi pi-fw pi-angle-down layout-submenu-toggler"></i>}
-                        <Ripple />
+                        <Ripple/>
                     </a>
                 </>
             ) : null}
@@ -121,13 +132,17 @@ const AppMenuitem = (props) => {
             {item.to && !item.items && item.visible !== false ? (
                 <>
                     {/* @see https://github.com/vercel/next.js/commit/489e65ed98544e69b0afd7e0cfc3f9f6c2b803b7 */}
-                        <a onClick={(e) => itemClick(e)} className={classNames(item.class, 'p-ripple ', { 'active-route': isActiveRoute })} tabIndex={0} onMouseEnter={onMouseEnter}>
+                    <Link href={item.to} replace={item.replaceUrl} legacyBehavior>
+                        <a onClick={(e) => itemClick(e)}
+                           className={classNames(item.class, 'p-ripple ', {'active-route': isActiveRoute})} tabIndex={0}
+                           onMouseEnter={onMouseEnter}>
                             <i className={classNames('layout-menuitem-icon', item.icon)}></i>
                             <span className="layout-menuitem-text">{item.label}</span>
                             {badge}
                             {item.items && <i className="pi pi-fw pi-angle-down layout-submenu-toggler"></i>}
-                            <Ripple />
+                            <Ripple/>
                         </a>
+                    </Link>
                 </>
             ) : null}
             {subMenu}

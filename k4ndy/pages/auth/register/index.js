@@ -8,7 +8,7 @@ import AppConfig from '../../../layout/AppConfig';
 import {useDispatch, useSelector} from "react-redux";
 import {Messages} from "primereact/messages";
 
-const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
+const initialState = { username: '', email: '', password: '', confirmPassword: '' };
 
 function Register() {
     const [confirmed, setConfirmed] = useState(false);
@@ -22,16 +22,13 @@ function Register() {
     let respuestaError  = useSelector((state) => state.auth.authData?.response?.data.message);
     console.log("Error: "+respuestaError);
 
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
         console.log("Botón handleSubmit: "+ e);
         //Registrarse
-
             console.log("Registrarse: "+form);
-            if (form.username !== '' && form.email !== '' && form.password !== '' && form.confirmPassword !== ''){
+            if (form.username !== '' && form.password !== '' && form.confirmPassword !== ''){
                 dispatch(signup(form, history));
 
             }else {

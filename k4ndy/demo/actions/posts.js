@@ -8,6 +8,7 @@ import { START_LOADING,
     LIKE,
     COMMENT,
     FETCH_BY_CREATOR,
+    FETCH_BY_ID_CREATOR,
     FETCH_CAROUSEL_POST} from '../constants/actionTypes';
 
 import * as api from '../api/index.js';
@@ -91,7 +92,7 @@ export const createPost = (post, history) => async (dispatch) => {
 
     dispatch({ type: CREATE, payload: data });
 
-    history(`/posts/${data._id}`);
+    history.push(`/posts/${data._id}`);
   } catch (error) {
     console.log(error);
   }
@@ -143,11 +144,12 @@ export const deletePost = (id) => async (dispatch) => {
 
 //Buscar los posts por el id del creador
 export const getPostsByIdCreator = (id) => async (dispatch) => {
+    console.log("ididididid: "+id);
     try {
         dispatch({ type: START_LOADING });
         const { data: { data } } = await api.fetchPostsByIdCreator(id);
 
-        dispatch({ type: FETCH_BY_CREATOR, payload: { data } });
+        dispatch({ type: FETCH_BY_ID_CREATOR, payload: { data } });
         dispatch({ type: END_LOADING });
     } catch (error) {
         console.log(error);

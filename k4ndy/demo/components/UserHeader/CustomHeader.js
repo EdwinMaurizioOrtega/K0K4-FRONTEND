@@ -5,6 +5,7 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import * as actionType from "../../constants/actionTypes";
 import {useDispatch} from "react-redux";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 
 function CustomHeader() {
@@ -93,6 +94,19 @@ function CustomHeader() {
                             </a>
                             <Ripple/>
                         </li>
+
+                        <li>
+                            <a
+                                className="p-ripple flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
+
+                            <Link href={'/apps/blog/edit/'} style={{ width: 'unset' }}>
+                                <i className="pi pi-fw pi-camera"></i>
+                                +PUBLICAR
+                            </Link>
+                            </a>
+                            <Ripple/>
+                        </li>
+
                         <li>
                             <Button type="button" label="Cerrar sesión" className="m-0 mt-3 md:mt-0 md:ml-5"
                                     onClick={logout}></Button>
