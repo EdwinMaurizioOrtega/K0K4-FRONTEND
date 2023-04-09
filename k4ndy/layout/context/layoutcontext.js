@@ -78,18 +78,21 @@ export const LayoutProvider = (props) => {
         <LayoutContext.Provider value={value}>
             <>
                 <Head>
-                    <title>PrimeReact - APOLLO</title>
+                    <title>K4NDY</title>
                     <meta charSet="UTF-8" />
-                    <meta name="description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
+                    <meta name="theme-color" content="#000000" />
+                    <meta name="description" content="Encuentros, Noviazgo y Citas: Anuncios gratis para adultos." />
                     <meta name="robots" content="index, follow" />
                     <meta name="viewport" content="initial-scale=1, width=device-width" />
                     <meta property="og:type" content="website"></meta>
-                    <meta property="og:title" content="Apollo by PrimeReact for NextJS"></meta>
+                    <meta property="og:title" content="K4NDY"></meta>
                     <meta property="og:url" content="https://www.primefaces.org/apollo-react"></meta>
-                    <meta property="og:description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
+                    <meta property="og:description" content="Encuentros, Noviazgo y Citas: Anuncios gratis para adultos." />
                     <meta property="og:image" content="https://www.primefaces.org/static/social/apollo-nextjs.png"></meta>
                     <meta property="og:ttl" content="604800"></meta>
                     <link rel="icon" href={`${contextPath}/favicon.ico`} type="image/x-icon"></link>
+                    <link rel="apple-touch-icon" href={`${contextPath}/icon-192x192.png`} type="image/x-icon"></link>
+                    <link rel="manifest" href={`${contextPath}/manifest.json`} />
                 </Head>
                 {props.children}
             </>
