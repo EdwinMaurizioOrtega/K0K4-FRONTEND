@@ -2,23 +2,17 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/es'
-
-
 import {likePost, deletePost} from '../../../actions/posts';
-
 import {Button} from 'primereact/button';
 import {Galleria} from 'primereact/galleria';
-import ProductService from "../../../service/ProductService";
-import PhotoService from "../../../service/PhotoService";
-import Link from "next/link";
 import {useRouter} from "next/router";
-
 
 const Post = ({post, setCurrentId}) => {
 
     const history = useRouter();
     moment.locale('es')
     const user = JSON.parse(localStorage.getItem('profile'));
+    //console.log(user);
     const [likes, setLikes] = useState(post?.likes);
     const dispatch = useDispatch();
     const galleriaResponsiveOptions = [
@@ -78,8 +72,7 @@ const Post = ({post, setCurrentId}) => {
 
     const openPost = (e) => {
         // dispatch(getPost(post._id, history));
-
-        history.push( `apps/blog/detail?id=${post._id}`);
+        history.push(`apps/blog/detail?id=${post._id}`);
     };
 
     const openInNewTab = url => {
@@ -93,20 +86,14 @@ const Post = ({post, setCurrentId}) => {
     return (
         <div key={post._id} className="p-3">
             <div className="relative" onClick={openPost}>
-                {/*<img src={post.selectedFile[0] || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} className="w-full" title={post.title} onClick={openPost}/>*/}
-                <Galleria value={post.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions} numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false} showIndicators ></Galleria>
-                {/* <img src={contextPath + blog.profile} className="flex absolute w-4rem h-4rem" style={{ bottom: '-1.5rem', right: '1.5rem' }} alt={blog.description.split(' ', 1)} /> */}
+                <Galleria value={post.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions}
+                          numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}}
+                          item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false}
+                          showIndicators></Galleria>
             </div>
             <div className="p-3">
-
-
                 <p className="text-700 text-lg mt-0 mb-5">
-
-
-
                 </p>
-
-
 
                 <span className="flex align-items-center text-900">
                         <i className="pi pi-clock mr-2"></i>
@@ -117,16 +104,22 @@ const Post = ({post, setCurrentId}) => {
                 <p className="text-700 text-lg mt-0 mb-5">{post.message.split(' ').splice(0, 20).join(' ')}...</p>
 
                 <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
-                    <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
+                    <span
+                        className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">
                         <i className="pi pi-phone mr-2"></i>
-                        <span className="font-semibold" onClick={() => openInNewTab('tel:0' + post.cellphone)}>Llámame</span>
+                        <span className="font-semibold"
+                              onClick={() => openInNewTab('tel:0' + post.cellphone)}>Llámame</span>
                     </span>
-                    <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" >
+                    <span
+                        className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">
                         <i className="pi pi-whatsapp mr-2"></i>
-                        <span className="font-semibold" onClick={() => openInNewTab('https://wa.me/593' + post.cellphone + '?text='+post.title)}>WhatsApp</span>
+                        <span className="font-semibold"
+                              onClick={() => openInNewTab('https://wa.me/593' + post.cellphone + '?text=' + post.title)}>WhatsApp</span>
                     </span>
                     <span className="flex align-items-center text-900">
-                        <Button icon="pi pi-fw pi-thumbs-up-fill" className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round" disabled={!user?.result} onClick={handleLike}>
+                        <Button icon="pi pi-fw pi-thumbs-up-fill"
+                                className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round"
+                                disabled={!user?.result} onClick={handleLike}>
                             <Likes/>
                         </Button>
                     </span>
@@ -137,7 +130,8 @@ const Post = ({post, setCurrentId}) => {
 
                     <span className="flex align-items-center text-900">
                         {user?.result?._id === post?.creator && (
-                            <Button icon="pi pi-fw pi-trash" className="p-button-rounded p-button-secondary" onClick={() => dispatch(deletePost(post._id))}>
+                            <Button icon="pi pi-fw pi-trash" className="p-button-rounded p-button-secondary"
+                                    onClick={() => dispatch(deletePost(post._id))}>
                                 &nbsp; Borrar
                             </Button>
                         )}

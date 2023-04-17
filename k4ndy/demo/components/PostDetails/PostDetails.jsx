@@ -9,26 +9,16 @@ import {useParams} from "next/navigation";
 import {Router, useRouter} from "next/router";
 import {PhotoService} from "../../service/PhotoService";
 import Link from "next/link";
-import CustomHeader from "../UserHeader/CustomHeader";
-
 
 const PostDetails = () => {
-
-    // const contextPath = getConfig().publicRuntimeConfig.contextPath;
 
     const {post, posts, isLoading} = useSelector((state) => state.posts);
     const dispatch = useDispatch();
     const history = useRouter();
     //const {id} = useParams();
     const {id} = history.query;
-
-
-    const [activeIndex, setActiveIndex] = useState(0);
     const galleriaService = new PhotoService();
-
-    const galleria3 = useRef(null);
     const [images, setImages] = useState(null);
-
 
     useEffect(() => {
         dispatch(getPost(id));
@@ -42,7 +32,7 @@ const PostDetails = () => {
 
     useEffect(() => {
         galleriaService.getImages().then(data => setImages(data));
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []);
 
 
     if (!post) return null;
@@ -61,30 +51,8 @@ const PostDetails = () => {
     }
 
     const recommendedPosts = posts.filter(({_id}) => _id !== post._id);
-
-    const responsiveOptions = [
-        {
-            breakpoint: '1024px',
-            numVisible: 5
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 3
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1
-        }
-    ];
-
-
-    const itemTemplate = (item) => {
-        return <img src={item.itemImageSrc} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={item.alt} style={{width: '100%', display: 'block'}}/>;
-    }
-
-    const thumbnailTemplate = (item) => {
-        return <img src={item.thumbnailImageSrc} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={item.alt} style={{display: 'block'}}/>;
-    }
+    // console.log("posts: "+posts);
+    // console.log("recommendedPosts: "+recommendedPosts);
 
     const openInNewTab = url => {
         window.open(url, '_blank', 'noopener,noreferrer');
@@ -153,23 +121,23 @@ const PostDetails = () => {
                 }
             </div>
 
-            {!!recommendedPosts.length && (
-                <div>
-                    <span>You might also like:</span>
-                    <Divider/>
-                    <div>
-                        {recommendedPosts.map(({title, name, message, likes, selectedFile, _id}) => (
-                            <div style={{margin: '20px', cursor: 'pointer'}} onClick={() => openPost(_id)} key={_id}>
-                                <span>{title}</span>
-                                <span>{name}</span>
-                                <span>{message}</span>
-                                <span>Likes: {likes.length}</span>
-                                <img src={selectedFile[0]} width="200px"/>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
+            {/*{!!recommendedPosts.length && (*/}
+            {/*    <div>*/}
+            {/*        <span>You might also like:</span>*/}
+            {/*        <Divider/>*/}
+            {/*        <div>*/}
+            {/*            {recommendedPosts.map(({title, name, message, likes, selectedFile, _id}) => (*/}
+            {/*                <div style={{margin: '20px', cursor: 'pointer'}} onClick={() => openPost(_id)} key={_id}>*/}
+            {/*                    <span>{title}</span>*/}
+            {/*                    <span>{name}</span>*/}
+            {/*                    <span>{message}</span>*/}
+            {/*                    <span>Likes: {likes.length}</span>*/}
+            {/*                    <img src={selectedFile[0]} width="200px"/>*/}
+            {/*                </div>*/}
+            {/*            ))}*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*)}*/}
         </div>
 
     );

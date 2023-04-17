@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { ProgressSpinner } from 'primereact/progressspinner';
 
 import Post from './Post/Post';
 
@@ -19,8 +18,8 @@ const Posts = ({ setCurrentId }) => {
             width: "50%"}}  />
         : (
       <div className="p-fluid grid formgrid">
-        {posts?.map((post) => (
-          <div key={post._id} className="field col-12 md:col-4" >
+        {posts?.map((post, indexAux) => (
+          <div key={indexAux} className="field col-12 md:col-4" >
             <Post post={post} setCurrentId={setCurrentId} />
           </div>
         ))}
