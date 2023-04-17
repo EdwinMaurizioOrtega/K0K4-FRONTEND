@@ -19,17 +19,9 @@ const Anuncio = () => {
 
     const [currentId, setCurrentId] = useState(0);
 
-    // useEffect(() => {
-    //     // Check if running on client
-    //
-    //         const userProfile = JSON.parse(localStorage.getItem('profile'));
-    //         console.log(userProfile);
-    //         setUser(userProfile);
-    //
-    // }, []);
+    const {posts} = useSelector((state) => state.posts);
 
-
-    console.log("Usuario: "+user)
+    console.log("Usuario: " + user)
     const logout = () => {
         dispatch({type: actionType.LOGOUT});
         navigate.push('/');
@@ -39,68 +31,55 @@ const Anuncio = () => {
 
     useEffect(() => {
 
-        const storedProfile =(JSON.parse(localStorage.getItem('profile')));
+        const storedProfile = (JSON.parse(localStorage.getItem('profile')));
 
         setUser(storedProfile);
-
-        console.log("storedProfile: "+storedProfile.result.name);
-
         const token = storedProfile.token;
-
         if (token) {
             const decodedToken = decode(token);
-
             if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-
-             dispatch(getPostsByIdCreator(storedProfile.result._id));
         }
 
-
-    }, []);
-
-    const { posts } = useSelector((state) => state.posts);
-    //console.log("Anuncios: "+posts);
-
-    //if (!posts.length && !isLoading) return 'No posts';
+    }, [dispatch, posts]);
 
     const filaPostseleccionado = (rowData) => {
         //console.log(rowData._id);
         return (
             <div className="actions">
-                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => setCurrentId(rowData._id)}>
+                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2"
+                        onClick={() => setCurrentId(rowData._id)}>
                     Editar
                 </Button>
-                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mt-2" onClick={() => dispatch(deletePost(rowData._id))}>Borrar</Button>
+                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mt-2"
+                        onClick={() => dispatch(deletePost(rowData._id))}>Borrar</Button>
             </div>
         );
     }
 
 
+    function MostrarPosts() {
+        //console.log(user.result.name);
+        dispatch(getPostsByIdCreator(user.result._id));
+    }
+
     return (
+        <>
+            <Form currentId={currentId} setCurrentId={setCurrentId}/>
 
-        <div className="card">
+            <div className="card">
+                <Button onClick={MostrarPosts}>Mostrar Anuncios</Button>
+                <DataTable value={posts} responsiveLayout="scroll" dataKey="_id">
+                    <Column field="title" header="Título del anuncio"></Column>
+                    <Column field="createdAt" header="Fecha de creacion"></Column>
+                    <Column field="_id" body={filaPostseleccionado} header="ID"></Column>
 
-            {/*<span variant="h2">{user?.result._id}</span>*/}
-
-            <div id="header" className="flex flex-column">
-
-                <div className="header-features">
-                    <div className="grid flex">
-                        <div className="col-12 md:col-12 flex justify-content-center">
-                            <Form currentId={currentId} setCurrentId={setCurrentId}/>
-                        </div>
-                    </div>
-                </div>
+                </DataTable>
             </div>
 
 
-            <DataTable value={posts} responsiveLayout="scroll" dataKey="_id">
-                <Column field="title" header="Título del anuncio"></Column>
-                <Column field="createdAt" header="Fecha de creacion"></Column>
-                <Column field="_id" body={filaPostseleccionado} header="ID"></Column>
+        </>
 
-            </DataTable>
-        </div>
+
     )
 }
 export default Anuncio;
