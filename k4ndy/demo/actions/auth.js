@@ -5,11 +5,12 @@ export const signin = (formData, router) => async (dispatch) => {
 
     try {
         const {data} = await api.signIn(formData);
-        console.log("los datos estan llegando: " + data)
+        //console.log("los datos estan llegando: " + data)
         dispatch({type: AUTH, data});
         router.push('/');
-    } catch (data) {
-        console.log(data);
+    } catch (error) {
+        const data = error.response && error.response.data;
+        //console.log("Data: "+data);
         //Muy importante para consumir desde el Frontend -_-
         dispatch({type: AUTH, data});
     }
