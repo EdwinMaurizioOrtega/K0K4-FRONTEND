@@ -5,6 +5,7 @@ import { START_LOADING,
     FETCH_BY_SEARCH,
     CREATE, UPDATE,
     DELETE,
+    TOPPOST,
     LIKE,
     COMMENT,
     FETCH_BY_CREATOR,
@@ -134,17 +135,27 @@ export const commentPost = (value, id) => async (dispatch) => {
 
 export const deletePost = (id) => async (dispatch) => {
   try {
-    await await api.deletePost(id);
-
+    await api.deletePost(id);
     dispatch({ type: DELETE, payload: id });
   } catch (error) {
     console.log(error);
   }
 };
 
+export const topBannerUploadedIn = (id, history) => async (dispatch)=>{
+    try {
+        await api.topPost(id);
+        // dispatch({ type: TOPPOST, payload: id });
+        history.push(`/`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 //Buscar los posts por el id del creador
 export const getPostsByIdCreator = (id) => async (dispatch) => {
-    console.log("ididididid: "+id);
+    //console.log("ididididid: "+id);
     try {
         dispatch({ type: START_LOADING });
         const { data: { data } } = await api.fetchPostsByIdCreator(id);

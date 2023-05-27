@@ -152,7 +152,7 @@ const Form = ({currentId, setCurrentId}) => {
                     <form autoComplete="off" noValidate onSubmit={handleSubmit}>
                         <div className="flex flex-column p-fluid">
                             <div className="mb-4">
-                                <span variant="h6">{currentId ? `Editando "${post?.title}"` : 'Crear una memoria-anuncio'}</span>
+                                <h6>{currentId ? `Editando "${post?.title}"` : 'Crear anuncio'}</h6>
                             </div>
 
                             <div className="mb-4">
@@ -163,10 +163,12 @@ const Form = ({currentId, setCurrentId}) => {
                             </div>
 
                             <div className="mb-4">
+                                <h6>Número celular - WhatsApp: </h6>
                                 <InputText name="cellphone" label="Célular" placeholder="Célular" value={postData.cellphone} onChange={(e) => setPostData({...postData, cellphone: e.target.value})}/>
                             </div>
 
                             <div className="mb-4">
+                                <h6>Seleccionar la ciuada: </h6>
 
                                 {/*<Dropdown value={postData.city} options={countries} onChange={*/}
                                 {/*    (e) => {*/}
@@ -185,7 +187,8 @@ const Form = ({currentId, setCurrentId}) => {
                             variant="outlined" />
                         </div> */}
                             <div className="mb-4">
-                                <FileBase type="file" multiple={true} onDone={(base64) => handleAddImage(base64)}/>
+                                <h6>Subir imágenes: </h6>
+                                <FileBase type="file" label="jjjjjjjjjjj" multiple={true} onDone={(base64) => handleAddImage(base64)}/>
                             </div>
 
                         </div>

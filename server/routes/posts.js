@@ -9,6 +9,7 @@ import {
     getPost,
     createPost,
     updatePost,
+    topPost,
     likePost,
     commentPost,
     deletePost,
@@ -30,6 +31,8 @@ router.get('/:id', getPost);
 
 router.post('/', auth,  createPost);
 router.patch('/:id', auth, updatePost);
+
+router.put('/:id', topPost);
 router.delete('/:id', auth, deletePost);
 router.patch('/:id/likePost', auth, likePost);
 router.post('/:id/commentPost', commentPost);

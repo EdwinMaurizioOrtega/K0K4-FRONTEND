@@ -18,7 +18,9 @@ const postSchema = mongoose.Schema({
     inCarousel: {
         type: Boolean,
         default: false
-    }
+    },
+    topBannerUploadedIn: Date
+
 })
 
 var PostMessage = mongoose.model('PostMessage', postSchema);

@@ -23,11 +23,12 @@ export const getPosts = async (req, res) => {
 
 export const getPostsInCarousel = async (req, res) => {
 
-
     try {
-        const posts = await PostMessage.find({ inCarousel : true });
+            const posts = await PostMessage.find({inCarousel: true, topBannerUploadedIn: {$exists: true}})
+                .sort({topBannerUploadedIn: -1})
+                .limit(10);
+            res.json({data: posts});
 
-        res.json({ data: posts });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -168,5 +169,17 @@ export const commentPost = async (req, res) => {
 
     res.json(updatedPost);
 };
+
+export const topPost = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No hay publicación con identificación: ${id}`);
+
+    const updatedPost = {inCarousel: true, topBannerUploadedIn: new Date(), _id: id };
+
+    await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
+
+    res.json(updatedPost);
+}
 
 export default router;

@@ -159,7 +159,7 @@ function LandingPage() {
                     <div className="mb-3" onClick={() => openPost(postsInCarousel)}>
                         {/*<img src={`images/product/${product.image}`} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={product.name} className="product-image" />*/}
                         <Galleria value={postsInCarousel.selectedFile.map((pic) => (pic))}
-                                  responsiveOptions={galleriaResponsiveOptions} numVisible={7} circular
+                                  responsiveOptions={galleriaResponsiveOptions} numVisible={10} circular
                                   style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay
                                   transitionInterval={2000} showThumbnails={false}
                                   showIndicators></Galleria>
@@ -189,6 +189,20 @@ function LandingPage() {
 
 
     return (
+        <>
+        <div className="bg-primary text-gray-100 p-3 flex justify-content-center align-items-center flex-wrap" style={{textAlign: "center"}}>
+            {/*<div className="font-bold mr-8">🔥 Alerta!</div>*/}
+            {/*<div className="align-items-center hidden lg:flex">*/}
+            {/*    <span className="line-height-3">K4NDY no es una agencia de escorts, sólo un sitio de encuentros seguro.</span>*/}
+            {/*</div>*/}
+
+            <a className="flex-wrap align-items-center">
+                <span className="underline font-bold">🔥K4NDY es sólo una plataforma de encuentros seguros, no es una agencia de escorts.</span>
+            </a>
+            {/*<a className="flex align-items-center no-underline justify-content-center border-circle text-100 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style={{ width: '2rem', height: '2rem' }}>*/}
+            {/*    <i className="pi pi-times"></i>*/}
+            {/*</a>*/}
+        </div>
         <div className="relative overflow-hidden flex flex-column justify-content-center">
             <div className="bg-circle opacity-50" style={{top: '-200px', left: '-700px'}}></div>
             <div className="bg-circle hidden lg:flex"
@@ -258,6 +272,7 @@ function LandingPage() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 

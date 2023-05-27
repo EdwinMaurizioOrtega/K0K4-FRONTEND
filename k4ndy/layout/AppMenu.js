@@ -20,6 +20,11 @@ const AppMenu = () => {
                     label: 'Crear | Editar',
                     icon: 'pi pi-fw pi-pencil',
                     to: '/apps/blog/edit'
+                },
+                {
+                    label: 'Redes Sociales',
+                    icon: 'pi pi-fw pi-pencil',
+                    to: '/pages/help'
                 }
             ]
         }

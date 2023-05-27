@@ -11,6 +11,7 @@ export const START_LOADING = 'START_LOADING';
 export const FETCH_BY_CREATOR = 'FETCH_BY_CREATOR';
 export const FETCH_BY_ID_CREATOR = 'FETCH_BY_ID_CREATOR';
 export const FETCH_CAROUSEL_POST = 'FETCH_CAROUSEL_POST';
+export const TOPPOST = 'TOPPOST';
 
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
