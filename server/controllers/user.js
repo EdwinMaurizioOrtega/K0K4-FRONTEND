@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+// import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import UserModal from "../models/user.js";
@@ -13,7 +13,10 @@ export const signin = async (req, res) => {
 
     if (!oldUser) return res.status(404).json({ message: "El usuario no existe" });
 
-    const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
+    //Contraseña encriptada
+    //const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
+
+    const isPasswordCorrect =  password === oldUser.password;
 
     if (!isPasswordCorrect) return res.status(400).json({ message: "Credenciales no válidas" });
 
@@ -33,7 +36,10 @@ export const signup = async (req, res) => {
 
     if (oldUser) return res.status(400).json({ message: "El usuario ya existe" });
 
-    const hashedPassword = await bcrypt.hash(password, 12);
+    // Encriptar contraseña
+    //const hashedPassword = await bcrypt.hash(password, 12);
+
+    const hashedPassword = password;
 
     const result = await UserModal.create({ email, password: hashedPassword, name: username });
 

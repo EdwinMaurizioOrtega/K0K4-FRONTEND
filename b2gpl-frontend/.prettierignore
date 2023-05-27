@@ -1,7 +1,0 @@
-# Ignore artifacts:
-coverage
-public
-styles
-node_modules
-.sass-cache
-.vscode

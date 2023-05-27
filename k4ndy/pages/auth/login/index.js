@@ -17,8 +17,8 @@ function Login() {
     const { layoutConfig } = useContext(LayoutContext);
     const dark = layoutConfig.colorScheme !== 'light';
 
-
-    let respuestaError  = useSelector((state) => state.auth.authData?.message);
+    let respuestaError  = null;
+    respuestaError  = useSelector((state) => state.auth.authData?.message);
     console.log("Error: "+respuestaError);
 
     const message = useRef();
@@ -49,10 +49,10 @@ function Login() {
                 dispatch(signin(form, history));
 
                 //Validamos los errores
-                if (respuestaError !== undefined){
+                if (respuestaError !== null){
 
                     message.current.show({ severity: 'warn', content: ' Hola! 👋🏻 '+ respuestaError });
-                    respuestaError = undefined;
+                    //respuestaError = undefined;
 
                 }
 

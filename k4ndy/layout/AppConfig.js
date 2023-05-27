@@ -120,7 +120,7 @@ const AppConfig = (props) => {
             </button>
 
             <Sidebar visible={layoutState.configSidebarVisible} onHide={onConfigSidebarHide} position="right" className="layout-config-sidebar w-18rem">
-                <h5>Themes</h5>
+                <h5>Temas</h5>
                 <div className="flex flex-wrap row-gap-3">
                     {componentThemes.map((theme, i) => {
                         return (
@@ -137,7 +137,7 @@ const AppConfig = (props) => {
                     })}
                 </div>
 
-                <h5>Scale</h5>
+                <h5>Escala</h5>
                 <div className="flex align-items-center">
                     <Button icon="pi pi-minus" type="button" onClick={decrementScale} className="p-button-text p-button-rounded w-2rem h-2rem mr-2" disabled={layoutConfig.scale === scales[0]}></Button>
                     <div className="flex gap-2 align-items-center">
@@ -150,7 +150,7 @@ const AppConfig = (props) => {
 
                 {!props.minimal && (
                     <>
-                        <h5>Menu Type</h5>
+                        <h5>Tipo de menú</h5>
                         <div className="field-radiobutton">
                             <RadioButton name="menuMode" value={'static'} checked={layoutConfig.menuMode === 'static'} onChange={(e) => changeMenuMode(e)} inputId="mode1"></RadioButton>
                             <label htmlFor="mode1">Static</label>
@@ -168,7 +168,7 @@ const AppConfig = (props) => {
                             <label htmlFor="mode4">Horizontal</label>
                         </div>
 
-                        <h5>Menu Theme</h5>
+                        <h5>Tema del menú</h5>
                         <div className="field-radiobutton">
                             <RadioButton name="menuTheme" value="colorScheme" checked={layoutConfig.menuTheme === 'colorScheme'} onChange={(e) => changeMenuTheme(e)} inputId="menutheme-colorscheme"></RadioButton>
                             <label htmlFor="menutheme-colorscheme">Color Scheme</label>
@@ -184,7 +184,7 @@ const AppConfig = (props) => {
                     </>
                 )}
 
-                <h5>Color Scheme</h5>
+                <h5>Esquema de colores</h5>
                 <div className="field-radiobutton">
                     <RadioButton name="colorScheme" value="light" checked={layoutConfig.colorScheme === 'light'} onChange={(e) => changeColorScheme(e.value)} inputId="mode-light"></RadioButton>
                     <label htmlFor="mode-light">Light</label>
@@ -200,7 +200,7 @@ const AppConfig = (props) => {
 
                 {!props.minimal && (
                     <>
-                        <h5>Input Style</h5>
+                        <h5>Estilo de entradale</h5>
                         <div className="flex">
                             <div className="field-radiobutton flex-1">
                                 <RadioButton name="inputStyle" value="outlined" checked={layoutConfig.inputStyle === 'outlined'} onChange={(e) => changeInputStyle(e)} inputId="outlined_input"></RadioButton>
@@ -212,7 +212,7 @@ const AppConfig = (props) => {
                             </div>
                         </div>
 
-                        <h5>Ripple Effect</h5>
+                        <h5>Efecto dominó</h5>
                         <InputSwitch checked={layoutConfig.ripple} onChange={(e) => changeRipple(e)}></InputSwitch>
                     </>
                 )}

@@ -12,7 +12,7 @@ import {
     COMMENT
 } from '../constants/actionTypes';
 
-export default (state = {isLoading: true, posts: []}, action) => {
+export default (state = {isLoading: true, posts: [], postsByUser: []}, action) => {
     switch (action.type) {
         case 'START_LOADING':
             return {...state, isLoading: true};
@@ -29,7 +29,7 @@ export default (state = {isLoading: true, posts: []}, action) => {
         case FETCH_BY_CREATOR:
             return {...state, posts: action.payload.data};
         case FETCH_BY_ID_CREATOR:
-            return {...state, posts: action.payload.data};
+            return {...state, postsByUser: action.payload.data};
         case FETCH_POST:
             return {...state, post: action.payload.post};
         case LIKE:

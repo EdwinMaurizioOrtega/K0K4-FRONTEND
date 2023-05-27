@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Button} from 'primereact/button';
 import {useDispatch, useSelector} from "react-redux";
 import {deletePost, getPostsByIdCreator} from "../../actions/posts";
@@ -12,35 +12,30 @@ import {useRouter} from "next/router";
 
 const Anuncio = () => {
 
-    const [user, setUser] = useState(null);
-
     const dispatch = useDispatch();
     const navigate = useRouter();
-
     const [currentId, setCurrentId] = useState(0);
+    const { postsByUser } = useSelector((state) => state.posts);
 
-    const {posts} = useSelector((state) => state.posts);
-
-    console.log("Usuario: " + user)
-    const logout = () => {
-        dispatch({type: actionType.LOGOUT});
+    const logout = useCallback(() => {
+        dispatch({ type: actionType.LOGOUT });
         navigate.push('/');
-        setUser(null);
-        //window.location.reload(false);
-    };
+    }, [dispatch, navigate]);
 
     useEffect(() => {
+        const storedProfile = JSON.parse(localStorage.getItem('profile'));
+        const token = storedProfile?.token;
 
-        const storedProfile = (JSON.parse(localStorage.getItem('profile')));
-
-        setUser(storedProfile);
-        const token = storedProfile.token;
         if (token) {
             const decodedToken = decode(token);
-            if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+            if (decodedToken.exp * 1000 < Date.now()) {
+                logout();
+            } else {
+                dispatch(getPostsByIdCreator(storedProfile.result._id));
+            }
         }
 
-    }, [dispatch, posts]);
+    }, [dispatch, logout]);
 
     const filaPostseleccionado = (rowData) => {
         //console.log(rowData._id);
@@ -56,19 +51,12 @@ const Anuncio = () => {
         );
     }
 
-
-    function MostrarPosts() {
-        //console.log(user.result.name);
-        dispatch(getPostsByIdCreator(user.result._id));
-    }
-
     return (
         <>
             <Form currentId={currentId} setCurrentId={setCurrentId}/>
 
             <div className="card">
-                <Button onClick={MostrarPosts}>Mostrar Anuncios</Button>
-                <DataTable value={posts} responsiveLayout="scroll" dataKey="_id">
+                <DataTable value={postsByUser} responsiveLayout="scroll" dataKey="_id">
                     <Column field="title" header="Título del anuncio"></Column>
                     <Column field="createdAt" header="Fecha de creacion"></Column>
                     <Column field="_id" body={filaPostseleccionado} header="ID"></Column>
