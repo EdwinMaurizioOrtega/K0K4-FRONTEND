@@ -15,6 +15,20 @@ class MyDocument extends Document {
             <Html lang="en">
                 <Head>
                     <link id="theme-link" href={`${contextPath}/theme/theme-dark/pink/theme.css`} rel="stylesheet"></link>
+                    <script
+                        async
+                        src="https://www.googletagmanager.com/gtag/js?id=G-3B7XL16EFL"
+                    ></script>
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-3B7XL16EFL');
+              `,
+                        }}
+                    ></script>
                 </Head>
                 <body>
                     <Main />
