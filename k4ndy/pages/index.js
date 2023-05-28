@@ -13,6 +13,8 @@ import {useDispatch} from "react-redux";
 import * as actionType from "../demo/constants/actionTypes";
 import decode from 'jwt-decode';
 import CustomHeader from "../demo/components/UserHeader/CustomHeader";
+import SearchCity from "../demo/components/SearchCity";
+import HotBanner from "../demo/components/HotBanner";
 
 function useQuery() {
     return new URLSearchParams(useRouter().query);
@@ -190,19 +192,7 @@ function LandingPage() {
 
     return (
         <>
-        <div className="bg-primary text-gray-100 p-3 flex justify-content-center align-items-center flex-wrap" style={{textAlign: "center"}}>
-            {/*<div className="font-bold mr-8">🔥 Alerta!</div>*/}
-            {/*<div className="align-items-center hidden lg:flex">*/}
-            {/*    <span className="line-height-3">K4NDY no es una agencia de escorts, sólo un sitio de encuentros seguro.</span>*/}
-            {/*</div>*/}
-
-            <a className="flex-wrap align-items-center">
-                <span className="underline font-bold">🔥K4NDY es sólo una plataforma de encuentros seguros, no es una agencia de escorts.</span>
-            </a>
-            {/*<a className="flex align-items-center no-underline justify-content-center border-circle text-100 hover:bg-bluegray-700 cursor-pointer transition-colors transition-duration-150" style={{ width: '2rem', height: '2rem' }}>*/}
-            {/*    <i className="pi pi-times"></i>*/}
-            {/*</a>*/}
-        </div>
+        <HotBanner/>
         <div className="relative overflow-hidden flex flex-column justify-content-center">
             <div className="bg-circle opacity-50" style={{top: '-200px', left: '-700px'}}></div>
             <div className="bg-circle hidden lg:flex"
@@ -210,6 +200,7 @@ function LandingPage() {
             <div className="landing-wrapper">
 
                 <CustomHeader/>
+                <SearchCity/>
 
                 <div className="py-4 px-4 mx-0 md:mx-6 lg:mx-10 lg:px-10 z-2">
 

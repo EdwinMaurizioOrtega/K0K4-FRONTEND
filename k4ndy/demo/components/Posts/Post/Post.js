@@ -6,6 +6,7 @@ import {likePost, deletePost} from '../../../actions/posts';
 import {Button} from 'primereact/button';
 import {Galleria} from 'primereact/galleria';
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 const Post = ({post, setCurrentId}) => {
 
@@ -72,7 +73,7 @@ const Post = ({post, setCurrentId}) => {
 
     const openPost = (e) => {
         // dispatch(getPost(post._id, history));
-        history.push(`apps/blog/detail?id=${post._id}`);
+        history.push(`/apps/blog/detail?id=${post._id}`);
     };
 
     const openInNewTab = url => {
@@ -98,9 +99,13 @@ const Post = ({post, setCurrentId}) => {
                 <span className="flex align-items-center text-900">
                         <i className="pi pi-clock mr-2"></i>
                         <span className="font-semibold">{moment(post.createdAt).fromNow()}</span>
-                    </span>
+                </span>
 
                 <div className="text-900 font-semibold text-xl mb-3">{post.title}</div>
+
+                <Link href={`/apps/blog/city?name=${post.city}`} className="mt-3 font-bold text-900 text-center white-space-nowrap">
+                    {` ${post.city}`}
+                </Link>
                 <p className="text-700 text-lg mt-0 mb-5">{post.message.split(' ').splice(0, 20).join(' ')}...</p>
 
                 <div className="flex flex-wrap gap-2 align-items-center justify-content-between">

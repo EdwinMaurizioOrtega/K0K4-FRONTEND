@@ -82,8 +82,10 @@ const PostDetails = () => {
                 <div className="flex flex-column align-items-center justify-content-center">
                     {/* <img className="w-4rem h-4rem" src={`${contextPath}/demo/images/avatar/circle/avatar-f-2@2x.png`} alt="Avatar" /> */}
                     {/*<span className="mt-3 font-bold text-900 text-center white-space-nowrap">{post.name}</span>*/}
-
-                    <Link href={`/creators/${post.name}`} className="mt-3 font-bold text-900 text-center white-space-nowrap">
+                    <Link href={`/apps/blog/city?name=${post.city}`} className="mt-3 font-bold text-900 text-center white-space-nowrap">
+                        {` ${post.city}`}
+                    </Link>
+                    <Link href={`/apps/blog/creator?name=${post.name}`} className="mt-3 font-bold text-900 text-center white-space-nowrap">
                         {` ${post.name}`}
                     </Link>
                 </div>
