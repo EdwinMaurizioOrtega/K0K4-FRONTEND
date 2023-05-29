@@ -1,7 +1,7 @@
 import React from "react";
 import AppConfig from "../../../../layout/AppConfig";
 import CustomHeader from "../../../../demo/components/UserHeader/CustomHeader";
-import CreatorOrTag from "../../../../demo/components/CreatorOrTag/CreatorOrTag";
+import CreatorOrTag from "../../../../demo/components/CreatorOrTag";
 
 function Creator (){
 

@@ -10,6 +10,7 @@ import {getPostsByCity, getPostsByCreator, getPostsBySearch} from '../../actions
 const CreatorOrTag = () => {
     const router = useRouter();
     const {pathname, query} = router;
+    // console.log(router.query);
     const {name} = query;
 
     const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const CreatorOrTag = () => {
         } else {
             dispatch(getPostsByCreator(name));
         }
-    }, []);
+    }, [name]);
 
     if (!posts.length && !isLoading) {
         return 'No se encontró ninguna publicación.';

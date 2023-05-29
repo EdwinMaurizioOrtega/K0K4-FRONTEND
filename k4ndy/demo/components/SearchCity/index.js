@@ -81,7 +81,7 @@ const SearchCity = () => {
                             optionGroupChildren={['states', 'cities']}
                             style={{ minWidth: '14rem' }}
                             breakpoint="767px"
-                            placeholder="Ciudad"
+                            placeholder="Todas las localidades"
                             className={classNames({ 'p-invalid': fieldState.error })}
                             onChange={(e) => field.onChange(e.value)}
                         />
