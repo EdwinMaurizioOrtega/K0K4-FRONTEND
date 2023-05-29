@@ -4,8 +4,7 @@ import FileBase from 'react-file-base64';
 
 import {createPost, updatePost} from '../../actions/posts';
 import {Button} from 'primereact/button';
-import {InputText} from 'primereact/inputtext';
-import {InputTextarea} from 'primereact/inputtextarea';
+
 
 import {Chips} from 'primereact/chips';
 
@@ -13,12 +12,14 @@ import {Dropdown} from 'primereact/dropdown';
 
 import { ListBox } from 'primereact/listbox';
 import {useRouter} from "next/router";
+import {InputText} from "primereact/inputtext";
+import {InputTextarea} from "primereact/inputtextarea";
 
 
 const Form = ({currentId, setCurrentId}) => {
     const [postData, setPostData] = useState({title: '', message: '', cellphone: '', city: '', tags: [], selectedFile: []});
     console.log("Post: "+currentId);
-    const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
+    const post = useSelector((state) => (currentId ? state.posts.postsByUser.find((message) => message._id === currentId) : null));
     const dispatch = useDispatch();
     const [user, setUser] = useState(null);
 
@@ -35,7 +36,7 @@ const Form = ({currentId, setCurrentId}) => {
 
     const clear = () => {
         setCurrentId(0);
-        setPostData({title: '', message: '', tags: [], selectedFile: []});
+        setPostData({title: '', message: '', cellphone: '', city: '', tags: [], selectedFile: []});
     };
 
     function refreshPage() {
@@ -54,7 +55,7 @@ const Form = ({currentId, setCurrentId}) => {
             dispatch(createPost({...postData, name: user?.result?.name}, history));
             clear();
         } else {
-            console.log(postData);
+            console.log("Actualizar: "+postData);
             dispatch(updatePost(currentId, {...postData, name: user?.result?.name}));
             clear();
             //refreshPage();
@@ -188,7 +189,7 @@ const Form = ({currentId, setCurrentId}) => {
                         </div> */}
                             <div className="mb-4">
                                 <h6>Subir imágenes: </h6>
-                                <FileBase type="file" label="jjjjjjjjjjj" multiple={true} onDone={(base64) => handleAddImage(base64)}/>
+                                <FileBase type="file" multiple={true} onDone={(base64) => handleAddImage(base64)}/>
                             </div>
 
                         </div>
