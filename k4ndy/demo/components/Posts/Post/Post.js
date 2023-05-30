@@ -81,9 +81,7 @@ const Post = ({post, setCurrentId}) => {
     };
 
     const galleriaItemTemplate = (item) => {
-        return <img src={item} style={{height: '600px', display: 'block'}}/>
-        // return <Image src={item} alt="Descripción de la imagen" height={500} layout="responsive" />
-
+        return <img src={item} style={{width: '100%', display: 'block'}}/>
     }
 
     return (

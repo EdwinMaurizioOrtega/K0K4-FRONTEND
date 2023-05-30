@@ -79,7 +79,7 @@ const HotBanner = () => {
         }
     ];
     const galleriaItemTemplate = (item) => {
-        return <img src={item} style={{height: '400px', display: 'block'}}/>
+        return <img src={item} style={{width: '100%', display: 'block'}}/>
     }
 
     const openPost = (e) => {

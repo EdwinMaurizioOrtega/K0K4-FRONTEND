@@ -12,7 +12,7 @@ class MyDocument extends Document {
         const contextPath = getConfig().publicRuntimeConfig.contextPath;
 
         return (
-            <Html lang="en">
+            <Html lang="es">
                 <Head>
                     <link id="theme-link" href={`${contextPath}/theme/theme-dark/pink/theme.css`} rel="stylesheet"></link>
                     <script
