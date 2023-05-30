@@ -1,8 +1,14 @@
 import React from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import AppConfig from '../../../layout/AppConfig';
 
 function NotFound() {
+
+    const router = useRouter();
+    const handleClick = async () => {
+        await router.push('/');
+    };
+
     return (
         <>
             <svg viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" className="min-h-screen min-w-screen fixed left-0" style={{ bottom: '-10rem' }} preserveAspectRatio="none">
@@ -17,9 +23,9 @@ function NotFound() {
             <div className="px-5 min-h-screen flex justify-content-center align-items-center">
                 <div className="z-1 text-center">
                     <div className="text-900 font-bold text-8xl mb-4">Oops!</div>
-                    <p className="line-height-3 mt-0 mb-5 text-700 text-xl font-medium">There is nothing here</p>
-                        <button type="button" className="p-button p-button-warning font-medium p-button-raised">
-                            Go to Dashboard
+                    <p className="line-height-3 mt-0 mb-5 text-700 text-xl font-medium">No hay nada aquí</p>
+                        <button type="button" className="p-button p-button-warning font-medium p-button-raised" onClick={handleClick}>
+                            Ir al inicio.
                         </button>
                 </div>
             </div>
