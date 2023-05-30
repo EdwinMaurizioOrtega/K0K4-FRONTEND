@@ -107,7 +107,7 @@ const HotBanner = () => {
                                   showIndicators></Galleria>
 
                     </div>
-                    <div style={{textAlign: 'center'}}>
+                    <div>
                         {/*<h4 className="mb-1">{posts.title}</h4>*/}
                         <span
                             className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">
