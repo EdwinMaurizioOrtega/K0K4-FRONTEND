@@ -13,13 +13,14 @@ import {
     likePost,
     commentPost,
     deletePost,
-    getPostsByCity
+    getPostsByCity, getPostsInCarouselByCity
 } from '../controllers/posts.js';
 
 const router = express.Router();
 import auth from "../middleware/auth.js";
 
 router.get('/in_carousel', getPostsInCarousel);
+router.get('/in_carousel_by_city', getPostsInCarouselByCity);
 
 router.get('/creator', getPostsByCreator);
 router.get('/city', getPostsByCity);

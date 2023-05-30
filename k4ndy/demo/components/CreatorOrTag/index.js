@@ -36,7 +36,7 @@ const CreatorOrTag = () => {
 
     return (
         <div>
-            <h4>Anuncios de {name}</h4>
+            <h4 style={{textAlign: 'center'}}>🍭💯🍑Anuncios de {name}</h4>
             <Divider/>
             {isLoading ? <ProgressSpinner/> : (
                 <div className="p-fluid grid formgrid">

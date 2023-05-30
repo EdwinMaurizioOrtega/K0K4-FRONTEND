@@ -81,14 +81,16 @@ const Post = ({post, setCurrentId}) => {
     };
 
     const galleriaItemTemplate = (item) => {
-        return <img src={item} style={{width: '100%', display: 'block'}}/>
+        return <img src={item} style={{height: '600px', display: 'block'}}/>
+        // return <Image src={item} alt="Descripción de la imagen" height={500} layout="responsive" />
+
     }
 
     return (
         <div key={post._id} className="p-3">
             <div className="relative" onClick={openPost}>
                 <Galleria value={post.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions}
-                          numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}}
+                          numVisible={10} circular style={{maxWidth: '800px', margin: 'auto'}}
                           item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false}
                           showIndicators></Galleria>
             </div>

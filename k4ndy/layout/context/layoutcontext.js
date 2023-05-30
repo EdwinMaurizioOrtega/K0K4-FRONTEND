@@ -86,9 +86,9 @@ export const LayoutProvider = (props) => {
                     <meta name="viewport" content="initial-scale=1, width=device-width" />
                     <meta property="og:type" content="website"></meta>
                     <meta property="og:title" content="K4NDY"></meta>
-                    <meta property="og:url" content="https://www.primefaces.org/apollo-react"></meta>
+                    <meta property="og:url" content="https://ec.k4ndy.com/"></meta>
                     <meta property="og:description" content="Encuentros, Noviazgo y Citas: Anuncios gratis para adultos." />
-                    <meta property="og:image" content="https://www.primefaces.org/static/social/apollo-nextjs.png"></meta>
+                    <meta property="og:image" content={`${contextPath}/k4ndy.png`}></meta>
                     <meta property="og:ttl" content="604800"></meta>
                     <link rel="icon" href={`${contextPath}/favicon.ico`} type="image/x-icon"></link>
                     <link rel="apple-touch-icon" href={`${contextPath}/icon-192x192.png`} type="image/x-icon"></link>
