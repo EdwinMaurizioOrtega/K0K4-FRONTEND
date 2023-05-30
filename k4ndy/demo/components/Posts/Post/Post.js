@@ -88,7 +88,7 @@ const Post = ({post, setCurrentId}) => {
         <div key={post._id} className="p-3">
             <div className="relative" onClick={openPost}>
                 <Galleria value={post.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions}
-                          numVisible={10} circular style={{maxWidth: '800px', margin: 'auto'}}
+                          numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}}
                           item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false}
                           showIndicators></Galleria>
             </div>
