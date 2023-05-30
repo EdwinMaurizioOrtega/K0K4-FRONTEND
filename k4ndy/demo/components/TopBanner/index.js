@@ -85,7 +85,7 @@ const HotBanner = () => {
     const openPost = (e) => {
         //dispatch(getPost(post._id, history));
         console.log(e._id);
-        history.push(`apps/blog/detail?id=${e._id}`);
+        history.push(`/apps/blog/detail?id=${e._id}`);
     };
 
     //Número de teléfono WhatsApp
