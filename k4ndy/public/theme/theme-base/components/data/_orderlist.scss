@@ -78,23 +78,3 @@
         }
     }
 }
-
-@media screen and (max-width: $orderListBreakpoint) {
-    .p-orderlist  {
-        flex-direction: column;
-
-        .p-orderlist-controls {
-            padding: $panelContentPadding;
-            flex-direction: row;
-    
-            .p-button {
-                margin-right: $inlineSpacing;
-                margin-bottom: 0;
-
-                &:last-child {
-                    margin-right: 0;
-                }
-            }
-        }
-    }
-}

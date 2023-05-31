@@ -14,7 +14,7 @@ class MyDocument extends Document {
         return (
             <Html lang="es">
                 <Head>
-                    <link id="theme-link" href={`${contextPath}/theme/theme-dark/pink/theme.css`} rel="stylesheet"></link>
+                    <link id="theme-link" href={`/theme/theme-dark/pink/theme.css`} rel="stylesheet"></link>
                     <script
                         async
                         src="https://www.googletagmanager.com/gtag/js?id=G-3B7XL16EFL"
@@ -33,11 +33,6 @@ class MyDocument extends Document {
                 <body>
                     <Main />
                     <NextScript />
-                    <div className="layout-preloader-container">
-                        <div className="layout-preloader">
-                            <span></span>
-                        </div>
-                    </div>
                 </body>
             </Html>
         );

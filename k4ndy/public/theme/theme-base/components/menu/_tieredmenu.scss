@@ -1,9 +1,8 @@
-.p-contextmenu {
+.p-tieredmenu {
     padding: $verticalMenuPadding;
-    background: $overlayMenuBg;
+    background: $menuBg;
     color: $menuTextColor;
-    border: $overlayMenuBorder;
-    box-shadow: $overlayMenuShadow;
+    border: $menuBorder;
     border-radius: $borderRadius;
     width: $menuWidth;
 
@@ -11,12 +10,17 @@
         @include menuitem-link();
     }
 
+    &.p-tieredmenu-overlay {
+        background: $overlayMenuBg;
+        border: $overlayMenuBorder;
+        box-shadow: $overlayMenuShadow;
+    }
+
     .p-submenu-list {
         padding: $verticalMenuPadding;
         background: $overlayMenuBg;
         border: $overlayMenuBorder;
         box-shadow: $overlayMenuShadow;
-        border-radius: $borderRadius;
     }
 
     .p-menuitem {
@@ -42,5 +46,6 @@
 
     .p-submenu-icon {
         font-size: $menuitemSubmenuIconFontSize;
+        transition: transform $transitionDuration;
     }
 }

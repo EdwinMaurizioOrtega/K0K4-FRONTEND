@@ -1,6 +1,6 @@
 {
     "name": "apollo-react",
-    "version": "8.1.0",
+    "version": "9.0.0",
     "private": true,
     "scripts": {
         "dev": "next dev",
@@ -14,35 +14,37 @@
         "@babel/core": "^7.20.2",
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
-        "@fullcalendar/core": "^5.11.2",
-        "@fullcalendar/daygrid": "^5.11.2",
-        "@fullcalendar/interaction": "^5.11.2",
-        "@fullcalendar/react": "^5.11.2",
-        "@fullcalendar/timegrid": "^5.11.2",
         "@mui/material": "^5.11.16",
         "axios": "^1.3.5",
         "babel-plugin-transform-require-ignore": "^0.1.1",
-        "chart.js": "^3.9.1",
         "jwt-decode": "^3.1.2",
         "moment": "^2.29.4",
-        "next": "^13.2.4",
         "next-transpile-modules": "^10.0.0",
-        "primeflex": "^3.2.1",
-        "primeicons": "^6.0.1",
-        "primereact": "^8.7.3",
-        "quill": "^1.3.7",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
         "react-file-base64": "^1.0.3",
         "react-hook-form": "^7.44.1",
         "react-redux": "^8.0.5",
         "redux": "^4.2.1",
-        "redux-thunk": "^2.4.2"
+        "redux-thunk": "^2.4.2",
+
+        "chart.js": "4.2.1",
+        "next": "13.2.3",
+        "primeflex": "3.3.0",
+        "primeicons": "^6.0.1",
+        "primereact": "9.2.3",
+        "quill": "^1.3.7",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "@fullcalendar/core": "6.1.4",
+        "@fullcalendar/daygrid": "6.1.4",
+        "@fullcalendar/interaction": "6.1.4",
+        "@fullcalendar/react": "6.1.4",
+        "@fullcalendar/timegrid": "6.1.4"
+
     },
     "devDependencies": {
-        "eslint": "8.21.0",
-        "eslint-config-next": "^13.2.4",
-        "prettier": "2.7.1",
-        "sass": "^1.54.4"
+        "eslint": "8.35.0",
+        "eslint-config-next": "13.2.3",
+        "prettier": "2.8.4",
+        "sass": "^1.58.3"
     }
 }

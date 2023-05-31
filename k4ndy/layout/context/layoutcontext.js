@@ -88,11 +88,11 @@ export const LayoutProvider = (props) => {
                     <meta property="og:title" content="K4NDY"></meta>
                     <meta property="og:url" content="https://ec.k4ndy.com/"></meta>
                     <meta property="og:description" content="Encuentros, Noviazgo y Citas: Anuncios gratis para adultos." />
-                    <meta property="og:image" content={`${contextPath}/k4ndy.png`}></meta>
+                    <meta property="og:image" content={`/k4ndy.png`}></meta>
                     <meta property="og:ttl" content="604800"></meta>
-                    <link rel="icon" href={`${contextPath}/favicon.ico`} type="image/x-icon"></link>
-                    <link rel="apple-touch-icon" href={`${contextPath}/icon-192x192.png`} type="image/x-icon"></link>
-                    <link rel="manifest" href={`${contextPath}/manifest.json`} />
+                    <link rel="icon" href={`/favicon.ico`} type="image/x-icon"></link>
+                    <link rel="apple-touch-icon" href={`/icon-192x192.png`} type="image/x-icon"></link>
+                    <link rel="manifest" href={`/manifest.json`} />
                 </Head>
                 {props.children}
             </>

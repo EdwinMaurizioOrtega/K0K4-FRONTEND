@@ -1,14 +1,15 @@
 /** @type {import('next').NextConfig} */
-
-const withTM = require('next-transpile-modules')(['@fullcalendar/common', '@fullcalendar/react', '@fullcalendar/timegrid', '@fullcalendar/daygrid']);
-const nextConfig = withTM({
+const nextConfig = {
     reactStrictMode: true,
-    trailingSlash: true,
-    basePath: process.env.NODE_ENV === 'production' ? '' : '',
-    publicRuntimeConfig: {
-        contextPath: process.env.NODE_ENV === 'production' ? '' : '',
-        uploadPath: process.env.NODE_ENV === 'production' ? '/apollo-react/upload.php' : '/api/upload'
+    async redirects() {
+        return [
+            {
+                source: '/apps/mail',
+                destination: '/apps/mail/inbox',
+                permanent: true
+            }
+        ];
     }
-});
+};
 
 module.exports = nextConfig;

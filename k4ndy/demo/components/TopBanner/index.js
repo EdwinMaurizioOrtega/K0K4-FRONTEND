@@ -41,12 +41,12 @@ const HotBanner = () => {
             numScroll: 3
         },
         {
-            breakpoint: '600px',
+            breakpoint: '768px',
             numVisible: 2,
             numScroll: 2
         },
         {
-            breakpoint: '480px',
+            breakpoint: '560px',
             numVisible: 1,
             numScroll: 1
         }
@@ -78,9 +78,8 @@ const HotBanner = () => {
             numVisible: 1
         }
     ];
-    const galleriaItemTemplate = (item) => {
-        return <img src={item} style={{width: '100%', display: 'block'}}/>
-    }
+    const galleriaItemTemplate = (item) => <img src={item} style={{width: '100%', display: 'block'}}/>;
+
 
     const openPost = (e) => {
         //dispatch(getPost(post._id, history));
@@ -96,8 +95,8 @@ const HotBanner = () => {
 
     const productTemplate = (postsInCarousel) => {
         return (
-            <div className="product-item">
-                <div className="product-item-content">
+
+                <div className="m-1 text-center py-5">
                     <div className="mb-3" onClick={() => openPost(postsInCarousel)}>
                         {/*<img src={`images/product/${product.image}`} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={product.name} className="product-image" />*/}
                         <Galleria value={postsInCarousel.selectedFile.map((pic) => (pic))}
@@ -125,7 +124,7 @@ const HotBanner = () => {
                         {/*    <Button icon="pi pi-cog" className="p-button-help p-button-rounded" />*/}
                         {/*</div>*/}
                     </div>
-                </div>
+
             </div>
         );
     }
