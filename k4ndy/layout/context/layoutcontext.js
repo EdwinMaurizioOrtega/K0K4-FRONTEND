@@ -13,7 +13,7 @@ export const LayoutProvider = (props) => {
         menuTheme: 'colorScheme',
         colorScheme: 'dark',
         theme: 'pink',
-        scale: 14
+        scale: 12
     });
 
     const [layoutState, setLayoutState] = useState({
