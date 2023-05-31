@@ -13,7 +13,7 @@ function CreateTask() {
     const [task, setTask] = useState({});
     const [filteredMembers, setFilteredMembers] = useState([]);
     const toast = useRef(null);
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
     const { addTask, editTask, closeDialog, dialogConfig, selectedTask, members } = useContext(TaskContext);
 
     const filterMembers = (event) => {
@@ -51,7 +51,7 @@ function CreateTask() {
     const itemTemplate = (member) => {
         return (
             <div className="flex align-items-center border-round">
-                <img src={`${contextPath}/demo/images/avatar/${member.image}`} alt={member.name} className="h-2rem w-2rem mr-2" />
+                <img src={`/demo/images/avatar/${member.image}`} alt={member.name} className="h-2rem w-2rem mr-2" />
                 <span className="text-900 font-medium">{member.name}</span>
             </div>
         );
@@ -59,7 +59,7 @@ function CreateTask() {
     const selectedItemTemplate = (member) => {
         return (
             <div className="flex align-items-center">
-                <img src={`${contextPath}/demo/images/avatar/${member.image}`} alt={member.name} className="h-2rem w-2rem mr-2" />
+                <img src={`/demo/images/avatar/${member.image}`} alt={member.name} className="h-2rem w-2rem mr-2" />
                 <span className="text-900 font-medium">{member.name}</span>
             </div>
         );

@@ -19,13 +19,13 @@ const TimelineDemo = () => {
     ];
 
     const horizontalEvents = ['2023', '2024', '2025', '2026'];
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     const customizedContent = (item) => {
         return (
             <Card title={item.status} subTitle={item.date}>
                 {item.image && (
-                    <img src={`${contextPath}/demo/images/product/${item.image}`} onError={(e) => (e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')} alt={item.name} width={200} className="shadow-2" />
+                    <img src={`/demo/images/product/${item.image}`} onError={(e) => (e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')} alt={item.name} width={200} className="shadow-2" />
                 )}
                 <p className="line-height-3 my-3">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque

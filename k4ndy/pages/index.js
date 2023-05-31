@@ -16,6 +16,7 @@ import CustomHeader from "../demo/components/UserHeader/CustomHeader";
 import SearchCity from "../demo/components/SearchCity";
 import HotBanner from "../demo/components/HotBanner";
 import TopBanner from "../demo/components/TopBanner";
+import Link from "next/link";
 
 function useQuery() {
     return new URLSearchParams(useRouter().query);
@@ -132,11 +133,11 @@ function LandingPage() {
 
                     <div className="grid justify-content-between my-6 pt-4 md:my-8">
                         <div className="col-12 md:col-2 text-center md:text-left">
-                            <a className="cursor-pointer" href="/">
+                            <Link className="cursor-pointer" href="/">
 
                                 <img src={`layout/images/logo-k4ndy.png`} style={{height: '40px'}} alt="app-name" />
 
-                            </a>
+                            </Link>
                         </div>
 
 

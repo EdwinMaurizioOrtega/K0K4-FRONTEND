@@ -15,7 +15,7 @@ function Contact() {
         { icon: 'pi pi-fw pi-map-marker', title: 'Our Head Office', info: 'Churchill-laan 16 II, 1052 CD, Amsterdam' },
         { icon: 'pi pi-fw pi-print', title: 'Fax', info: '3 (833) 297-1548' }
     ]);
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
     const { layoutConfig } = useContext(LayoutContext);
     return (
         <div className="grid surface-card grid-nogutter p-6 border-1 surface-border" style={{ columnGap: '2rem', rowGap: '2rem', borderRadius: '6px' }}>
@@ -24,7 +24,7 @@ function Contact() {
             </div>
             <div
                 className="col-12 mt-3 h-20rem border-1 surface-border p-0 w-full bg-cover border-round"
-                style={{ backgroundImage: `url('${contextPath}/demo/images/contact/map-${layoutConfig.colorScheme === 'light' ? 'light' : 'dark'}.svg')` }}
+                style={{ backgroundImage: `url('/demo/images/contact/map-${layoutConfig.colorScheme === 'light' ? 'light' : 'dark'}.svg')` }}
             ></div>
             <div className="col-12 mt-5">
                 <div className="grid grid-nogutter px-2 flex-column md:flex-row" style={{ columnGap: '2rem', rowGap: '2rem' }}>

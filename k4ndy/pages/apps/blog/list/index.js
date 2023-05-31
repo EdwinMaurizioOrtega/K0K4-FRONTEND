@@ -72,7 +72,7 @@ function BlogList() {
     const [sortField, setSortField] = useState('');
     const [sortKey, setSortKey] = useState(null);
     const [sortOrder, setSortOrder] = useState(-1);
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
     const router = useRouter();
     const sortOptions = [
         { label: 'Most Shared', value: 'share' },
@@ -91,8 +91,8 @@ function BlogList() {
                 <div className="p-3">
                     <div className="surface-100 cursor-pointer z-index border-round" onClick={() => router.push('/apps/blog/detail')}>
                         <div className="relative">
-                            <img src={contextPath + blog.coverImage} className="w-full" alt={blog.description.split(' ', 1)} />
-                            <img src={contextPath + blog.profile} className="flex absolute w-4rem h-4rem" style={{ bottom: '-1.5rem', right: '1.5rem' }} alt={blog.description.split(' ', 1)} />
+                            <img src={blog.coverImage} className="w-full" alt={blog.description.split(' ', 1)} />
+                            <img src={blog.profile} className="flex absolute w-4rem h-4rem" style={{ bottom: '-1.5rem', right: '1.5rem' }} alt={blog.description.split(' ', 1)} />
                         </div>
                         <div className="p-3">
                             <div className="text-900 font-semibold text-xl mb-3">{blog.title}</div>
@@ -144,7 +144,7 @@ function BlogList() {
                             <div className="text-900 font-medium text-xl line-height-3 mb-4">Why Earth&lsquo;s most beloved creatures are headed toward extinction</div>
                             <div className="font-sm text-700 line-height-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
                             <div className="flex mt-4">
-                                <Avatar image={`${contextPath}/demo/images/avatar/circle/avatar-f-1.png`} shape="circle"></Avatar>
+                                <Avatar image={`/demo/images/avatar/circle/avatar-f-1.png`} shape="circle"></Avatar>
                                 <div className="ml-2">
                                     <div className="text-xs font-bold text-900 mb-1">Anna Miles</div>
                                     <div className="text-xs flex align-items-center text-700">
@@ -160,7 +160,7 @@ function BlogList() {
                             <div className="text-900 font-medium text-xl line-height-3 mb-4">Only one-third of tropical rainforests remain intact, study says </div>
                             <div className="font-sm text-700 line-height-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
                             <div className="flex mt-4">
-                                <Avatar image={`${contextPath}/demo/images/avatar/circle/avatar-f-2.png`} shape="circle"></Avatar>
+                                <Avatar image={`/demo/images/avatar/circle/avatar-f-2.png`} shape="circle"></Avatar>
                                 <div className="ml-2">
                                     <div className="text-xs font-bold text-900 mb-1">Arlene Miles</div>
                                     <div className="text-xs flex align-items-center text-700">
@@ -176,7 +176,7 @@ function BlogList() {
                             <div className="text-900 font-medium text-xl line-height-3 mb-4">Does planting a tree really offset your carbon footprint?</div>
                             <div className="font-sm text-700 line-height-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
                             <div className="flex mt-4">
-                                <Avatar image={`${contextPath}/demo/images/avatar/circle/avatar-f-3.png`} shape="circle"></Avatar>
+                                <Avatar image={`/demo/images/avatar/circle/avatar-f-3.png`} shape="circle"></Avatar>
                                 <div className="ml-2">
                                     <div className="text-xs font-bold text-900 mb-1">Diane Miles</div>
                                     <div className="text-xs flex align-items-center text-700">

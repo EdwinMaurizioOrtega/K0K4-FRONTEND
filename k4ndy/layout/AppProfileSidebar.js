@@ -6,7 +6,7 @@ import { LayoutContext } from './context/layoutcontext';
 
 const AppProfileSidebar = () => {
     const { layoutState, setLayoutState } = useContext(LayoutContext);
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     const onProfileSidebarHide = () => {
         setLayoutState((prevState) => ({ ...prevState, profileSidebarVisible: false }));
@@ -115,7 +115,7 @@ const AppProfileSidebar = () => {
                     <li>
                         <a className="cursor-pointer flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150">
                             <span>
-                                <img src={`${contextPath}/demo/images/avatar/circle/avatar-m-8.png`} alt="Avatar" className="w-2rem h-2rem" />
+                                <img src={`/demo/images/avatar/circle/avatar-m-8.png`} alt="Avatar" className="w-2rem h-2rem" />
                             </span>
                             <div className="ml-3">
                                 <span className="mb-2 font-semibold">James Robinson</span>
@@ -127,7 +127,7 @@ const AppProfileSidebar = () => {
                     <li>
                         <a className="cursor-pointer flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150">
                             <span>
-                                <img src={`${contextPath}/demo/images/avatar/circle/avatar-f-8.png`} alt="Avatar" className="w-2rem h-2rem" />
+                                <img src={`/demo/images/avatar/circle/avatar-f-8.png`} alt="Avatar" className="w-2rem h-2rem" />
                             </span>
                             <div className="ml-3">
                                 <span className="mb-2 font-semibold">Mary Watson</span>
@@ -139,7 +139,7 @@ const AppProfileSidebar = () => {
                     <li>
                         <a className="cursor-pointer flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150">
                             <span>
-                                <img src={`${contextPath}/demo/images/avatar/circle/avatar-f-4.png`} alt="Avatar" className="w-2rem h-2rem" />
+                                <img src={`/demo/images/avatar/circle/avatar-f-4.png`} alt="Avatar" className="w-2rem h-2rem" />
                             </span>
                             <div className="ml-3">
                                 <span className="mb-2 font-semibold">Aisha Webb</span>

@@ -4,7 +4,7 @@ import { Ripple } from 'primereact/ripple';
 import React from 'react';
 
 function OrderHistory() {
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     const orders = [
         {
@@ -107,7 +107,7 @@ function OrderHistory() {
                                 return (
                                     <div key={i} className="p-2 my-4 flex flex-column lg:flex-row justify-content-between align-items-center">
                                         <div className="flex flex-column lg:flex-row justify-content-center align-items-center px-2">
-                                            <img src={contextPath + product.image} alt="product" className="w-8rem h-8rem mr-3 flex-shrink-0" />
+                                            <img src={product.image} alt="product" className="w-8rem h-8rem mr-3 flex-shrink-0" />
                                             <div className="flex flex-column my-auto text-center md:text-left">
                                                 <span className="text-900 font-medium mb-3 mt-3 lg:mt-0">{product.name}</span>
                                                 <span className="text-700 text-sm mb-3">

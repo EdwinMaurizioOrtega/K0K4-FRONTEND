@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 
 function AboutUs() {
     const [visibleMember, setVisibleMember] = useState(null);
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     return (
         <>
             <div className="card px-4 py-8 md:px-6 lg:px-8">
                 <div className="flex flex-wrap mb-4">
                     <div className="w-full lg:w-6 pl-0 lg:pr-4">
-                        <img src={`${contextPath}/demo/images/blocks/about/about-1.png`} alt="Image" className="w-full border-round" />
+                        <img src={`/demo/images/blocks/about/about-1.png`} alt="Image" className="w-full border-round" />
                     </div>
                     <div className="w-full lg:w-6 pr-0 lg:pl-4 mt-3 lg:mt-0">
                         <div className="font-bold text-4xl mb-4 text-900">About us</div>
@@ -36,7 +36,7 @@ function AboutUs() {
                     <div className="grid">
                         <div className="col-12 md:col-6 lg:col-3 p-3">
                             <div className="relative overflow-hidden" onMouseEnter={() => setVisibleMember(0)} onMouseLeave={() => setVisibleMember(-1)}>
-                                <img src={`${contextPath}/demo/images/blocks/team/team-1.png`} className="w-full block" alt="Team 1" />
+                                <img src={`/demo/images/blocks/team/team-1.png`} className="w-full block" alt="Team 1" />
                                 {visibleMember === 0 && (
                                     <div className="absolute top-0 left-0 h-full w-full border-round fadein animation-duration-300 select-none" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}>
                                         <div className="flex flex-column p-5 h-full">
@@ -60,7 +60,7 @@ function AboutUs() {
                         </div>
                         <div className="col-12 md:col-6 lg:col-3 p-3">
                             <div className="relative overflow-hidden" onMouseEnter={() => setVisibleMember(1)} onMouseLeave={() => setVisibleMember(-1)}>
-                                <img src={`${contextPath}/demo/images/blocks/team/team-2.png`} className="w-full block" alt="Team 2" />
+                                <img src={`/demo/images/blocks/team/team-2.png`} className="w-full block" alt="Team 2" />
                                 {visibleMember === 1 && (
                                     <div className="absolute top-0 left-0 h-full w-full border-round fadein animation-duration-300 select-none" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}>
                                         <div className="flex flex-column p-5 h-full">
@@ -84,7 +84,7 @@ function AboutUs() {
                         </div>
                         <div className="col-12 md:col-6 lg:col-3 p-3">
                             <div className="relative overflow-hidden" onMouseEnter={() => setVisibleMember(2)} onMouseLeave={() => setVisibleMember(-1)}>
-                                <img src={`${contextPath}/demo/images/blocks/team/team-3.png`} className="w-full block" alt="Team 3" />
+                                <img src={`/demo/images/blocks/team/team-3.png`} className="w-full block" alt="Team 3" />
                                 {visibleMember === 2 && (
                                     <div className="absolute top-0 left-0 h-full w-full border-round fadein animation-duration-300 select-none" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}>
                                         <div className="flex flex-column p-5 h-full">
@@ -108,7 +108,7 @@ function AboutUs() {
                         </div>
                         <div className="col-12 md:col-6 lg:col-3 p-3">
                             <div className="relative overflow-hidden" onMouseEnter={() => setVisibleMember(3)} onMouseLeave={() => setVisibleMember(-1)}>
-                                <img src={`${contextPath}/demo/images/blocks/team/team-4.png`} className="w-full block" alt="Team 4" />
+                                <img src={`/demo/images/blocks/team/team-4.png`} className="w-full block" alt="Team 4" />
                                 {visibleMember === 3 && (
                                     <div className="absolute top-0 left-0 h-full w-full border-round fadein animation-duration-300 select-none" style={{ backgroundColor: 'rgba(0,0,0,0.7)' }}>
                                         <div className="flex flex-column p-5 h-full">

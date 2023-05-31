@@ -23,7 +23,7 @@ function OrderSummary() {
         }
     ];
 
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     return (
         <>
@@ -48,7 +48,7 @@ function OrderSummary() {
                         {products.map((product, i) => {
                             return (
                                 <li key={i} className={classNames('p-3 surface-border flex align-items-start sm:align-items-center', { 'border-bottom-1': i !== products.length - 1 })}>
-                                    <img src={contextPath + product.image} className="w-3rem sm:w-8rem flex-shrink-0 mr-3 shadow-2" alt={product.name} />
+                                    <img src={+ product.image} className="w-3rem sm:w-8rem flex-shrink-0 mr-3 shadow-2" alt={product.name} />
                                     <div className="flex flex-column">
                                         <span className="text-900 font-semibold text-xl mb-2">{product.name}</span>
                                         <span className="text-700 font-medium mb-3">
@@ -73,7 +73,7 @@ function OrderSummary() {
 
                         <span className="font-medium text-900">Payment</span>
                         <div className="flex align-items-center mt-3">
-                            <img src={`${contextPath}/demo/images/ecommerce/ordersummary/visa.png`} className="w-4rem mr-3" alt="visa" />
+                            <img src={`/demo/images/ecommerce/ordersummary/visa.png`} className="w-4rem mr-3" alt="visa" />
                             <div className="flex flex-column">
                                 <span className="text-900 mb-1">Visa Debit Card</span>
                                 <span className="text-900 font-medium">**** **** **** 1234</span>
@@ -121,7 +121,7 @@ function OrderSummary() {
                     </div>
                 </div>
                 <div className="flex flex-column md:flex-row md:align-items-center border-bottom-1 surface-border py-5">
-                    <img src={`${contextPath}/demo/images/ecommerce/ordersummary/order-summary-2-1.png`} className="w-15rem flex-shrink-0 md:mr-6" alt="summary-1-2" />
+                    <img src={`/demo/images/ecommerce/ordersummary/order-summary-2-1.png`} className="w-15rem flex-shrink-0 md:mr-6" alt="summary-1-2" />
                     <div className="flex-auto mt-3 md:mt-0">
                         <span className="text-xl text-900">Product Name</span>
                         <div className="font-medium text-2xl text-900 mt-3 mb-5">Order Processing</div>
@@ -152,7 +152,7 @@ function OrderSummary() {
                     <div className="flex flex-column">
                         <span className="font-medium text-900 text-xl">Payment</span>
                         <div className="flex align-items-center mt-3">
-                            <img src={`${contextPath}/demo/images/ecommerce/ordersummary/visa.png`} className="w-4rem mr-3" alt="visa-2" />
+                            <img src={`/demo/images/ecommerce/ordersummary/visa.png`} className="w-4rem mr-3" alt="visa-2" />
                             <div className="flex flex-column">
                                 <span className="text-900 mb-1">Visa Debit Card</span>
                                 <span className="text-900 font-medium">**** **** **** 1234</span>

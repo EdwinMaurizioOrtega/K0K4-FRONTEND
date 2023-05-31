@@ -43,7 +43,7 @@ export const InputDemo = () => {
     const [selectButtonValue1, setSelectButtonValue1] = useState(null);
     const [selectButtonValue2, setSelectButtonValue2] = useState(null);
     const [inputGroupValue, setInputGroupValue] = useState(false);
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     const listboxValues = [
         { name: 'New York', code: 'NY' },
@@ -118,7 +118,7 @@ export const InputDemo = () => {
             <div className="flex align-items-center">
                 <img
                     alt={option.name}
-                    src={`${contextPath}/demo/images/flag/flag_placeholder.png`}
+                    src={`/demo/images/flag/flag_placeholder.png`}
                     onError={(e) => (e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')}
                     className={`flag flag-${option.code.toLowerCase()}`}
                     style={{ width: '21px' }}

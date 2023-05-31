@@ -9,7 +9,7 @@ class MyDocument extends Document {
     }
 
     render() {
-        const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
         return (
             <Html lang="es">

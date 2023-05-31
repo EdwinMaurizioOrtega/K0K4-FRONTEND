@@ -1,4 +1,3 @@
-import getConfig from 'next/config';
 import { useRouter } from 'next/router';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { Button } from 'primereact/button';
@@ -15,8 +14,6 @@ function List() {
     const [loading, setLoading] = useState(true);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
     const router = useRouter();
-    const customerService = new CustomerService();
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
     const dt = useRef(null);
 
     const getCustomers = (data) => {
@@ -50,7 +47,7 @@ function List() {
     };
 
     useEffect(() => {
-        customerService.getCustomersLarge().then((data) => {
+        CustomerService.getCustomersLarge().then((data) => {
             setCustomers(getCustomers(data));
             setLoading(false);
         });
@@ -90,7 +87,7 @@ function List() {
     const countryBodyTemplate = (customer) => {
         return (
             <>
-                <img alt={customer.country.name} src={`${contextPath}/demo/images/flag/flag_placeholder.png`} className={'w-2rem mr-2 flag flag-' + customer.country.code} />
+                <img alt={customer.country.name} src={`/demo/images/flag/flag_placeholder.png`} className={'w-2rem mr-2 flag flag-' + customer.country.code} />
                 <span className="image-text">{customer.country.name}</span>
             </>
         );
@@ -99,7 +96,7 @@ function List() {
     const createdByBodyTemplate = (customer) => {
         return (
             <div className="inline-flex align-items-center">
-                <img alt={customer.representative.name} src={`${contextPath}/demo/images/avatar/${customer.representative.image}`} className="w-2rem mr-2" />
+                <img alt={customer.representative.name} src={`/demo/images/avatar/${customer.representative.image}`} className="w-2rem mr-2" />
                 <span>{customer.representative.name}</span>
             </div>
         );

@@ -24,13 +24,13 @@ function ProfileCreate() {
         ]);
     }, []);
 
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     const itemTemplate = (option) => {
         return (
             <div className="flex align-items-center">
                 <img
-                    src={`${contextPath}/demo/images/flag/flag_placeholder.png`}
+                    src={`/demo/images/flag/flag_placeholder.png`}
                     onError={(e) => (e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')}
                     className={'mr-2 flag flag-' + option.code.toLowerCase()}
                     style={{ width: '18px' }}

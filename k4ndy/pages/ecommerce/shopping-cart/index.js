@@ -13,7 +13,7 @@ function ShoppingCart() {
     const [selectedQuantity, setselectedQuantity] = useState(1);
     const [selectedQuantity2, setselectedQuantity2] = useState(1);
 
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     return (
         <div className="surface-section border-1 surface-border border-round px-4 py-8 md:px-6 lg:px-8">
@@ -24,7 +24,7 @@ function ShoppingCart() {
             </div>
             <ul className="list-none p-0 m-0">
                 <li className="flex flex-column md:flex-row py-6 border-top-1 border-bottom-1 surface-border md:align-items-center">
-                    <img src={`${contextPath}/demo/images/ecommerce/shopping-cart/shopping-cart-2-1.png`} className="w-12rem flex-shrink-0 mx-auto md:mx-0" alt="shopping-cart-2-1" />
+                    <img src={`/demo/images/ecommerce/shopping-cart/shopping-cart-2-1.png`} className="w-12rem flex-shrink-0 mx-auto md:mx-0" alt="shopping-cart-2-1" />
                     <div className="flex-auto py-5 md:pl-5">
                         <div className="flex flex-wrap align-items-start sm:align-items-center sm:flex-row sm:justify-content-between surface-border pb-6">
                             <div className="w-full sm:w-6 flex flex-column">
@@ -62,7 +62,7 @@ function ShoppingCart() {
                     </div>
                 </li>
                 <li className="flex flex-column md:flex-row py-6 border-top-1 border-bottom-1 surface-border md:align-items-center">
-                    <img src={`${contextPath}/demo/images/ecommerce/shopping-cart/shopping-cart-2-2.png`} className="w-12rem flex-shrink-0 mx-auto md:mx-0" alt="shopping-cart-2-2" />
+                    <img src={`/demo/images/ecommerce/shopping-cart/shopping-cart-2-2.png`} className="w-12rem flex-shrink-0 mx-auto md:mx-0" alt="shopping-cart-2-2" />
                     <div className="flex-auto py-5 md:pl-5">
                         <div className="flex flex-wrap align-items-start sm:align-items-center sm:flex-row sm:justify-content-between surface-border pb-6">
                             <div className="w-full sm:w-6 flex flex-column">

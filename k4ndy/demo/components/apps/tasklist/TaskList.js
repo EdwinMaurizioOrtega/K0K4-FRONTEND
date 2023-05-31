@@ -12,7 +12,7 @@ function TaskList(props) {
     const [clickedTask, setClickedTask] = useState({});
     const { markAsCompleted, removeTask, onTaskSelect, showDialog } = useContext(TaskContext);
     const menu = useRef(null);
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     const menuItems = [
         { label: 'Edit', icon: 'pi pi-pencil', command: () => onEdit() },
@@ -81,11 +81,11 @@ function TaskList(props) {
                                     <AvatarGroup className="mr-3">
                                         {task.members &&
                                             task.members.map((member, i) => {
-                                                return <Avatar key={i} image={`${contextPath}/demo/images/avatar/${member.image}`} size="large" shape="circle" />;
+                                                return <Avatar key={i} image={`/demo/images/avatar/${member.image}`} size="large" shape="circle" />;
                                             })}
                                         {task && task.members && task.members.length > 4 && (
                                             <Avatar
-                                                image={`${contextPath}/demo/images/avatar/amyelsner.png`}
+                                                image={`/demo/images/avatar/amyelsner.png`}
                                                 size="large"
                                                 shape="circle"
                                                 label={'+' + task.members.length - 4}

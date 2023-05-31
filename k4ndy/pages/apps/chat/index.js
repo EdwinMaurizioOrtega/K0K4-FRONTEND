@@ -8,7 +8,7 @@ import { ChatContext, ChatProvider } from '../../../demo/components/apps/chat/co
 import UserCard from '../../../demo/components/apps/chat/UserCard';
 import Layout from '../../../layout/layout';
 
-const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
 const ChatSidebar = () => {
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -40,7 +40,7 @@ const ChatSidebar = () => {
     return (
         <React.Fragment>
             <div className="flex flex-column align-items-center border-bottom-1 surface-border p-6">
-                <img src={`${contextPath}/demo/images/avatar/circle/avatar-f-1@2x.png`} className="w-6rem h-6rem border-circle shadow-4" alt="Asiya Javayant" />
+                <img src={`/demo/images/avatar/circle/avatar-f-1@2x.png`} className="w-6rem h-6rem border-circle shadow-4" alt="Asiya Javayant" />
                 <span className="text-900 text-xl font-semibold mt-4">Asiya Javayant</span>
             </div>
             <div className="w-full flex row-gap-4 flex-column surface-border p-4">
@@ -117,7 +117,7 @@ const ChatBox = (props) => {
             <div className="flex flex-column h-full">
                 <div className="flex align-items-center border-bottom-1 surface-border p-3 lg:p-6">
                     <div className="relative flex align-items-center mr-3">
-                        <img src={`${contextPath}/demo/images/avatar/${props.user.image}`} alt={props.user.name} className="w-4rem h-4rem border-circle shadow-4" />
+                        <img src={`/demo/images/avatar/${props.user.image}`} alt={props.user.name} className="w-4rem h-4rem border-circle shadow-4" />
                         <span
                             className={classNames('w-1rem h-1rem border-circle border-2 surface-border absolute bottom-0 right-0', {
                                 'bg-green-400': props.user.status === 'active',
@@ -153,7 +153,7 @@ const ChatBox = (props) => {
                                 ) : (
                                     <div className="grid grid-nogutter mb-4">
                                         <div className="mr-3 mt-1">
-                                            <img src={`${contextPath}/demo/images/avatar/${user.image}`} alt={user.name} className="w-3rem h-3rem border-circle shadow-4" />
+                                            <img src={`/demo/images/avatar/${user.image}`} alt={user.name} className="w-3rem h-3rem border-circle shadow-4" />
                                         </div>
                                         <div className="col mt-3">
                                             <p className="text-900 font-semibold mb-3">{user.name}</p>

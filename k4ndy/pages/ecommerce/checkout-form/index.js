@@ -20,7 +20,7 @@ function CheckoutForm() {
         { name: 'Paris', code: 'PRS' }
     ]);
 
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     return (
         <div className="surface-card border-1 surface-border border-round">
@@ -89,7 +89,7 @@ function CheckoutForm() {
                         <span className="text-900 font-medium text-xl">Your Cart</span>
                     </div>
                     <div className="flex flex-column lg:flex-row flex-wrap lg:align-items-center py-2 mt-3 surface-border">
-                        <img src={`${contextPath}/demo/images/ecommerce/shop/shop-1.png`} className="w-8rem h-8rem flex-shrink-0 mb-3" alt="product" />
+                        <img src={`/demo/images/ecommerce/shop/shop-1.png`} className="w-8rem h-8rem flex-shrink-0 mb-3" alt="product" />
                         <div className="flex-auto lg:ml-3">
                             <div className="flex align-items-center justify-content-between mb-3">
                                 <span className="text-900 font-bold">Product Name</span>
@@ -134,7 +134,7 @@ function CheckoutForm() {
                         </div>
                     </div>
                     <div className="py-2 mt-3 bg-yellow-100 flex align-items-center justify-content-center border-round">
-                        <img src={`${contextPath}/demo/images/ecommerce/shop/flag.png`} className="mr-2" alt="Country Flag" />
+                        <img src={`/demo/images/ecommerce/shop/flag.png`} className="mr-2" alt="Country Flag" />
                         <span className="text-black-alpha-90 font-medium">No additional duties or taxes.</span>
                     </div>
                 </div>

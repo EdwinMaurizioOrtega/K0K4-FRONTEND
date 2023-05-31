@@ -6,7 +6,7 @@ import { ChatContext } from './context/chatcontext';
 function UserCard(props) {
     const [lastMessage, setLastMessage] = useState({});
 
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
     const { changeActiveChat } = useContext(ChatContext);
 
     const changeView = (user) => {
@@ -32,7 +32,7 @@ hover:surface-hover transition-colors transition-duration-150"
         >
             <div className="flex align-items-center">
                 <div className="relative md:mr-3">
-                    <img src={`${contextPath}/demo/images/avatar/${props.user.image}`} alt="props.user" className="w-3rem h-3rem border-circle shadow-4" />
+                    <img src={`/demo/images/avatar/${props.user.image}`} alt="props.user" className="w-3rem h-3rem border-circle shadow-4" />
                     <span
                         className={classNames('w-1rem h-1rem border-circle border-2 surface-border absolute', { 'bg-green-400': props.user.status === 'active', 'bg-red-400': props.user.status === 'busy', 'bg-yellow-400': 'away' })}
                         style={{ bottom: '2px', right: '2px' }}

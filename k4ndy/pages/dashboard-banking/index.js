@@ -13,7 +13,7 @@ const Banking = () => {
     const [chartData, setChartData] = useState({});
     const [price, setPrice] = useState(0);
     const { layoutConfig } = useContext(LayoutContext);
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
     const dt = useRef(null);
 
     const payments = [
@@ -146,7 +146,7 @@ const Banking = () => {
             <div className="col-12">
                 <div className="flex flex-column sm:flex-row align-items-center gap-4">
                     <div className="flex flex-column sm:flex-row align-items-center gap-3">
-                        <img alt="avatar" src={`${contextPath}/demo/images/avatar/circle/avatar-f-1.png`} className="w-4rem h-4rem flex-shrink-0" />
+                        <img alt="avatar" src={`/demo/images/avatar/circle/avatar-f-1.png`} className="w-4rem h-4rem flex-shrink-0" />
                         <div className="flex flex-column align-items-center sm:align-items-start">
                             <span className="text-900 font-bold text-4xl">Welcome Isabel</span>
                             <p className="text-600 m-0">Your last login was on 04/05/2022 at 10:24 am</p>
@@ -185,7 +185,7 @@ const Banking = () => {
                 <div className="card h-full">
                     <div className="flex align-items-center justify-content-between mb-3">
                         <div className="text-900 text-xl font-semibold">Credit Card</div>
-                        <img alt="avatar" src={`${contextPath}/demo/images/banking/visa.svg`} className="h-1rem" />
+                        <img alt="avatar" src={`/demo/images/banking/visa.svg`} className="h-1rem" />
                     </div>
                     <div className="text-600 mb-1 font-semibold">Debt</div>
                     <div className="text-900 text-2xl text-primary mb-5 font-bold">$1.500,00</div>
@@ -215,7 +215,7 @@ const Banking = () => {
                     <div className="text-900 text-xl font-semibold mb-3">Recent Transactions</div>
                     <ul className="list-none p-0 m-0">
                         <li className="flex align-items-center p-3 mb-3 border-bottom-1 surface-border">
-                            <img alt="brands" src={`${contextPath}/demo/images/banking/airbnb.png`} className="w-3rem flex-shrink-0 mr-3" />
+                            <img alt="brands" src={`/demo/images/banking/airbnb.png`} className="w-3rem flex-shrink-0 mr-3" />
                             <div className="flex flex-column">
                                 <span className="text-xl font-medium text-900 mb-1">Airbnb</span>
                                 <span>05/23/2022</span>
@@ -223,7 +223,7 @@ const Banking = () => {
                             <span className="text-xl text-900 ml-auto font-semibold">$250.00</span>
                         </li>
                         <li className="flex align-items-center p-3 mb-3 border-bottom-1 surface-border">
-                            <img alt="brands" src={`${contextPath}/demo/images/banking/amazon.png`} className="w-3rem flex-shrink-0 mr-3" />
+                            <img alt="brands" src={`/demo/images/banking/amazon.png`} className="w-3rem flex-shrink-0 mr-3" />
                             <div className="flex flex-column">
                                 <span className="text-xl font-medium text-900 mb-1">Amazon</span>
                                 <span>04/12/2022</span>
@@ -231,7 +231,7 @@ const Banking = () => {
                             <span className="text-xl text-900 ml-auto font-semibold">$50.00</span>
                         </li>
                         <li className="flex align-items-center p-3 mb-3 border-bottom-1 surface-border">
-                            <img alt="brands" src={`${contextPath}/demo/images/banking/nike.svg`} className="w-3rem flex-shrink-0 mr-3 border-circle" />
+                            <img alt="brands" src={`/demo/images/banking/nike.svg`} className="w-3rem flex-shrink-0 mr-3 border-circle" />
                             <div className="flex flex-column">
                                 <span className="text-xl font-medium text-900 mb-1">Nike Store</span>
                                 <span>04/29/2022</span>
@@ -239,7 +239,7 @@ const Banking = () => {
                             <span className="text-xl text-900 ml-auto font-semibold">$60.00</span>
                         </li>
                         <li className="flex align-items-center p-3 mb-3 border-bottom-1 surface-border">
-                            <img alt="brands" src={`${contextPath}/demo/images/banking/starbucks.svg`} className="w-3rem flex-shrink-0 mr-3" />
+                            <img alt="brands" src={`/demo/images/banking/starbucks.svg`} className="w-3rem flex-shrink-0 mr-3" />
                             <div className="flex flex-column">
                                 <span className="text-xl font-medium text-900 mb-1">Starbucks</span>
                                 <span>04/15/2022</span>
@@ -247,7 +247,7 @@ const Banking = () => {
                             <span className="text-xl text-900 ml-auto font-semibold">$15.24</span>
                         </li>
                         <li className="flex align-items-center p-3 mb-3">
-                            <img alt="brands" src={`${contextPath}/demo/images/banking/amazon.png`} className="w-3rem flex-shrink-0 mr-3" />
+                            <img alt="brands" src={`/demo/images/banking/amazon.png`} className="w-3rem flex-shrink-0 mr-3" />
                             <div className="flex flex-column">
                                 <span className="text-xl font-medium text-900 mb-1">Amazon</span>
                                 <span>04/12/2022</span>
@@ -273,31 +273,31 @@ const Banking = () => {
                     <div className="flex flex-column row-gap-3">
                         <div className="flex flex-column lg:flex-row gap-3">
                             <div className="w-full lg:w-6 p-3 border-1 border-round surface-border flex align-items-center hover:surface-100 cursor-pointer border-radius">
-                                <img alt="avatar" src={`${contextPath}/demo/images/avatar/circle/avatar-f-1.png`} className="w-2rem flex-shrink-0 mr-2" />
+                                <img alt="avatar" src={`/demo/images/avatar/circle/avatar-f-1.png`} className="w-2rem flex-shrink-0 mr-2" />
                                 <span className="text-900 text-lg font-medium">Aisha Williams</span>
                             </div>
                             <div className="w-full lg:w-6 p-3 border-1 border-round surface-border flex align-items-center hover:surface-100 cursor-pointer border-radius">
-                                <img alt="avatar" src={`${contextPath}/demo/images/avatar/circle/avatar-f-2.png`} className="w-2rem flex-shrink-0 mr-2" />
+                                <img alt="avatar" src={`/demo/images/avatar/circle/avatar-f-2.png`} className="w-2rem flex-shrink-0 mr-2" />
                                 <span className="text-900 text-lg font-medium">Jane Watson</span>
                             </div>
                         </div>
                         <div className="flex flex-column lg:flex-row gap-3">
                             <div className="w-full lg:w-6 p-3 border-1 border-round surface-border flex align-items-center hover:surface-100 cursor-pointer border-radius">
-                                <img alt="avatar" src={`${contextPath}/demo/images/avatar/circle/avatar-m-1.png`} className="w-2rem flex-shrink-0 mr-2" />
+                                <img alt="avatar" src={`/demo/images/avatar/circle/avatar-m-1.png`} className="w-2rem flex-shrink-0 mr-2" />
                                 <span className="text-900 text-lg font-medium">Brad Curry</span>
                             </div>
                             <div className="w-full lg:w-6 p-3 border-1 border-round surface-border flex align-items-center hover:surface-100 cursor-pointer border-radius">
-                                <img alt="avatar" src={`${contextPath}/demo/images/avatar/circle/avatar-f-3.png`} className="w-2rem flex-shrink-0 mr-2" />
+                                <img alt="avatar" src={`/demo/images/avatar/circle/avatar-f-3.png`} className="w-2rem flex-shrink-0 mr-2" />
                                 <span className="text-900 text-lg font-medium">Claire Dunphy</span>
                             </div>
                         </div>
                         <div className="flex flex-column lg:flex-row gap-3">
                             <div className="w-full lg:w-6 p-3 border-1 border-round surface-border flex align-items-center hover:surface-100 cursor-pointer border-radius">
-                                <img alt="avatar" src={`${contextPath}/demo/images/avatar/circle/avatar-m-2.png`} className="w-2rem flex-shrink-0 mr-2" />
+                                <img alt="avatar" src={`/demo/images/avatar/circle/avatar-m-2.png`} className="w-2rem flex-shrink-0 mr-2" />
                                 <span className="text-900 text-lg font-medium">Kevin James</span>
                             </div>
                             <div className="w-full lg:w-6 p-3 border-1 border-round surface-border flex align-items-center hover:surface-100 cursor-pointer">
-                                <img alt="avatar" src={`${contextPath}/demo/images/avatar/circle/avatar-f-4.png`} className="w-2rem flex-shrink-0 mr-2" />
+                                <img alt="avatar" src={`/demo/images/avatar/circle/avatar-f-4.png`} className="w-2rem flex-shrink-0 mr-2" />
                                 <span className="text-900 text-lg font-medium">Sarah McTamish</span>
                             </div>
                         </div>

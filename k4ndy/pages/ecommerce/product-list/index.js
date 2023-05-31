@@ -54,7 +54,7 @@ function ProductList() {
         _products2[productIndex]['color'] = color;
         setProducts2(_products2);
     };
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     return (
         <>
@@ -71,7 +71,7 @@ function ProductList() {
                                             <span className="surface-card text-900 shadow-2 px-3 py-2 absolute" style={{ borderRadius: '1.5rem', left: '1rem', top: '1rem' }}>
                                                 Category
                                             </span>
-                                            <img src={contextPath + '/' + product.image} className="w-full" alt={i} />
+                                            <img src={'/' + product.image} className="w-full" alt={i} />
                                         </div>
                                         <div className="flex justify-content-between align-items-center mb-3">
                                             <span className="text-900 font-medium text-xl">Product Name</span>
@@ -96,7 +96,7 @@ function ProductList() {
                         return (
                             <div key={i} className="col-12 md:col-6 lg:col-3 mb-5 lg:mb-0">
                                 <div className="mb-3 relative">
-                                    <img src={contextPath + '/' + product.image} className="w-full" alt={i} />
+                                    <img src={'/' + product.image} className="w-full" alt={i} />
                                     <Button
                                         type="button"
                                         className="border-1 border-white border-round py-2 px-3 absolute bg-black-alpha-30 text-white inline-flex align-items-center justify-content-center hover:bg-black-alpha-40 transition-colors transition-duration-300 cursor-pointer"

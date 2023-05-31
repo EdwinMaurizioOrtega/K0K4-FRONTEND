@@ -4,10 +4,6 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
-// fullcalendar style imports
-import '@fullcalendar/common/main.css';
-import '@fullcalendar/daygrid/main.css';
-import '@fullcalendar/timegrid/main.css';
 import { Button } from 'primereact/button';
 import { Calendar as PRCalendar } from 'primereact/calendar';
 import { Dialog } from 'primereact/dialog';
@@ -46,8 +42,7 @@ const CalendarDemo = () => {
     };
 
     useEffect(() => {
-        const eventService = new EventService();
-        eventService.getEvents().then((data) => {
+        EventService.getEvents().then((data) => {
             setEvents(data);
             const _tags = [];
             data.forEach((event) => {

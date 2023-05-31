@@ -53,7 +53,7 @@ export const ChatProvider = (props) => {
         ],
         lastSeen: '2d'
     });
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     const getChatData = () => {
         return fetch(contextPath + '/demo/data/chat.json', { headers: { 'Cache-Control': 'no-cache' } })

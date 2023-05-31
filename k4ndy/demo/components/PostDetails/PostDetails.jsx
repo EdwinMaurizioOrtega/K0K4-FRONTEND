@@ -17,7 +17,7 @@ const PostDetails = () => {
     const history = useRouter();
     //const {id} = useParams();
     const {id} = history.query;
-    const galleriaService = new PhotoService();
+    // const galleriaService = new PhotoService();
     const [images, setImages] = useState(null);
 
     useEffect(() => {
@@ -30,9 +30,9 @@ const PostDetails = () => {
         }
     }, [post]);
 
-    useEffect(() => {
-        galleriaService.getImages().then(data => setImages(data));
-    }, []);
+    // useEffect(() => {
+    //     galleriaService.getImages().then(data => setImages(data));
+    // }, []);
 
 
     if (!post) return null;
@@ -80,7 +80,7 @@ const PostDetails = () => {
                     </div>
                 </div>
                 <div className="flex flex-column align-items-center justify-content-center">
-                    {/* <img className="w-4rem h-4rem" src={`${contextPath}/demo/images/avatar/circle/avatar-f-2@2x.png`} alt="Avatar" /> */}
+                    {/* <img className="w-4rem h-4rem" src={`/demo/images/avatar/circle/avatar-f-2@2x.png`} alt="Avatar" /> */}
                     {/*<span className="mt-3 font-bold text-900 text-center white-space-nowrap">{post.name}</span>*/}
                     <Link href={`/apps/blog/city?name=${post.city}`} className="mt-3 font-bold text-900 text-center white-space-nowrap">
                         {` ${post.city}`}

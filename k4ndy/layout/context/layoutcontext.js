@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 export const LayoutContext = React.createContext();
 
 export const LayoutProvider = (props) => {
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
     const [breadcrumbs, setBreadcrumbs] = useState([]);
     const [layoutConfig, setLayoutConfig] = useState({
         ripple: false,

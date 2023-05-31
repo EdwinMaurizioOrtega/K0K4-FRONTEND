@@ -16,7 +16,7 @@ function ProductOverview() {
     useEffect(() => {
         setImages(['product-overview-3-1.png', 'product-overview-3-2.png', 'product-overview-3-3.png', 'product-overview-3-4.png']);
     }, [selectedImageIndex]);
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     return (
         <div className="surface-section px-6 py-6 border-1 surface-border border-round">
@@ -29,7 +29,7 @@ function ProductOverview() {
                                     <img
                                         alt={i}
                                         key={i}
-                                        src={`${contextPath}/demo/images/ecommerce/productoverview/${image}`}
+                                        src={`/demo/images/ecommerce/productoverview/${image}`}
                                         className={classNames('w-full cursor-pointer border-2 border-transparent transition-colors transition-duration-150 border-round', { 'border-primary': selectedImageIndex === i })}
                                         onClick={() => setSelectedImageIndex(i)}
                                     />
@@ -37,7 +37,7 @@ function ProductOverview() {
                             })}
                         </div>
                         <div className="pl-3 w-10 flex">
-                            <img alt={images[selectedImageIndex]} src={`${contextPath}/demo/images/ecommerce/productoverview/${images[selectedImageIndex]}`} className="w-full border-2 border-transparent border-round" />
+                            <img alt={images[selectedImageIndex]} src={`/demo/images/ecommerce/productoverview/${images[selectedImageIndex]}`} className="w-full border-2 border-transparent border-round" />
                         </div>
                     </div>
                 </div>

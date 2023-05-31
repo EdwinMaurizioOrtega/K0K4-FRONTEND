@@ -13,7 +13,7 @@ export const TaskProvider = (props) => {
         newTask: false
     });
 
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     const getTasks = () => {
         return fetch(contextPath + '/demo/data/tasks.json', { headers: { 'Cache-Control': 'no-cache' } })

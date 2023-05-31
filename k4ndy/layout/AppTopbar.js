@@ -12,7 +12,7 @@ import * as actionType from "../demo/constants/actionTypes";
 const AppTopbar = forwardRef((props, ref) => {
     const { onMenuToggle, showProfileSidebar } = useContext(LayoutContext);
     const menubuttonRef = useRef(null);
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
+
 
     useImperativeHandle(ref, () => ({
         menubutton: menubuttonRef.current
@@ -62,7 +62,7 @@ const AppTopbar = forwardRef((props, ref) => {
                     </li>
                     <li >
                         {/*<button type="button" className="p-link" onClick={showProfileSidebar}>*/}
-                        {/*    <img src={`${contextPath}/layout/images/avatar.png`} alt="Profile" />*/}
+                        {/*    <img src={`/layout/images/avatar.png`} alt="Profile" />*/}
                         {/*</button>*/}
 
                         <Button type="button" className="m-0 mt-3 md:mt-0 md:ml-5" label="Cerrar sesión" onClick={logout}>
