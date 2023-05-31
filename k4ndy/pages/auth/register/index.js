@@ -8,6 +8,7 @@ import AppConfig from '../../../layout/AppConfig';
 import {useDispatch, useSelector} from "react-redux";
 import {Messages} from "primereact/messages";
 import {signup} from "../../../demo/actions/auth";
+import Link from "next/link";
 
 const initialState = {username: '', email: '', password: '', confirmPassword: ''};
 
@@ -184,9 +185,9 @@ function Register() {
                             {/*<Button label="Regístrate" className="w-full mb-4" onClick={() => router.push('/')}></Button>*/}
                             <Button type="submit" label="Regístrate" className="w-full mb-4"></Button>
                             <span className="font-medium text-600">
-                            ¿Ya tienes una cuenta? <a
+                            ¿Ya tienes una cuenta? <Link
                                 className="font-semibold cursor-pointer text-900 hover:text-primary transition-colors transition-duration-300"
-                                href="/auth/login">Acceso</a>
+                                href="/auth/login">Acceso</Link>
                         </span>
                         </div>
                     </form>

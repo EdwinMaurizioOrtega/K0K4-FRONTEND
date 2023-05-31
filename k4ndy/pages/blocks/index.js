@@ -1,4 +1,3 @@
-import getConfig from 'next/config';
 import { Button } from 'primereact/button';
 import { Checkbox } from 'primereact/checkbox';
 import { Chip } from 'primereact/chip';
@@ -8,13 +7,12 @@ import BlockViewer from '../../demo/components/BlockViewer';
 
 const BlocksDemo = () => {
     const [checked, setChecked] = useState(false);
-    const contextPath = getConfig().publicRuntimeConfig.contextPath;
 
     const block1 = `
     <div className="grid grid-nogutter surface-0 text-800">
         <div className="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center ">
             <section>
-                <span className="block text-6xl font-bold mb-1">Create the screens your</span>
+                <span className="block text-6xl font-bold mb-1">Create the screens</span>
                 <div className="text-6xl text-primary font-bold mb-3">your visitors deserve to see</div>
                 <p className="mt-0 mb-4 text-700 line-height-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
     
@@ -29,7 +27,7 @@ const BlocksDemo = () => {
         `;
 
     const block2 = `
-    <div className="surface-0 text-center">
+    <div className="surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
         <div className="mb-3 font-bold text-3xl">
             <span className="text-900">One Product, </span>
             <span className="text-blue-600">Many Solutions</span>
@@ -102,15 +100,15 @@ const BlocksDemo = () => {
                         <ul className="list-none p-0 m-0 flex-grow-1">
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Arcu vitae elementum</span>
+                                <span className="text-900">Arcu vitae elementum</span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Dui faucibus in ornare</span>
+                                <span className="text-900">Dui faucibus in ornare</span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Morbi tincidunt augue</span>
+                                <span className="text-900">Morbi tincidunt augue</span>
                             </li>
                         </ul>
                         <hr className="mb-3 mx-0 border-top-1 border-bottom-none border-300 mt-auto" />
@@ -133,19 +131,19 @@ const BlocksDemo = () => {
                         <ul className="list-none p-0 m-0 flex-grow-1">
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Arcu vitae elementum</span>
+                                <span className="text-900">Arcu vitae elementum</span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Dui faucibus in ornare</span>
+                                <span className="text-900">Dui faucibus in ornare</span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Morbi tincidunt augue</span>
+                                <span className="text-900">Morbi tincidunt augue</span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Duis ultricies lacus sed</span>
+                                <span className="text-900">Duis ultricies lacus sed</span>
                             </li>
                         </ul>
                         <hr className="mb-3 mx-0 border-top-1 border-bottom-none border-300" />
@@ -168,27 +166,27 @@ const BlocksDemo = () => {
                         <ul className="list-none p-0 m-0 flex-grow-1">
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Arcu vitae elementum</span>
+                                <span className="text-900">Arcu vitae elementum</span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Dui faucibus in ornare</span>
+                                <span className="text-900">Dui faucibus in ornare</span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Morbi tincidunt augue</span>
+                                <span className="text-900">Morbi tincidunt augue</span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Duis ultricies lacus sed</span>
+                                <span className="text-900">Duis ultricies lacus sed</span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Imperdiet proin</span>
+                                <span className="text-900">Imperdiet proin</span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Nisi scelerisque</span>
+                                <span className="text-900">Nisi scelerisque</span>
                             </li>
                         </ul>
                         <hr className="mb-3 mx-0 border-top-1 border-bottom-none border-300" />
@@ -334,7 +332,7 @@ const BlocksDemo = () => {
             <div className="text-center mb-5">
                 <img src="assets/images/blocks/logos/hyper.svg" alt="hyper" height={50} className="mb-3" />
                 <div className="text-900 text-3xl font-medium mb-3">Welcome Back</div>
-                <span className="text-600 font-medium line-height-3">Don't have an account?</span>
+                <span className="text-600 font-medium line-height-3">Do not have an account?</span>
                 <a className="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
             </div>
     
@@ -348,7 +346,7 @@ const BlocksDemo = () => {
                 <div className="flex align-items-center justify-content-between mb-6">
                     <div className="flex align-items-center">
                         <Checkbox id="rememberme" onChange={e => setChecked(e.checked)} checked={checked} className="mr-2" />
-                        <label htmlFor="rememberme">Remember me</label>
+                        <label htmlFor="rememberme" className="text-900">Remember me</label>
                     </div>
                     <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot your password?</a>
                 </div>
@@ -419,11 +417,11 @@ const BlocksDemo = () => {
 
     return (
         <>
-            <BlockViewer header="Hero" code={block1}>
+            <BlockViewer header="Hero" code={block1} free>
                 <div className="grid grid-nogutter surface-0 text-800">
                     <div className="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center ">
                         <section>
-                            <span className="block text-6xl font-bold mb-1">Create the screens your</span>
+                            <span className="block text-6xl font-bold mb-1">Create the screens</span>
                             <div className="text-6xl text-primary font-bold mb-3">your visitors deserve to see</div>
                             <p className="mt-0 mb-4 text-700 line-height-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
@@ -432,13 +430,13 @@ const BlocksDemo = () => {
                         </section>
                     </div>
                     <div className="col-12 md:col-6 overflow-hidden">
-                        <img src={`${contextPath}/demo/images/blocks/hero/hero-1.png`} alt="hero-1" className="md:ml-auto block md:h-full" style={{ clipPath: 'polygon(8% 0, 100% 0%, 100% 100%, 0 100%)' }} />
+                        <img src="/demo/images/blocks/hero/hero-1.png" alt="hero-1" className="md:ml-auto block md:h-full" style={{ clipPath: 'polygon(8% 0, 100% 0%, 100% 100%, 0 100%)' }} />
                     </div>
                 </div>
             </BlockViewer>
 
-            <BlockViewer header="Feature" code={block2} containerClassName="surface-0 px-4 py-8 md:px-6 lg:px-8">
-                <div className="surface-0 text-center">
+            <BlockViewer header="Feature" code={block2} containerClassName="surface-0 px-4 py-8 md:px-6 lg:px-8" free>
+                <div className="surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
                     <div className="mb-3 font-bold text-3xl">
                         <span className="text-900">One Product, </span>
                         <span className="text-blue-600">Many Solutions</span>
@@ -449,49 +447,49 @@ const BlocksDemo = () => {
                             <span className="p-3 shadow-2 mb-3 inline-block" style={{ borderRadius: '10px' }}>
                                 <i className="pi pi-desktop text-4xl text-blue-500"></i>
                             </span>
-                            <div className="text-900 text xl mb-3 font-medium">Built for Developers</div>
+                            <div className="text-900 text-xl mb-3 font-medium">Built for Developers</div>
                             <span className="text-700 line-height-3">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</span>
                         </div>
                         <div className="col-12 md:col-4 mb-4 px-5">
                             <span className="p-3 shadow-2 mb-3 inline-block" style={{ borderRadius: '10px' }}>
                                 <i className="pi pi-lock text-4xl text-blue-500"></i>
                             </span>
-                            <div className="text-900 text xl mb-3 font-medium">End-to-End Encryption</div>
+                            <div className="text-900 text-xl mb-3 font-medium">End-to-End Encryption</div>
                             <span className="text-700 line-height-3">Risus nec feugiat in fermentum posuere urna nec. Posuere sollicitudin aliquam ultrices sagittis.</span>
                         </div>
                         <div className="col-12 md:col-4 mb-4 px-5">
                             <span className="p-3 shadow-2 mb-3 inline-block" style={{ borderRadius: '10px' }}>
                                 <i className="pi pi-check-circle text-4xl text-blue-500"></i>
                             </span>
-                            <div className="text-900 text xl mb-3 font-medium">Easy to Use</div>
+                            <div className="text-900 text-xl mb-3 font-medium">Easy to Use</div>
                             <span className="text-700 line-height-3">Ornare suspendisse sed nisi lacus sed viverra tellus. Neque volutpat ac tincidunt vitae semper.</span>
                         </div>
                         <div className="col-12 md:col-4 mb-4 px-5">
                             <span className="p-3 shadow-2 mb-3 inline-block" style={{ borderRadius: '10px' }}>
                                 <i className="pi pi-globe text-4xl text-blue-500"></i>
                             </span>
-                            <div className="text-900 text xl mb-3 font-medium">Fast & Global Support</div>
+                            <div className="text-900 text-xl mb-3 font-medium">Fast & Global Support</div>
                             <span className="text-700 line-height-3">Fermentum et sollicitudin ac orci phasellus egestas tellus rutrum tellus.</span>
                         </div>
                         <div className="col-12 md:col-4 mb-4 px-5">
                             <span className="p-3 shadow-2 mb-3 inline-block" style={{ borderRadius: '10px' }}>
                                 <i className="pi pi-github text-4xl text-blue-500"></i>
                             </span>
-                            <div className="text-900 text xl mb-3 font-medium">Open Source</div>
+                            <div className="text-900 text-xl mb-3 font-medium">Open Source</div>
                             <span className="text-700 line-height-3">Nec tincidunt praesent semper feugiat. Sed adipiscing diam donec adipiscing tristique risus nec feugiat. </span>
                         </div>
                         <div className="col-12 md:col-4 md:mb-4 mb-0 px-3">
                             <span className="p-3 shadow-2 mb-3 inline-block" style={{ borderRadius: '10px' }}>
                                 <i className="pi pi-shield text-4xl text-blue-500"></i>
                             </span>
-                            <div className="text-900 text xl mb-3 font-medium">Trusted Securitty</div>
+                            <div className="text-900 text-xl mb-3 font-medium">Trusted Securitty</div>
                             <span className="text-700 line-height-3">Mattis rhoncus urna neque viverra justo nec ultrices. Id cursus metus aliquam eleifend.</span>
                         </div>
                     </div>
                 </div>
             </BlockViewer>
 
-            <BlockViewer header="Pricing" code={block3} containerClassName="surface-0 px-4 py-8 md:px-6 lg:px-8">
+            <BlockViewer header="Pricing" code={block3} containerClassName="surface-0 px-4 py-8 md:px-6 lg:px-8" free>
                 <div className="surface-0">
                     <div className="text-900 font-bold text-6xl mb-4 text-center">Pricing Plans</div>
                     <div className="text-700 text-xl mb-6 text-center line-height-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos.</div>
@@ -511,15 +509,15 @@ const BlocksDemo = () => {
                                     <ul className="list-none p-0 m-0 flex-grow-1">
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Arcu vitae elementum</span>
+                                            <span className="text-900">Arcu vitae elementum</span>
                                         </li>
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Dui faucibus in ornare</span>
+                                            <span className="text-900">Dui faucibus in ornare</span>
                                         </li>
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Morbi tincidunt augue</span>
+                                            <span className="text-900">Morbi tincidunt augue</span>
                                         </li>
                                     </ul>
                                     <hr className="mb-3 mx-0 border-top-1 border-bottom-none border-300 mt-auto" />
@@ -542,19 +540,19 @@ const BlocksDemo = () => {
                                     <ul className="list-none p-0 m-0 flex-grow-1">
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Arcu vitae elementum</span>
+                                            <span className="text-900">Arcu vitae elementum</span>
                                         </li>
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Dui faucibus in ornare</span>
+                                            <span className="text-900">Dui faucibus in ornare</span>
                                         </li>
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Morbi tincidunt augue</span>
+                                            <span className="text-900">Morbi tincidunt augue</span>
                                         </li>
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Duis ultricies lacus sed</span>
+                                            <span className="text-900">Duis ultricies lacus sed</span>
                                         </li>
                                     </ul>
                                     <hr className="mb-3 mx-0 border-top-1 border-bottom-none border-300" />
@@ -577,27 +575,27 @@ const BlocksDemo = () => {
                                     <ul className="list-none p-0 m-0 flex-grow-1">
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Arcu vitae elementum</span>
+                                            <span className="text-900">Arcu vitae elementum</span>
                                         </li>
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Dui faucibus in ornare</span>
+                                            <span className="text-900">Dui faucibus in ornare</span>
                                         </li>
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Morbi tincidunt augue</span>
+                                            <span className="text-900">Morbi tincidunt augue</span>
                                         </li>
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Duis ultricies lacus sed</span>
+                                            <span className="text-900">Duis ultricies lacus sed</span>
                                         </li>
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Imperdiet proin</span>
+                                            <span className="text-900">Imperdiet proin</span>
                                         </li>
                                         <li className="flex align-items-center mb-3">
                                             <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                            <span>Nisi scelerisque</span>
+                                            <span className="text-900">Nisi scelerisque</span>
                                         </li>
                                     </ul>
                                     <hr className="mb-3 mx-0 border-top-1 border-bottom-none border-300" />
@@ -609,7 +607,7 @@ const BlocksDemo = () => {
                 </div>
             </BlockViewer>
 
-            <BlockViewer header="Call to Action" code={block4} containerClassName="surface-0 px-4 py-8 md:px-6 lg:px-8">
+            <BlockViewer header="Call to Action" code={block4} containerClassName="surface-0 px-4 py-8 md:px-6 lg:px-8" free>
                 <div className="surface-0 text-700 text-center">
                     <div className="text-blue-600 font-bold mb-3">
                         <i className="pi pi-discord"></i>&nbsp;POWERED BY DISCORD
@@ -620,7 +618,7 @@ const BlocksDemo = () => {
                 </div>
             </BlockViewer>
 
-            <BlockViewer header="Banner" code={block5} containerClassName="surface-0 py-8">
+            <BlockViewer header="Banner" code={block5} containerClassName="surface-0 py-8" free>
                 <div className="bg-bluegray-900 text-gray-100 p-3 flex justify-content-between lg:justify-content-center align-items-center flex-wrap">
                     <div className="font-bold mr-8">🔥 Hot Deals!</div>
                     <div className="align-items-center hidden lg:flex">
@@ -635,7 +633,8 @@ const BlocksDemo = () => {
                 </div>
             </BlockViewer>
 
-            <BlockViewer header="Page Heading" code={block6} containerClassName="surface-0 px-4 py-5 md:px-6 lg:px-8">
+            <div className="block-category-title">Application UI</div>
+            <BlockViewer header="Page Heading" code={block6} containerClassName="surface-0 px-4 py-5 md:px-6 lg:px-8" free>
                 <div className="surface-0">
                     <ul className="list-none p-0 m-0 flex align-items-center font-medium mb-3">
                         <li>
@@ -674,7 +673,7 @@ const BlocksDemo = () => {
                 </div>
             </BlockViewer>
 
-            <BlockViewer header="Stats" code={block7} containerClassName="px-4 py-5 md:px-6 lg:px-8">
+            <BlockViewer header="Stats" code={block7} containerClassName="px-4 py-5 md:px-6 lg:px-8" free>
                 <div className="grid">
                     <div className="col-12 md:col-6 lg:col-3">
                         <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
@@ -739,13 +738,13 @@ const BlocksDemo = () => {
                 </div>
             </BlockViewer>
 
-            <BlockViewer header="Sign-In" code={block8} containerClassName="px-4 py-8 md:px-6 lg:px-8">
+            <BlockViewer header="Sign-In" code={block8} containerClassName="px-4 py-8 md:px-6 lg:px-8" free>
                 <div className="flex align-items-center justify-content-center">
                     <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6">
                         <div className="text-center mb-5">
-                            <img src={`${contextPath}/demo/images/blocks/logos/hyper.svg`} alt="hyper" height={50} className="mb-3" />
+                            <img src="/demo/images/blocks/logos/hyper.svg" alt="hyper" height={50} className="mb-3" />
                             <div className="text-900 text-3xl font-medium mb-3">Welcome Back</div>
-                            <span className="text-600 font-medium line-height-3">Don't have an account?</span>
+                            <span className="text-600 font-medium line-height-3">Do not have an account?</span>
                             <a className="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
                         </div>
 
@@ -763,7 +762,9 @@ const BlocksDemo = () => {
                             <div className="flex align-items-center justify-content-between mb-6">
                                 <div className="flex align-items-center">
                                     <Checkbox id="rememberme" onChange={(e) => setChecked(e.checked)} checked={checked} className="mr-2" />
-                                    <label htmlFor="rememberme">Remember me</label>
+                                    <label htmlFor="rememberme" className="text-900">
+                                        Remember me
+                                    </label>
                                 </div>
                                 <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot your password?</a>
                             </div>
@@ -774,7 +775,7 @@ const BlocksDemo = () => {
                 </div>
             </BlockViewer>
 
-            <BlockViewer header="Description List" code={block9} containerClassName="surface-0 px-4 py-8 md:px-6 lg:px-8">
+            <BlockViewer header="Description List" code={block9} containerClassName="surface-0 px-4 py-8 md:px-6 lg:px-8" free>
                 <div className="surface-0">
                     <div className="font-medium text-3xl text-900 mb-3">Movie Information</div>
                     <div className="text-500 mb-5">Morbi tristique blandit turpis. In viverra ligula id nulla hendrerit rutrum.</div>
@@ -822,7 +823,7 @@ const BlocksDemo = () => {
                 </div>
             </BlockViewer>
 
-            <BlockViewer header="Card" code={block10} containerClassName="px-4 py-8 md:px-6 lg:px-8">
+            <BlockViewer header="Card" code={block10} containerClassName="px-4 py-8 md:px-6 lg:px-8" free>
                 <div className="surface-0 p-4 shadow-2 border-round">
                     <div className="text-3xl font-medium text-900 mb-3">Card Title</div>
                     <div className="font-medium text-500 mb-3">Vivamus id nisl interdum, blandit augue sit amet, eleifend mi.</div>
