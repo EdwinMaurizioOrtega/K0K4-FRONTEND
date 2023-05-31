@@ -83,7 +83,8 @@ function Help() {
                                     <a className="text-color-secondary hover:text-primary cursor-pointer">Con gratitud, El Equipo de Soporte K4NDY</a>
                                 </li>
                                 <li>
-                                    <Link href="https://t.me/+ngCrW98FWCw3ZWYx">Abrir Canal</Link>
+                                    {/*<Link href="https://t.me/+ngCrW98FWCw3ZWYx">Abrir Canal</Link>*/}
+                                    <Link href="https://t.me/+M6jowATvAA9iMjFh">Abrir Grupo</Link>
                                 </li>
                             </ul>
                         </div>
