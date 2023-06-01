@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import FileBase from 'react-file-base64';
 
@@ -14,9 +14,11 @@ import { ListBox } from 'primereact/listbox';
 import {useRouter} from "next/router";
 import {InputText} from "primereact/inputtext";
 import {InputTextarea} from "primereact/inputtextarea";
+import {Message} from "primereact/message";
 
 
 const Form = ({currentId, setCurrentId}) => {
+    const toast = useRef(null);
     const [postData, setPostData] = useState({title: '', message: '', cellphone: '', city: '', tags: [], selectedFile: []});
     console.log("Post: "+currentId);
     const post = useSelector((state) => (currentId ? state.posts.postsByUser.find((message) => message._id === currentId) : null));
@@ -48,18 +50,51 @@ const Form = ({currentId, setCurrentId}) => {
         if (post) setPostData(post);
     }, [post]);
 
+    const [errors, setErrors] = useState({});
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (currentId === 0) {
-            dispatch(createPost({...postData, name: user?.result?.name}, history));
-            clear();
-        } else {
-            console.log("Actualizar: "+postData);
-            dispatch(updatePost(currentId, {...postData, name: user?.result?.name}));
-            clear();
-            //refreshPage();
+        // Validar los campos del formulario
+        const formErrors = {};
+        if (!postData.title) {
+            formErrors.title = "El título es obligatorio";
         }
+        if (!postData.message) {
+            formErrors.message = "El contenido es obligatorio";
+        }
+        if (!postData.cellphone) {
+            formErrors.cellphone = "El número de celular es obligatorio";
+        }
+        if (!selectedCountry) {
+            formErrors.country = "Debes seleccionar una ciudad";
+        }
+
+        // Verificar si hay errores de validación
+        if (Object.keys(formErrors).length === 0) {
+            // No hay errores, enviar el formulario
+            // Aquí puedes llamar a la función que procesa los datos o realizar la acción deseada
+            // ...
+
+            if (currentId === 0) {
+                dispatch(createPost({...postData, name: user?.result?.name}, history));
+                clear();
+            } else {
+                console.log("Actualizar: "+postData);
+                dispatch(updatePost(currentId, {...postData, name: user?.result?.name}));
+                toast.current.show({severity:'success', summary: 'Felicidades', detail:'El anuncio se ha actualizado.', life: 3000});
+                clear();
+                //refreshPage();
+            }
+
+
+        } else {
+            // Hay errores, actualizar el estado de los errores
+            setErrors(formErrors);
+        }
+
+
     };
 
     if (!user?.result?.name) {
@@ -91,11 +126,12 @@ const Form = ({currentId, setCurrentId}) => {
     };
 
     const countries = [
-        {name: 'Ambato', code: 'Ambato'},
+        {name: 'Quito', code: 'Quito'},
+        {name: 'Guayaquil', code: 'Guayaquil'},
         {name: 'Cuenca', code: 'Cuenca'},
+        {name: 'Ambato', code: 'Ambato'},
         {name: 'Durán', code: 'Durán'},
         {name: 'Esmeraldas', code: 'Esmeraldas'},
-        {name: 'Guayaquil', code: 'Guayaquil'},
         {name: 'Ibarra', code: 'Ibarra'},
         {name: 'Latacunga', code: 'Latacunga'},
         {name: 'Loja', code: 'Loja'},
@@ -103,7 +139,6 @@ const Form = ({currentId, setCurrentId}) => {
         {name: 'Manta', code: 'Manta'},
         {name: 'Portoviejo', code: 'Portoviejo'},
         {name: 'Quevedo', code: 'Quevedo'},
-        {name: 'Quito', code: 'Quito'},
         {name: 'Riobamba', code: 'Riobamba'},
         {name: 'Salinas', code: 'Salinas'},
         {name: 'Sangolqui', code: 'Sangolqui'},
@@ -155,43 +190,62 @@ const Form = ({currentId, setCurrentId}) => {
                             <div className="mb-4">
                                 <h6>{currentId ? `Editando "${post?.title}"` : 'Crear anuncio'}</h6>
                             </div>
-
                             <div className="mb-4">
-                                <InputText name="title" label="Título" placeholder="Título" value={postData.title} onChange={(e) => setPostData({...postData, title: e.target.value})}/>
+                                <InputText
+                                    name="title"
+                                    label="Título"
+                                    placeholder="Título"
+                                    value={postData.title}
+                                    onChange={(e) => setPostData({...postData, title: e.target.value})}
+                                    required
+                                />
+                                {errors.title && <Message severity="error" text={errors.title}/>}
                             </div>
                             <div className="mb-4">
-                                <InputTextarea name="message" label="Contenido" rows={6} placeholder="Contenido" autoResize value={postData.message} onChange={(e) => setPostData({...postData, message: e.target.value})}></InputTextarea>
+                                <InputTextarea
+                                    name="message"
+                                    label="Contenido"
+                                    rows={6} placeholder="Contenido"
+                                    autoResize value={postData.message}
+                                    onChange={(e) => setPostData({...postData, message: e.target.value})}
+                                    required
+                                />
+                                {errors.message && <Message severity="error" text={errors.message}/>}
                             </div>
-
                             <div className="mb-4">
                                 <h6>Número celular - WhatsApp: </h6>
-                                <InputText name="cellphone" label="Célular" placeholder="Célular" value={postData.cellphone} onChange={(e) => setPostData({...postData, cellphone: e.target.value})}/>
+                                <InputText
+                                    name="cellphone"
+                                    label="Célular"
+                                    placeholder="Célular"
+                                    value={postData.cellphone}
+                                    onChange={(e) => setPostData({...postData, cellphone: e.target.value})}
+                                    required
+                                />
+                                {errors.cellphone && <Message severity="error" text={errors.cellphone}/>}
                             </div>
-
                             <div className="mb-4">
                                 <h6>Seleccionar la ciuada: </h6>
-
-                                {/*<Dropdown value={postData.city} options={countries} onChange={*/}
-                                {/*    (e) => {*/}
-                                {/*        setPostData({...postData, city: e.target.value});*/}
-
-                                {/*    }*/}
-                                {/*} optionLabel="name" placeholder="Seleccione una ciudad."/>*/}
-
-                                <ListBox filter value={selectedCountry} options={countries} onChange={onCountryChange} optionLabel="name" style={{ width: '15rem' }} listStyle={{ maxHeight: '250px' }} />
-
+                                <ListBox
+                                    filter
+                                    value={selectedCountry}
+                                    options={countries}
+                                    onChange={onCountryChange}
+                                    optionLabel="name"
+                                    style={{ width: '15rem' }}
+                                    listStyle={{ maxHeight: '250px' }}
+                                    required
+                                />
+                                {errors.country && <Message severity="error" text={errors.country}/>}
                             </div>
-                            {/* <div>
-                            <Chips name="tags" value={postData.tags}
-                            onAdd={(chip) => handleAddChip(chip)}
-                            onRemove={(chip) => handleDeleteChip(chip)}
-                            variant="outlined" />
-                        </div> */}
                             <div className="mb-4">
-                                <h6>Subir imágenes: </h6>
-                                <FileBase type="file" multiple={true} onDone={(base64) => handleAddImage(base64)}/>
+                                <h6>Debes subir al menos una imagen: </h6>
+                                <FileBase
+                                    type="file"
+                                    multiple={true}
+                                    onDone={(base64) => handleAddImage(base64)}
+                                />
                             </div>
-
                         </div>
                         <div className="flex justify-content-between gap-3">
                             <Button className="p-button-danger flex-1 p-button-outlined" label="Descartar" icon="pi pi-fw pi-trash" onClick={clear}></Button>
