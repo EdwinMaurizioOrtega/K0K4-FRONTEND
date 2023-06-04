@@ -9,6 +9,7 @@ import decode from "jwt-decode";
 import * as actionType from "../../constants/actionTypes";
 import Form from "./Form";
 import {useRouter} from "next/router";
+import EnviarMensaje from "../Telegram";
 
 const Anuncio = () => {
 
@@ -38,12 +39,27 @@ const Anuncio = () => {
 
     }, [dispatch, logout]);
 
+
+    const handleEnviarTelegram = (rowData) => {
+        console.dir(rowData);
+        EnviarMensaje({
+            _id: rowData._id,
+            title: rowData.title,
+            city: rowData.city,
+            selectedFile: rowData.selectedFile[0]
+
+        });
+    };
+
+
     const filaPostseleccionado = (rowData) => {
         //console.log(rowData._id);
         return (
             <div className="actions">
                 <Button icon="pi pi-check" className="p-button-rounded p-button-danger mt-2"
                         onClick={() => dispatch(topBannerUploadedIn(rowData._id, history))}>Subir al Top Banner</Button>
+
+                {/*<Button onClick={() => handleEnviarTelegram(rowData)}>Telegram</Button>*/}
                 <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2"
                         onClick={() => setCurrentId(rowData._id)}>
                     Editar
