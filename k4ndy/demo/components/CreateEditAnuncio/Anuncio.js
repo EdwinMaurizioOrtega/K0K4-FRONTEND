@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Button} from 'primereact/button';
 import {useDispatch, useSelector} from "react-redux";
 import {deletePost, getPostsByIdCreator, topBannerUploadedIn} from "../../actions/posts";
@@ -10,6 +10,7 @@ import * as actionType from "../../constants/actionTypes";
 import Form from "./Form";
 import {useRouter} from "next/router";
 import EnviarMensaje from "../Telegram";
+import {Toast} from "primereact/toast";
 
 const Anuncio = () => {
 
@@ -39,15 +40,38 @@ const Anuncio = () => {
 
     }, [dispatch, logout]);
 
-
+    const toastRef = useRef(null);
     const handleEnviarTelegram = (rowData) => {
-        console.dir(rowData);
-        EnviarMensaje({
-            _id: rowData._id,
-            title: rowData.title,
-            city: rowData.city,
-            selectedFile: rowData.selectedFile[0]
 
+        //console.dir(rowData);
+
+        const { _id, title, city, selectedFile } = rowData;
+
+        if (!_id || !title || !city || !selectedFile) {
+            // Mostrar mensaje de error en el Toast
+            toastRef.current.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Faltan campos obligatorios',
+                life: 3000 // Duración del Toast en milisegundos
+            });
+            return;
+        }
+
+        // Enviar el mensaje
+        EnviarMensaje({
+            _id: _id,
+            title: title,
+            city: city,
+            selectedFile: selectedFile[0]
+        });
+
+        // Mostrar mensaje de éxito en el Toast
+        toastRef.current.show({
+            severity: 'success',
+            summary: 'Éxito',
+            detail: 'Mensaje enviado correctamente',
+            life: 3000 // Duración del Toast en milisegundos
         });
     };
 
@@ -59,7 +83,7 @@ const Anuncio = () => {
                 <Button icon="pi pi-check" className="p-button-rounded p-button-danger mt-2"
                         onClick={() => dispatch(topBannerUploadedIn(rowData._id, history))}>Subir al Top Banner</Button>
 
-                {/*<Button onClick={() => handleEnviarTelegram(rowData)}>Telegram</Button>*/}
+                <Button onClick={() => handleEnviarTelegram(rowData)}>Telegram</Button>
                 <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2"
                         onClick={() => setCurrentId(rowData._id)}>
                     Editar
@@ -73,6 +97,8 @@ const Anuncio = () => {
 
     return (
         <>
+
+            <Toast ref={toastRef} />
             <Form currentId={currentId} setCurrentId={setCurrentId}/>
 
             <div className="card">

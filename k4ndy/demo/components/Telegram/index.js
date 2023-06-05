@@ -34,6 +34,16 @@ export default async function EnviarMensaje(props) {
     formData.append('chat_id', chatId);
     formData.append('photo', blob, 'image.jpg');
 
+    //Body message
+    const mensaje = title;
+    const linkUrl = 'https://ec.k4ndy.com/apps/blog/detail?id=' + _id;
+    const textCity = city;
+    const linkText = 'Ha actualizado su perfil';
+
+    const mensajeCompleto = `${mensaje} ${textCity} \n${linkUrl}: ${linkText}`;
+
+    formData.append('caption', mensajeCompleto);
+
     try {
         const response = await axios.post(
             `https://api.telegram.org/bot${botToken}/sendPhoto`,
@@ -46,38 +56,13 @@ export default async function EnviarMensaje(props) {
             }
         );
 
-        console.log('Image sent successfully');
+        //console.log('Image sent successfully');
     } catch (error) {
         if (error.response && error.response.data && error.response.data.description) {
-            console.error('Telegram API Error:', error.response.data.description);
+            //console.error('Telegram API Error:', error.response.data.description);
         } else {
-            console.error('Failed to send image:', error);
+            //console.error('Failed to send image:', error);
         }
     }
-
-
-    try {
-        //Body message
-        const mensaje = title;
-        const linkUrl = 'https://ec.k4ndy.com/apps/blog/detail?id='+_id;
-        const textCity = city;
-        const linkText = 'Ha actualizado su perfil';
-
-        const mensajeCompleto = `${mensaje} ${textCity} \n${linkUrl}: ${linkText}`;
-
-        await axios.get(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            params: {
-                chat_id: chatId,
-                text: mensajeCompleto,
-            },
-        });
-    } catch (error) {
-        if (error.response && error.response.data && error.response.data.description) {
-            console.error('Telegram API Error:', error.response.data.description);
-        } else {
-            console.error('Failed to send image:', error);
-        }
-    }
-
 
 }
