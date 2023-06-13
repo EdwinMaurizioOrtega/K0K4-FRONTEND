@@ -7,16 +7,15 @@ import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import decode from "jwt-decode";
 import * as actionType from "../../constants/actionTypes";
-import Form from "./Form";
 import {useRouter} from "next/router";
 import EnviarMensaje from "../Telegram";
 import {Toast} from "primereact/toast";
+import FormPublication from "./Form";
 
 const Anuncio = () => {
 
     const dispatch = useDispatch();
     const navigate = useRouter();
-    const history = useRouter();
     const [currentId, setCurrentId] = useState(0);
     const { postsByUser } = useSelector((state) => state.posts);
 
@@ -76,20 +75,34 @@ const Anuncio = () => {
     };
 
 
+    const handleDelete = (id) => {
+        dispatch(deletePost(id));
+        navigate.reload(); // Recargar la página
+    };
+
+
     const filaPostseleccionado = (rowData) => {
         //console.log(rowData._id);
         return (
             <div className="actions">
                 <Button icon="pi pi-check" className="p-button-rounded p-button-danger mt-2"
-                        onClick={() => dispatch(topBannerUploadedIn(rowData._id, history))}>Subir al Top Banner</Button>
+                        onClick={() => dispatch(topBannerUploadedIn(rowData._id, navigate))}>
+                    Subir al Top Banner
+                </Button>
 
-                <Button onClick={() => handleEnviarTelegram(rowData)}>Telegram</Button>
+                <Button onClick={() => handleEnviarTelegram(rowData)}>
+                    Telegram
+                </Button>
+
                 <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2"
                         onClick={() => setCurrentId(rowData._id)}>
                     Editar
                 </Button>
+
                 <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mt-2"
-                        onClick={() => dispatch(deletePost(rowData._id))}>Borrar</Button>
+                        onClick={()=>handleDelete(rowData._id)}>
+                    Borrar
+                </Button>
 
             </div>
         );
@@ -99,7 +112,7 @@ const Anuncio = () => {
         <>
 
             <Toast ref={toastRef} />
-            <Form currentId={currentId} setCurrentId={setCurrentId}/>
+            <FormPublication currentId={currentId} setCurrentId={setCurrentId}/>
 
             <div className="card">
                 <DataTable value={postsByUser} responsiveLayout="scroll" dataKey="_id">

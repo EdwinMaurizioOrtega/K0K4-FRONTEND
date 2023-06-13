@@ -10,17 +10,24 @@ import {Chips} from 'primereact/chips';
 
 import {Dropdown} from 'primereact/dropdown';
 
-import { ListBox } from 'primereact/listbox';
+import {ListBox} from 'primereact/listbox';
 import {useRouter} from "next/router";
 import {InputText} from "primereact/inputtext";
 import {InputTextarea} from "primereact/inputtextarea";
 import {Message} from "primereact/message";
 
 
-const Form = ({currentId, setCurrentId}) => {
+const FormPublication = ({currentId, setCurrentId}) => {
     const toast = useRef(null);
-    const [postData, setPostData] = useState({title: '', message: '', cellphone: '', city: '', tags: [], selectedFile: []});
-    console.log("Post: "+currentId);
+    const [postData, setPostData] = useState({
+        title: '',
+        message: '',
+        cellphone: '',
+        city: '',
+        tags: [],
+        selectedFile: []
+    });
+    console.log("Post: " + currentId);
     const post = useSelector((state) => (currentId ? state.posts.postsByUser.find((message) => message._id === currentId) : null));
     const dispatch = useDispatch();
     const [user, setUser] = useState(null);
@@ -28,6 +35,8 @@ const Form = ({currentId, setCurrentId}) => {
     const history = useRouter();
 
     const [selectedCountry, setSelectedCountry] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(false);
 
 
     useEffect(() => {
@@ -42,7 +51,7 @@ const Form = ({currentId, setCurrentId}) => {
     };
 
     function refreshPage() {
-        window.location.reload(false);
+        history.reload();
     }
 
     useEffect(() => {
@@ -73,19 +82,45 @@ const Form = ({currentId, setCurrentId}) => {
 
         // Verificar si hay errores de validación
         if (Object.keys(formErrors).length === 0) {
+
+            setIsLoading(true);
+
             // No hay errores, enviar el formulario
-            // Aquí puedes llamar a la función que procesa los datos o realizar la acción deseada
-            // ...
 
             if (currentId === 0) {
-                dispatch(createPost({...postData, name: user?.result?.name}, history));
-                clear();
+                //Nuevo
+                try {
+                    await dispatch(createPost({...postData, name: user?.result?.name}, history));
+                    clear();
+
+                } catch (error) {
+                    console.log('Error al crear el post:', error);
+                } finally {
+                    setIsLoading(false);
+                }
             } else {
-                console.log("Actualizar: "+postData);
-                dispatch(updatePost(currentId, {...postData, name: user?.result?.name}));
-                toast.current.show({severity:'success', summary: 'Felicidades', detail:'El anuncio se ha actualizado.', life: 3000});
-                clear();
-                //refreshPage();
+                //Actualizar
+                try {
+
+                    console.log("Actualizar: " + postData);
+                    await dispatch(updatePost(currentId, {...postData, name: user?.result?.name}));
+                    if (toast.current) {
+                        toast.current.show({
+                            severity: 'success',
+                            summary: 'Felicidades',
+                            detail: 'El anuncio se ha actualizado.',
+                            life: 3000
+                        });
+                    }
+
+                } catch (error) {
+                    console.log('Error al actualizar el post:', error);
+                } finally {
+                    setIsLoading(false);
+                    clear();
+                    refreshPage();
+                }
+
             }
 
 
@@ -232,8 +267,8 @@ const Form = ({currentId, setCurrentId}) => {
                                     options={countries}
                                     onChange={onCountryChange}
                                     optionLabel="name"
-                                    style={{ width: '15rem' }}
-                                    listStyle={{ maxHeight: '250px' }}
+                                    style={{width: '15rem'}}
+                                    listStyle={{maxHeight: '250px'}}
                                     required
                                 />
                                 {errors.country && <Message severity="error" text={errors.country}/>}
@@ -248,8 +283,24 @@ const Form = ({currentId, setCurrentId}) => {
                             </div>
                         </div>
                         <div className="flex justify-content-between gap-3">
-                            <Button className="p-button-danger flex-1 p-button-outlined" label="Descartar" icon="pi pi-fw pi-trash" onClick={clear}></Button>
-                            <Button type="submit" className="p-button-primary flex-1" label="Publicar" icon="pi pi-fw pi-check"></Button>
+                            <Button className="p-button-danger flex-1 p-button-outlined" label="Descartar"
+                                    icon="pi pi-fw pi-trash" onClick={clear}></Button>
+
+                            {isLoading ?
+                                <img src={`../../../layout/images/5db61a9d71fa2c97ffff30c83dcaa6e5.gif`} style={{
+                                    height: '100%',
+                                    display: "block",
+                                    marginLeft: "auto",
+                                    marginRight: "auto",
+                                    width: "10%"
+                                }} alt="Cargando..."/> :
+
+                                <Button type="submit" className="p-button-primary flex-1" label="Publicar"
+                                        icon="pi pi-fw pi-check" disabled={isLoading}>
+                                </Button>
+
+                            }
+
                         </div>
                     </form>
                 </div>
@@ -258,4 +309,4 @@ const Form = ({currentId, setCurrentId}) => {
     );
 };
 
-export default Form;
+export default FormPublication;
