@@ -33,7 +33,15 @@ const Anuncio = () => {
             if (decodedToken.exp * 1000 < Date.now()) {
                 logout();
             } else {
-                dispatch(getPostsByIdCreator(storedProfile.result._id));
+                const { _id, googleId } = storedProfile.result;
+
+                if (_id) {
+                    dispatch(getPostsByIdCreator(_id));
+                }
+
+                if (googleId) {
+                    dispatch(getPostsByIdCreator(googleId));
+                }
             }
         }
 

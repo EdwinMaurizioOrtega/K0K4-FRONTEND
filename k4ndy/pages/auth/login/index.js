@@ -9,6 +9,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {signin} from "../../../demo/actions/auth";
 import {Messages} from "primereact/messages";
 import Head from "next/head";
+import GoogleLogin from "react-google-login";
+import {Divider} from "primereact/divider";
+import {AUTH} from "../../../demo/constants/actionTypes";
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
@@ -72,17 +75,15 @@ function Login() {
         try {
             dispatch({ type: AUTH, data: { result, token } });
 
-            history('/');
+            history.push('/');
         } catch (error) {
             console.log(error);
         }
     };
 
-    const googleError = () => console.log('Google Sign In was unsuccessful. Try again later');
+    const googleError = () => console.log('El inicio de sesión de Google no tuvo éxito. Vuelva a intentarlo más tarde');
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-
 
 
     return (
@@ -159,6 +160,18 @@ function Login() {
                         <Messages ref={message} />
                         {/*<Button label="Log In" className="w-full" onClick={() => router.push('/dashboard-banking/')}></Button>*/}
                         <Button type="submit" label="Acceder" className="w-full"></Button>
+                        <Divider/>
+                        {/*<GoogleLogin*/}
+                        {/*    clientId="564033717568-bu2nr1l9h31bhk9bff4pqbenvvoju3oq.apps.googleusercontent.com"*/}
+                        {/*    // clientId="25547591021-fi0tqp65hhmautl7hptgl0dpj63c0ach.apps.googleusercontent.com"*/}
+                        {/*    render={(renderProps) => (*/}
+                        {/*        <Button label="Regístrese con Google" onClick={renderProps.onClick} disabled={renderProps.disabled} >*/}
+                        {/*        </Button>*/}
+                        {/*    )}*/}
+                        {/*    onSuccess={googleSuccess}*/}
+                        {/*    onFailure={googleError}*/}
+                        {/*    cookiePolicy="single_host_origin"*/}
+                        {/*/>*/}
                     </div>
 
 
