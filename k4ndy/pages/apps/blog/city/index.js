@@ -4,19 +4,26 @@ import CustomHeader from "../../../../demo/components/UserHeader/CustomHeader";
 import CreatorOrTag from "../../../../demo/components/CreatorOrTag";
 import SearchCity from "../../../../demo/components/SearchCity";
 import TopBanner from "../../../../demo/components/TopBanner";
+import Head from "next/head";
 
-function City (){
+function City() {
 
 
     return (
-        <div className="landing-wrapper">
-            <CustomHeader/>
+        <>
+            <Head>
+                <title>Ciudad</title>
+            </Head>
+            <div className="landing-wrapper">
+                <CustomHeader/>
 
-            <SearchCity/>
+                <SearchCity/>
 
-            <TopBanner/>
-            <CreatorOrTag/>
-        </div>
+                <TopBanner/>
+                <CreatorOrTag/>
+            </div>
+        </>
+
     );
 
 }
@@ -26,7 +33,7 @@ City.getLayout = function getLayout(page) {
     return (
         <React.Fragment>
             {page}
-            <AppConfig minimal />
+            <AppConfig minimal/>
         </React.Fragment>
     );
 };

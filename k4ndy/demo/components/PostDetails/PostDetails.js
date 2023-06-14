@@ -9,6 +9,7 @@ import {useParams} from "next/navigation";
 import {Router, useRouter} from "next/router";
 import {PhotoService} from "../../service/PhotoService";
 import Link from "next/link";
+import Head from "next/head";
 
 const PostDetails = () => {
 
@@ -58,8 +59,10 @@ const PostDetails = () => {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
     return (
-
-
+        <>
+        <Head>
+            <title>{post.title}</title>
+        </Head>
         <div className="card">
             <div className="flex justify-content-between flex-column-reverse md:flex-row align-items-center">
                 <div>
@@ -141,7 +144,7 @@ const PostDetails = () => {
             {/*    </div>*/}
             {/*)}*/}
         </div>
-
+        </>
     );
 };
 

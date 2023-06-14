@@ -8,6 +8,7 @@ import { LayoutContext } from '../../../layout/context/layoutcontext';
 import {useDispatch, useSelector} from "react-redux";
 import {signin} from "../../../demo/actions/auth";
 import {Messages} from "primereact/messages";
+import Head from "next/head";
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
@@ -86,6 +87,9 @@ function Login() {
 
     return (
         <>
+            <Head>
+                <title>Acceder</title>
+            </Head>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" className="fixed left-0 top-0 min-h-screen min-w-screen" preserveAspectRatio="none">
                 <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="-2" width="422" height="523">
 

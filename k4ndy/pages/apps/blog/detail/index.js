@@ -2,14 +2,19 @@ import React from 'react';
 import PostDetails from "../../../../demo/components/PostDetails/PostDetails";
 import AppConfig from "../../../../layout/AppConfig";
 import CustomHeader from "../../../../demo/components/UserHeader/CustomHeader";
+import Head from "next/head";
 
 function BlogDetail() {
 
     return (
-        <div className="landing-wrapper">
-            <CustomHeader/>
-            <PostDetails/>
-        </div>
+        <>
+            <div className="landing-wrapper">
+                <CustomHeader/>
+                <PostDetails/>
+            </div>
+
+        </>
+
     );
 }
 

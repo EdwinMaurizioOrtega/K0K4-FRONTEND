@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Messages} from "primereact/messages";
 import {signup} from "../../../demo/actions/auth";
 import Link from "next/link";
+import Head from "next/head";
 
 const initialState = {username: '', email: '', password: '', confirmPassword: ''};
 
@@ -57,6 +58,9 @@ function Register() {
 
     return (
         <>
+            <Head>
+                <title>Registrarse</title>
+            </Head>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800"
                  className="fixed left-0 top-0 min-h-screen min-w-screen" preserveAspectRatio="none">
                 <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="-2" width="422" height="523">

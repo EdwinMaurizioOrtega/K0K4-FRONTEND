@@ -2,15 +2,22 @@ import React from "react";
 import AppConfig from "../../../../layout/AppConfig";
 import CustomHeader from "../../../../demo/components/UserHeader/CustomHeader";
 import CreatorOrTag from "../../../../demo/components/CreatorOrTag";
+import Head from "next/head";
 
 function Creator (){
 
 
     return (
-        <div className="landing-wrapper">
-            <CustomHeader/>
-            <CreatorOrTag/>
-        </div>
+        <>
+            <Head>
+                <title>Creador</title>
+            </Head>
+            <div className="landing-wrapper">
+                <CustomHeader/>
+                <CreatorOrTag/>
+            </div>
+        </>
+
     );
 
 }

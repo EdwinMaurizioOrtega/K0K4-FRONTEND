@@ -110,7 +110,6 @@ const Anuncio = () => {
 
     return (
         <>
-
             <Toast ref={toastRef} />
             <FormPublication currentId={currentId} setCurrentId={setCurrentId}/>
 

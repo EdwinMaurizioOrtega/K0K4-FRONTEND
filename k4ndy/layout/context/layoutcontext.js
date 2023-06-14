@@ -77,7 +77,7 @@ export const LayoutProvider = (props) => {
         <LayoutContext.Provider value={value}>
             <>
                 <Head>
-                    <title>K4NDY</title>
+                    {/*<title>K4NDY</title>*/}
                     <meta charSet="UTF-8" />
                     <meta name="theme-color" content="#000000" />
                     <meta name="description" content="Encuentros, Noviazgo y Citas: Anuncios gratis para adultos." />

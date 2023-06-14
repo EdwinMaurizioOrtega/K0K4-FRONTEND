@@ -17,6 +17,7 @@ import SearchCity from "../demo/components/SearchCity";
 import HotBanner from "../demo/components/HotBanner";
 import TopBanner from "../demo/components/TopBanner";
 import Link from "next/link";
+import Head from "next/head";
 
 function useQuery() {
     return new URLSearchParams(useRouter().query);
@@ -91,6 +92,9 @@ function LandingPage() {
 
     return (
         <>
+            <Head>
+                <title>Anuncios clasificados gratis para adultos en Ecuador - k4ndy</title>
+            </Head>
         <HotBanner/>
         <div className="relative overflow-hidden flex flex-column justify-content-center">
             <div className="bg-circle opacity-50" style={{top: '-200px', left: '-700px'}}></div>
