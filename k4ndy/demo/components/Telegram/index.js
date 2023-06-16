@@ -40,7 +40,7 @@ export default async function EnviarMensaje(props) {
     const textCity = city;
     const linkText = 'Ha actualizado su perfil';
 
-    const mensajeCompleto = `${mensaje} ${textCity} \n${linkUrl}: ${linkText}`;
+    const mensajeCompleto = `${textCity} ${mensaje} \n${linkUrl}: ${linkText}`;
 
     formData.append('caption', mensajeCompleto);
 
