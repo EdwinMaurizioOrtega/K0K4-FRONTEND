@@ -162,7 +162,7 @@ function Register() {
                         </span>
                             <span className="p-input-icon-left w-full mb-4">
                             <i className="pi pi-envelope"></i>
-                            <InputText keyfilter={/[^s]/} id="email" name="email" type="text"
+                            <InputText id="email" name="email" type="text"
                                        className="w-full md:w-25rem" placeholder="Correo electrónico"
                                        onKeyUp={handleChange}/>
                         </span>
