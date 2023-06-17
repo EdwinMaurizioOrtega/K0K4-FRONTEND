@@ -78,7 +78,7 @@ const PostDetails = () => {
                 </span>
                         <span className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">
                     <i className="pi pi-whatsapp text-primary mr-2"></i>
-                    <span className="text-900" onClick={() => openInNewTab('https://wa.me/593' + post.cellphone + '?text=' + post.title)}>WhatsApp</span>
+                    <span className="text-900" onClick={() => openInNewTab(`https://wa.me/593${post.cellphone}?text=Hola, acabo de ver tu anuncio en K4ndy, "${post.title.substring(0, 25)}(…)", y me gustaría quedar contigo.`)}>WhatsApp</span>
                 </span>
                     </div>
                 </div>
