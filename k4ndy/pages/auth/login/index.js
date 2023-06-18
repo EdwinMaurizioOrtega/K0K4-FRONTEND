@@ -14,6 +14,7 @@ import {AUTH} from "../../../demo/constants/actionTypes";
 import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
 
 import decoded from 'jwt-decode';
+import Link from "next/link";
 
 
 const initialState = {firstName: '', lastName: '', email: '', password: '', confirmPassword: ''};
@@ -218,7 +219,7 @@ function Login() {
                             {/*<Button label="Log In" className="w-full" onClick={() => router.push('/dashboard-banking/')}></Button>*/}
                             <Button type="submit" label="Acceder" className="w-full"></Button>
                             <Divider/>
-                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <div className="mb-4" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
 
                             <GoogleOAuthProvider
                                 clientId="657855516344-6h394rg7v9c3ibo9e787ja4v6bckql7s.apps.googleusercontent.com">
@@ -229,7 +230,12 @@ function Login() {
                                 />
                             </GoogleOAuthProvider>
                             </div>
-
+                            <span className="font-medium text-600" style={{textAlign: "center"}}>
+                                ¿Aún no tienes una cuenta?
+                            <Link
+                                className="font-semibold cursor-pointer text-900 hover:text-primary transition-colors transition-duration-300"
+                                href="/auth/register">¡Regístrate!</Link>
+                            </span>
                         </div>
 
 
