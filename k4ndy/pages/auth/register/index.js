@@ -191,7 +191,7 @@ function Register() {
                             <span className="font-medium text-600">
                             ¿Ya tienes una cuenta? <Link
                                 className="font-semibold cursor-pointer text-900 hover:text-primary transition-colors transition-duration-300"
-                                href="/auth/login">Acceso</Link>
+                                href="/auth/login">Acceder</Link>
                         </span>
                         </div>
                     </form>

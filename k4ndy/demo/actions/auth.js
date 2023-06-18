@@ -1,11 +1,11 @@
 import {AUTH} from '../constants/actionTypes';
-import * as api from '../api/index.js';
+import { signIn, signUp } from '../api';
 
 // Iniciar sesión
 export const signin = (formData, router) => async (dispatch) => {
 
     try {
-        const {data} = await api.signIn(formData);
+        const {data} = await signIn(formData);
         //console.log("los datos estan llegando: " + data)
         dispatch({type: AUTH, data});
         router.push('/');
@@ -20,7 +20,7 @@ export const signin = (formData, router) => async (dispatch) => {
 //Reguistrarse
 export const signup = (formData, router) => async (dispatch) => {
     try {
-        const {data} = await api.signUp(formData);
+        const {data} = await signUp(formData);
 
         dispatch({type: AUTH, data});
 
