@@ -28,7 +28,13 @@ function Register() {
     const handleChange = (e) => {
         console.log("Name: " + e.target.name);
         console.log("Value: " + e.target.value);
-        setForm({...form, [e.target.name]: e.target.value});
+        //Convertimos el email en solo minúsculas
+        if (e.target.name === "email") {
+            setForm({...form, [e.target.name]: e.target.value.toLowerCase()});
+        }else {
+            setForm({...form, [e.target.name]: e.target.value});
+        }
+
     }
 
     const handleSubmit = (e) => {
@@ -54,6 +60,12 @@ function Register() {
             message.current.show({severity: 'warn', content: 'Hola! 👋🏻 Todos los datos son necesarios.'});
         }
 
+    };
+
+    //Aplicar los cambios en tiempo real en el InputText Emal
+    const handleChangeAux = (e) => {
+        const lowercaseValue = e.target.value.toLowerCase();
+        setForm({ ...form, [e.target.name]: lowercaseValue });
     };
 
     return (
@@ -164,6 +176,8 @@ function Register() {
                             <i className="pi pi-envelope"></i>
                             <InputText id="email" name="email" type="text"
                                        className="w-full md:w-25rem" placeholder="Correo electrónico"
+                                       value={form.email}
+                                       onChange={handleChangeAux}
                                        onKeyUp={handleChange}/>
                         </span>
                             <span className="p-input-icon-left w-full mb-4">

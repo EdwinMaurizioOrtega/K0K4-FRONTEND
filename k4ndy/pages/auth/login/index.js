@@ -90,7 +90,18 @@ function Login() {
 
     const googleError = () => console.log('El inicio de sesión de Google no tuvo éxito. Vuelva a intentarlo más tarde');
 
-    const handleChange = (e) => setForm({...form, [e.target.name]: e.target.value});
+    const handleChangePassword = (e) => setForm({...form, [e.target.name]: e.target.value});
+
+    //Unicamente para el caso del correo.
+    const handleChangeEmail = (e) => {
+        const lowercaseValue = e.target.value.toLowerCase();
+        setForm({ ...form, [e.target.name]: lowercaseValue });
+    };
+
+    const handleKeyUpEmail = (e) => {
+        const lowercaseValue = e.target.value.toLowerCase();
+        setForm({ ...form, [e.target.name]: lowercaseValue });
+    };
 
     return (
         <>
@@ -197,12 +208,14 @@ function Login() {
                         <span className="p-input-icon-left w-full mb-4">
                             <i className="pi pi-envelope"></i>
                             <InputText id="email" type="text" name="email" className="w-full md:w-25rem"
-                                       placeholder="Correo electrónico" onChange={handleChange}/>
+                                       placeholder="Correo electrónico" value={form.email}
+                                       onChange={handleChangeEmail}
+                                       onKeyUp={handleKeyUpEmail}/>
                         </span>
                             <span className="p-input-icon-left w-full mb-4">
                             <i className="pi pi-lock"></i>
                             <InputText id="password" type="password" name="password" className="w-full md:w-25rem"
-                                       placeholder="Contraseña" onChange={handleChange}/>
+                                       placeholder="Contraseña" onChange={handleChangePassword}/>
                         </span>
                             <div className="mb-4 flex flex-wrap gap-3">
                                 <div>
