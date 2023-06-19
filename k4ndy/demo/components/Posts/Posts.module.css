@@ -1,0 +1,31 @@
+.figure {
+    margin: 0;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    margin-bottom: 10px;
+    break-inside: avoid;
+}
+
+.container {
+    column-count: 3;
+    column-gap: 10px;
+}
+
+/* Media queries para ajustar el diseño en diferentes tamaños de pantalla */
+@media screen and (max-width: 600px) {
+    .container {
+        column-count: 1;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 900px) {
+    .container {
+        column-count: 2;
+    }
+}
+
+@media screen and (min-width: 901px) and (max-width: 1200px) {
+    .container {
+        column-count: 3;
+    }
+}

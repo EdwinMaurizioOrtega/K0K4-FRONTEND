@@ -114,11 +114,7 @@ function LandingPage() {
 
                             <div className="col-12">
 
-
-
                                     <TopBanner/>
-
-                                <div className="card">
 
                                     <Posts setCurrentId={setCurrentId}/>
                                     {(!searchQuery && !tags.length) && (
@@ -127,13 +123,10 @@ function LandingPage() {
                                         </div>
                                     )}
 
-                                </div>
                             </div>
-
 
                         </div>
                     </div>
-
 
                     <div className="grid justify-content-between my-6 pt-4 md:my-8">
                         <div className="col-12 md:col-2 text-center md:text-left">

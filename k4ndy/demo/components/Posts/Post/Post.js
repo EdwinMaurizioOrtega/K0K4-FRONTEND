@@ -85,7 +85,7 @@ const Post = ({post, setCurrentId}) => {
     }
 
     return (
-        <div key={post._id} className="p-3">
+        <div key={post._id}>
             <div className="relative" onClick={openPost}>
                 <Galleria value={post.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions}
                           numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}}
@@ -93,19 +93,24 @@ const Post = ({post, setCurrentId}) => {
                           showIndicators></Galleria>
             </div>
             <div className="p-3">
-                <p className="text-700 text-lg mt-0 mb-5">
-                </p>
 
                 <span className="flex align-items-center text-900">
                         <i className="pi pi-clock mr-2"></i>
                         <span className="font-semibold">{moment(post.createdAt).fromNow()}</span>
                 </span>
 
-                <div className="text-900 font-semibold text-xl mb-3">{post.title}</div>
+                <div>
+                    <Link href={`/apps/blog/city?name=${post.city}`}
+                          className="text-lg mt-5 mb-5 font-bold text-900 text-center white-space-nowrap underline">
+                        {` ${post.city}`}
+                    </Link>
+                </div>
 
-                <Link href={`/apps/blog/city?name=${post.city}`} className="mt-3 font-bold text-900 text-center white-space-nowrap">
-                    {` ${post.city}`}
-                </Link>
+
+                <Link href={`/apps/blog/detail?id=${post._id}`}
+                      className="text-900 font-semibold text-xl mb-3">{post.title}</Link>
+
+
                 <p className="text-700 text-lg mt-0 mb-5">{post.message.split(' ').splice(0, 20).join(' ')}...</p>
 
                 <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
@@ -118,8 +123,8 @@ const Post = ({post, setCurrentId}) => {
                     <span
                         className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">
                         <i className="pi pi-whatsapp mr-2"></i>
-                        <span className="font-semibold"
-                              onClick={() => openInNewTab(`https://wa.me/593${post.cellphone}?text=Hola, acabo de ver tu anuncio en K4ndy, "${post.title.substring(0, 25)}(…)", y me gustaría quedar contigo.`)}>WhatsApp</span>
+                        <Link className="font-semibold" target="_blank" style={{color: "white"}}
+                              href={`https://wa.me/593${post.cellphone}?text=Hola, acabo de ver tu anuncio en K4ndy, "${post.title.substring(0, 25)}(…)", y me gustaría quedar contigo.`}>WhatsApp</Link>
                     </span>
                     <span className="flex align-items-center text-900">
                         <Button icon="pi pi-fw pi-thumbs-up-fill"
