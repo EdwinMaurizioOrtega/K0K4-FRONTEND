@@ -145,20 +145,56 @@ const FormPublication = ({currentId, setCurrentId}) => {
         setPostData({...postData, tags: postData.tags.filter((tag) => tag !== chipToDelete)});
     };
 
-    const handleAddImage = (img) => {
-        //      console.log(img[0].base64);
-        const pictutes = [];
+    // const handleAddImage = (img) => {
+    //     //      console.log(img[0].base64);
+    //     const pictutes = [];
+    //
+    //     img.forEach((element) => {
+    //         //console.log(element.base64);
+    //         pictutes.push(element.base64);
+    //         //console.log(pictutes);
+    //     });
+    //
+    //     //console.log(pictutes);
+    //     setPostData({...postData, selectedFile: pictutes});
+    //     console.log(postData);
+    // };
 
-        img.forEach((element) => {
-            //console.log(element.base64);
-            pictutes.push(element.base64);
-            //console.log(pictutes);
-        });
+    const handleAddImage = async (img) => {
+        const pictures = []; // Array para almacenar las imágenes comprimidas
 
-        //console.log(pictutes);
-        setPostData({...postData, selectedFile: pictutes});
+        for (const element of img) {
+            const compressedImage = await compressToJpeg(element.base64, 500); // Comprimir la imagen con ancho máximo de 500 píxeles
+            pictures.push(compressedImage); // Agregar la imagen comprimida al array
+        }
+
+        setPostData({ ...postData, selectedFile: pictures }); // Actualizar el estado con las imágenes comprimidas
         console.log(postData);
     };
+
+    const compressToJpeg = (base64, maxWidth) => {
+        return new Promise((resolve) => {
+            const img = new Image(); // Crear un elemento de imagen
+
+            img.onload = () => {
+                const aspectRatio = img.width / img.height; // Calcular la proporción de aspecto de la imagen original
+                const canvas = document.createElement('canvas'); // Crear un elemento de lienzo (canvas)
+                const ctx = canvas.getContext('2d'); // Obtener el contexto de dibujo del lienzo
+
+                canvas.width = maxWidth; // Establecer el ancho del lienzo al valor máximo deseado
+                canvas.height = maxWidth / aspectRatio; // Calcular la altura proporcional en base a la proporción de aspecto
+
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Dibujar la imagen original en el lienzo con las dimensiones ajustadas
+
+                const quality = 0.7; // Calidad de compresión deseada
+                const imageData = canvas.toDataURL('image/jpeg', quality); // Obtener los datos de la imagen comprimida en formato base64
+                resolve(imageData); // Resolver la promesa con los datos de la imagen comprimida
+            };
+
+            img.src = base64; // Establecer la fuente de la imagen como los datos base64 de la imagen original
+        });
+    };
+
 
     const countries = [
         {name: 'Quito', code: 'Quito'},
