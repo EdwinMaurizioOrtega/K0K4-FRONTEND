@@ -10,7 +10,7 @@ export const getPosts = async (req, res) => {
     const { page, category, city } = req.query;
 
     try {
-        const LIMIT = 3;
+        const LIMIT = 30;
         const startIndex = (Number(page) - 1) * LIMIT; // obtener el índice de inicio de cada página
 
         let query = {};
