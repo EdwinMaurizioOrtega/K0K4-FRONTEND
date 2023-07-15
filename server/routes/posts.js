@@ -26,6 +26,7 @@ router.get('/creator', getPostsByCreator);
 router.get('/city', getPostsByCity);
 router.get('/id_creator', getPostsByIdCreator);
 router.get('/search', getPostsBySearch);
+//Obtiene los anuncios
 router.get('/', getPosts);
 router.get('/:id', getPost);
 

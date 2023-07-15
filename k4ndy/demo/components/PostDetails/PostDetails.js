@@ -15,15 +15,15 @@ const PostDetails = () => {
 
     const {post, posts, isLoading} = useSelector((state) => state.posts);
     const dispatch = useDispatch();
-    const history = useRouter();
+    const router = useRouter();
     //const {id} = useParams();
-    const {id} = history.query;
+    const {anuncio} = router.query;
     // const galleriaService = new PhotoService();
     const [images, setImages] = useState(null);
 
     useEffect(() => {
-        dispatch(getPost(id));
-    }, [id]);
+        dispatch(getPost(anuncio));
+    }, [anuncio]);
 
     useEffect(() => {
         if (post) {
@@ -38,7 +38,7 @@ const PostDetails = () => {
 
     if (!post) return null;
 
-    const openPost = (_id) => history.push(`/posts/${_id}`);
+    const openPost = (_id) => router.push(`/posts/${_id}`);
 
     if (isLoading) {
         return (
@@ -103,7 +103,7 @@ const PostDetails = () => {
             {/*<div className="flex flex-column sm:flex-row my-8 w-full gap-3">*/}
             {/*<Button icon="pi pi-twitter" className="p-button-secondary" label="Twitter"></Button>*/}
             {/*<Button icon="pi pi-facebook" className="p-button-secondary" label="Facebook"></Button>*/}
-            {/*<Button onClick={() => history('/apps/blog/edit')} icon="pi pi-pencil" className="sm:ml-auto" label="Edit Post"></Button>*/}
+            {/*<Button onClick={() => router('/apps/blog/edit')} icon="pi pi-pencil" className="sm:ml-auto" label="Edit Post"></Button>*/}
             {/*</div>*/}
 
             {/*<img src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt="Image" className="w-full"/>*/}

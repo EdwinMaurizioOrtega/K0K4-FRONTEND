@@ -5,15 +5,26 @@ import PostMessage from '../models/postMessage.js';
 
 const router = express.Router();
 
+//Obtiene los anuncios
 export const getPosts = async (req, res) => {
-    const { page } = req.query;
+    const { page, category, city } = req.query;
 
     try {
-        const LIMIT = 30;
-        const startIndex = (Number(page) - 1) * LIMIT; // get the starting index of every page
+        const LIMIT = 3;
+        const startIndex = (Number(page) - 1) * LIMIT; // obtener el índice de inicio de cada página
 
-        const total = await PostMessage.countDocuments({});
-        const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
+        let query = {};
+
+        if (typeof category !== 'undefined' && category !== 'undefined') {
+            query.category = category; // agregar la categoría a la consulta si está presente
+        }
+
+        if (typeof city !== 'undefined' && city !== 'undefined') {
+            query.city = city; // Agregar la condición de la ciudad a la consulta si está presente
+        }
+
+        const total = await PostMessage.countDocuments(query);
+        const posts = await PostMessage.find(query).sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
 
         res.json({ data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
     } catch (error) {

@@ -26,10 +26,11 @@ export const getPost = (id) => async (dispatch) => {
   }
 };
 
-export const getPosts = (page) => async (dispatch) => {
+
+export const getPosts = (page, category, city) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data: { data, currentPage, numberOfPages } } = await api.fetchPosts(page);
+    const { data: { data, currentPage, numberOfPages } } = await api.fetchPosts(page, category, city);
 
     dispatch({ type: FETCH_ALL, payload: { data, currentPage, numberOfPages } });
     dispatch({ type: END_LOADING });
@@ -93,7 +94,7 @@ export const createPost = (post, history) => async (dispatch) => {
 
     dispatch({ type: CREATE, payload: data });
 
-    history.push(`/apps/blog/detail?id=${data._id}`);
+    history.push(`/${data.category}/${data.city}/${data._id}`);
   } catch (error) {
     console.log(error);
   }

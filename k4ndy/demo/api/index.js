@@ -12,7 +12,7 @@ API.interceptors.request.use((req) => {
 });
 
 export const fetchPost = (id) => API.get(`/posts/${id}`);
-export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
+export const fetchPosts = (page, category, city) => API.get(`/posts?page=${page}&category=${category}&city=${city}`);
 
 //Listar los Post que van en el Carousel / Slider
 export const fetchPostsInCarouselSlider = () => API.get(`/posts/in_carousel`).then((res) => res.data.data);

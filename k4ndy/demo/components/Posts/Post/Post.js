@@ -107,7 +107,7 @@ const Post = ({post, setCurrentId}) => {
                 </div>
 
 
-                <Link href={`/apps/blog/detail?id=${post._id}`}
+                <Link href={`/${post.category}/${post.city}/${post._id}`}
                       className="text-900 font-semibold text-xl mb-3">{post.title}</Link>
 
 

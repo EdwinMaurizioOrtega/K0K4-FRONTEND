@@ -4,7 +4,7 @@ import { Paginator } from 'primereact/paginator';
 import { getPosts } from '../../actions/posts';
 import { useRouter } from 'next/router';
 
-const Paginate = ({ page }) => {
+const Paginate = ({ page, categoria, ciudad }) => {
     const { numberOfPages } = useSelector((state) => state.posts);
     const dispatch = useDispatch();
     const router = useRouter();
@@ -13,7 +13,7 @@ const Paginate = ({ page }) => {
 
     const handlePageChange = async (event) => {
         const nextPage = event.page + 1;
-        const href = `/?page=${nextPage}`;
+        const href = `/${categoria}/?page=${nextPage}`;
 
         try {
             await router.push(href);
@@ -24,11 +24,14 @@ const Paginate = ({ page }) => {
         }
     };
 
+    console.log("categoria: "+categoria);
+
     useEffect(() => {
         if (page != null) {
-            dispatch(getPosts(page));
+            //Página de anuncions 30/P
+            dispatch(getPosts(page, categoria, ciudad));
         }
-    }, [dispatch, page]);
+    }, [dispatch, page, categoria, ciudad]);
 
     return (
         <Paginator
