@@ -73,8 +73,8 @@ const SearchCity = () => {
     };
 
     return (
-        <div className=" flex justify-content-center">
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row gap-2">
+        <div className="flex justify-content-center">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-column">
                 <Toast ref={toast}/>
                 <Controller
                     name="category"
