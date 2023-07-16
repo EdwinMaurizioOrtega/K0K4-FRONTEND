@@ -52,7 +52,7 @@ const Anuncio = () => {
 
         //console.dir(rowData);
 
-        const { _id, title, city, selectedFile } = rowData;
+        const { _id, title, city, category, selectedFile } = rowData;
 
         if (!_id || !title || !city || !selectedFile) {
             // Mostrar mensaje de error en el Toast
@@ -69,6 +69,7 @@ const Anuncio = () => {
         EnviarMensaje({
             _id: _id,
             title: title,
+            category: category,
             city: city,
             selectedFile: selectedFile[0]
         });
@@ -98,9 +99,10 @@ const Anuncio = () => {
                     Subir al Top Banner
                 </Button>
 
-                <Button onClick={() => handleEnviarTelegram(rowData)}>
-                    Telegram
-                </Button>
+                {/*Feature Premium*/}
+                {/*<Button onClick={() => handleEnviarTelegram(rowData)}>*/}
+                {/*    Telegram*/}
+                {/*</Button>*/}
 
                 <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2"
                         onClick={() => setCurrentId(rowData._id)}>

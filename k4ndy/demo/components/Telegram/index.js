@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default async function EnviarMensaje(props) {
 
-    const {selectedFile, _id, title, city} = props;
+    const {selectedFile, _id, title, category, city} = props;
 
     const botToken = '5948269042:AAH47R9kjKPexgYokAMRxYgF8z5ZrSF7bYc';
     const chatId = '-1001876640043';
@@ -36,7 +36,7 @@ export default async function EnviarMensaje(props) {
 
     //Body message
     const mensaje = title;
-    const linkUrl = 'https://ec.k4ndy.com/apps/blog/detail?id=' + _id;
+    const linkUrl = 'https://ec.k4ndy.com/'+ category + '/' + city + "/" + _id;
     const textCity = city;
     const linkText = 'Ha actualizado su perfil';
 
