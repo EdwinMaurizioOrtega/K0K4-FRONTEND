@@ -125,7 +125,7 @@ function LandingPage() {
                                     {/*<button onClick={handleClick}>Ir a la página de Escorts</button>*/}
 
 
-                                    <div className="card text-center">
+                                    <div className="card text-center" style={{padding: "unset!important"}}>
                                         <div className="font-bold text-5xl text-900 mb-3">Encuentros calientes en tu
                                             ciudad
                                         </div>
