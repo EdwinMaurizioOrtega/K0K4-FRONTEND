@@ -173,15 +173,30 @@ export const updatePost = async (req, res) => {
     res.json(updatedPost);
 }
 
-export const deletePost = async (req, res) => {
-    const {id} = req.params;
+// Utiliza la sintaxis de función flecha y elimina la palabra clave 'async' para mejorar la legibilidad y el rendimiento.
+export const deletePost = (req, res) => {
+    const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    // Usa la función 'isValidObjectId' en lugar de 'mongoose.Types.ObjectId.isValid'
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(404).send(`No post with id: ${id}`);
+    }
 
-    await PostMessage.findByIdAndRemove(id);
+    // Utiliza el método 'deleteOne' en lugar de 'findByIdAndRemove' para una operación más eficiente.
+    PostMessage.deleteOne({ _id: id }, (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Something went wrong.' });
+        }
 
-    res.json({message: "Post deleted successfully."});
-}
+        // Verifica si algún documento fue eliminado.
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ message: `No post with id: ${id}` });
+        }
+
+        return res.json({ message: 'Post deleted successfully.' });
+    });
+};
 
 export const likePost = async (req, res) => {
     const {id} = req.params;
