@@ -13,21 +13,25 @@ const HotBanner = () => {
     // console.log(router.query);
     const {name} = query;
     const dispatch = useDispatch();
-
-
     const history = useRouter();
     //Ejemplo sin utilizar Redux React
-    const [postsInCarousel, setProducts, isLoading] = useState([])
+    const [postsInCarousel, setProducts] = useState([])
+    const [isLoading, setIsLoading] = useState(true); // Estado para manejar la carga
+
     const productService = new CarouselPosts();
     useEffect(() => {
+        setIsLoading(true); // Antes de cargar los datos, establecer isLoading a true
 
 
         if (pathname.endsWith('/city')) {
             // dispatch(getPostsByCity(name));
             productService.getCarouselPostByCity(name).then(data => setProducts(data.slice(0, 9)));
             // console.log("hola hola");
+            setIsLoading(false); // En caso de error, también debes establecer isLoading a false
+
         } else {
             productService.getProductsSmall().then(data => setProducts(data.slice(0, 9)));
+            setIsLoading(false); // En caso de error, también debes establecer isLoading a false
 
         }
 
@@ -133,8 +137,8 @@ const HotBanner = () => {
     return (
         <>
             {
-                isLoading ?
-                    <img src={`layout/images/5db61a9d71fa2c97ffff30c83dcaa6e5.gif`}
+                isLoading ? (
+                    <img src={`/layout/images/5db61a9d71fa2c97ffff30c83dcaa6e5.gif`}
                          style={{
                              height: '100%',
                              display: "block",
@@ -142,7 +146,7 @@ const HotBanner = () => {
                              marginRight: "auto",
                              width: "50%"
                          }}/>
-                    : (
+                ) : (
                         <Carousel value={postsInCarousel} numVisible={4} numScroll={1}
                                   responsiveOptions={responsiveOptions}
                                   autoplayInterval={3000} itemTemplate={productTemplate}

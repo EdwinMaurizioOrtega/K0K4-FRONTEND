@@ -132,7 +132,7 @@ const UIAnuncios = () => {
                             <div className="col-12 md:col-2 text-center md:text-left">
                                 <Link className="cursor-pointer" href="/">
 
-                                    <img src={`layout/images/logo-k4ndy.png`} style={{height: '40px'}} alt="app-name"/>
+                                    <img src={`/layout/images/logo-k4ndy.png`} style={{height: '40px'}} alt="app-name"/>
 
                                 </Link>
                             </div>
