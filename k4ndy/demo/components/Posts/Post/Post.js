@@ -73,7 +73,7 @@ const Post = ({post, setCurrentId}) => {
 
     const openPost = (e) => {
         // dispatch(getPost(post._id, history));
-        history.push(`/apps/blog/detail?id=${post._id}`);
+        history.push(`/${post.category}/${post.city}/${post._id}`);
     };
 
     const openInNewTab = url => {
@@ -100,7 +100,7 @@ const Post = ({post, setCurrentId}) => {
                 </span>
 
                 <div>
-                    <Link href={`/apps/blog/city?name=${post.city}`}
+                    <Link href={`/${post.category}/${post.city}`}
                           className="text-lg mt-5 mb-5 font-bold text-900 text-center white-space-nowrap underline">
                         {` ${post.city}`}
                     </Link>
