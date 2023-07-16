@@ -113,7 +113,7 @@ const UIAnuncios = () => {
 
                                 <div className="col-12">
 
-                                    <TopBanner/>
+                                    <TopBanner category={categoria} city={ciudad}/>
 
                                     <Posts setCurrentId={setCurrentId}/>
                                     {(!searchQuery && !tags.length) && (

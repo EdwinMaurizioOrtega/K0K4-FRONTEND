@@ -15,8 +15,8 @@ export const fetchPost = (id) => API.get(`/posts/${id}`);
 export const fetchPosts = (page, category, city) => API.get(`/posts?page=${page}&category=${category}&city=${city}`);
 
 //Listar los Post que van en el Carousel / Slider
-export const fetchPostsInCarouselSlider = () => API.get(`/posts/in_carousel`).then((res) => res.data.data);
-export const fetchByCityPostsInCarouselSlider = (name) => API.get(`/posts/in_carousel_by_city?city=${name}`).then((res) => res.data.data);
+export const fetchPostsInCarouselSlider = (category, city) => API.get(`/posts/in_carousel?category=${category}&city=${city}`).then((res) => res.data.data);
+//export const fetchByCityPostsInCarouselSlider = (name) => API.get(`/posts/in_carousel_by_city?city=${name}`).then((res) => res.data.data);
 export const fetchPostsByCreator = (name) => API.get(`/posts/creator?name=${name}`);
 //Listar por el id del creador del los post
 export const fetchPostsByIdCreator = (creator) => API.get(`/posts/id_creator?creator=${creator}`);

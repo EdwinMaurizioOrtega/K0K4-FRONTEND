@@ -6,7 +6,7 @@ import {useRouter} from "next/router";
 import {getPostsByCity, getPostsByCreator, getPostsBySearch} from "../../actions/posts";
 import {useDispatch} from "react-redux";
 
-const HotBanner = () => {
+const HotBanner = ({category, city}) => {
 
     const router = useRouter();
     const {pathname, query} = router;
@@ -23,20 +23,25 @@ const HotBanner = () => {
         setIsLoading(true); // Antes de cargar los datos, establecer isLoading a true
 
 
-        if (pathname.endsWith('/city')) {
-            // dispatch(getPostsByCity(name));
-            productService.getCarouselPostByCity(name).then(data => setProducts(data.slice(0, 9)));
-            // console.log("hola hola");
-            setIsLoading(false); // En caso de error, también debes establecer isLoading a false
+        // if (pathname.endsWith('/city')) {
+        //     // dispatch(getPostsByCity(name));
+        //     productService.getCarouselPostByCity(name).then(data => setProducts(data.slice(0, 9)));
+        //     // console.log("hola hola");
+        //
+        //     setIsLoading(false); // En caso de error, también debes establecer isLoading a false
+        //
+        // } else {
 
-        } else {
-            productService.getProductsSmall().then(data => setProducts(data.slice(0, 9)));
-            setIsLoading(false); // En caso de error, también debes establecer isLoading a false
+        console.log("category, city: "+category, city)
 
-        }
+            productService.getPostsInCarousel(category, city).then(data => setProducts(data.slice(0, 9)));
+
+        setIsLoading(false); // En caso de error, también debes establecer isLoading a false
+
+        //}
 
 
-    }, [name]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [category, city]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const responsiveOptions = [
         {
