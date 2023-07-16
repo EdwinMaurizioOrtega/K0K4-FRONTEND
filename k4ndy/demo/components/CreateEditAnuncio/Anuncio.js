@@ -94,7 +94,7 @@ const Anuncio = () => {
         //console.log(rowData._id);
         return (
             <div className="actions">
-                <Button icon="pi pi-check" className="p-button-rounded p-button-danger mt-2"
+                <Button icon="pi pi-check" className="p-button-rounded p-button-danger mr-2"
                         onClick={() => dispatch(topBannerUploadedIn(rowData._id, navigate))}>
                     Subir al Top Banner
                 </Button>
@@ -109,7 +109,7 @@ const Anuncio = () => {
                     Editar
                 </Button>
 
-                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mt-2"
+                <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mr-2"
                         onClick={()=>handleDelete(rowData._id)}>
                     Borrar
                 </Button>
