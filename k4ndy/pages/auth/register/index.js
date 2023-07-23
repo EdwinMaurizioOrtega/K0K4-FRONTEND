@@ -1,71 +1,59 @@
-import React, {useState, useContext, useRef} from 'react';
+import React, {useRef} from 'react';
 import {InputText} from 'primereact/inputtext';
 import {Button} from 'primereact/button';
 import {useRouter} from 'next/router';
-import {LayoutContext} from '../../../layout/context/layoutcontext';
-import {Checkbox} from 'primereact/checkbox';
 import AppConfig from '../../../layout/AppConfig';
 import {useDispatch, useSelector} from "react-redux";
 import {Messages} from "primereact/messages";
 import {signup} from "../../../demo/actions/auth";
 import Link from "next/link";
 import Head from "next/head";
+import {Controller, useForm} from "react-hook-form";
 
-const initialState = {username: '', email: '', password: '', confirmPassword: ''};
+
+import {classNames} from 'primereact/utils';
+import {Password} from "primereact/password";
+
 
 function Register() {
-    const router = useRouter();
-
-    const [form, setForm] = useState(initialState);
+    const history = useRouter();
     const dispatch = useDispatch();
     const message = useRef();
     let respuestaError = null;
     respuestaError = useSelector((state) => state.auth.authData?.message);
-    console.log("Error: " + respuestaError);
+    //console.log("Error: " + respuestaError);
 
-    const history = router;
+    const defaultValues = {
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    };
 
-    const handleChange = (e) => {
-        console.log("Name: " + e.target.name);
-        console.log("Value: " + e.target.value);
-        //Convertimos el email en solo minúsculas
-        if (e.target.name === "email") {
-            setForm({...form, [e.target.name]: e.target.value.toLowerCase()});
-        }else {
-            setForm({...form, [e.target.name]: e.target.value});
-        }
+    const {
+        control,
+        formState: {errors},
+        handleSubmit,
+        reset
+    } = useForm({defaultValues});
 
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Botón handleSubmit: " + e);
-
-        //Registrarse
-        console.log("UserName: " + form.username);
-        console.log("Email: " + form.email);
-        if (form.username !== '' && form.email !== '' && form.password !== '' && form.confirmPassword !== '') {
-            dispatch(signup(form, history));
-
+    const onSubmit = (data) => {
+        //console.log("data: " + JSON.stringify(data));
+        if (data.username !== '' && data.email !== '' && data.password !== '' && data.confirmPassword !== '') {
+            dispatch(signup(data, history));
             //Validamos los errores
             if (respuestaError !== null) {
-
                 message.current.show({severity: 'warn', content: ' Hola! 👋🏻 ' + respuestaError});
                 //respuestaError = 'undefined';
-
             }
-
-
         } else {
             message.current.show({severity: 'warn', content: 'Hola! 👋🏻 Todos los datos son necesarios.'});
         }
-
     };
 
-    //Aplicar los cambios en tiempo real en el InputText Emal
-    const handleChangeAux = (e) => {
-        const lowercaseValue = e.target.value.toLowerCase();
-        setForm({ ...form, [e.target.name]: lowercaseValue });
+    const getFormErrorMessage = (name) => {
+        return errors[name] ? <small className="p-error">{errors[name].message}</small> :
+            <small className="p-error">&nbsp;</small>;
     };
 
     return (
@@ -165,31 +153,103 @@ function Register() {
                         <div className="text-900 text-xl font-bold mb-2">Registro</div>
                         <span className="text-600 font-medium">Empecemos</span>
                     </div>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex flex-column">
                         <span className="p-input-icon-left w-full mb-4">
                             <i className="pi pi-user"></i>
-                            <InputText id="username" name="username" type="text" className="w-full md:w-25rem"
-                                       placeholder="Nombre de usuario" onKeyUp={handleChange}/>
+                            <Controller
+                                name="username"
+                                control={control}
+                                rules={{required: 'Se requiere un alias.'}}
+                                render={({field, fieldState}) => (
+                                    <>
+                                        <label htmlFor={field.name}
+                                               className={classNames({'p-error': errors.value})}></label>
+                                        <span className="p-float-label">
+                                <InputText id={field.name} value={field.value}
+                                           className={classNames({'p-invalid': fieldState.error})}
+                                           onChange={(e) => field.onChange(e.target.value)}
+                                           className="w-full md:w-25rem"
+                                />
+                                <label htmlFor={field.name}>Alias</label>
+                            </span>
+                                        {getFormErrorMessage(field.name)}
+                                    </>
+                                )}
+                            />
+
                         </span>
                             <span className="p-input-icon-left w-full mb-4">
                             <i className="pi pi-envelope"></i>
-                            <InputText id="email" name="email" type="text"
-                                       className="w-full md:w-25rem" placeholder="Correo electrónico"
-                                       value={form.email}
-                                       onChange={handleChangeAux}
-                                       onKeyUp={handleChange}/>
+                                <Controller
+                                    name="email"
+                                    control={control}
+                                    rules={{required: 'Se requiere un correo.'}}
+                                    render={({field, fieldState}) => (
+                                        <>
+                                            <label htmlFor={field.name}
+                                                   className={classNames({'p-error': errors.value})}></label>
+                                            <span className="p-float-label">
+                                <InputText id={field.name} type="email" value={field.value}
+                                           className="w-full"
+                                           onKeyUp={(e) => field.onChange(e.target.value.toLowerCase().replace(/\s/g, ''))}
+                                           onChange={(e) => field.onChange(e.target.value.toLowerCase().replace(/\s/g, ''))}
+                                />
+                                <label htmlFor={field.name}>Correo electrónico</label>
+                            </span>
+                                            {getFormErrorMessage(field.name)}
+                                        </>
+                                    )}
+                                />
                         </span>
                             <span className="p-input-icon-left w-full mb-4">
                             <i className="pi pi-lock"></i>
-                            <InputText id="password" name="password" type="password" className="w-full md:w-25rem"
-                                       placeholder="Contraseña" onKeyUp={handleChange}/>
+                                {/*<InputText id="password" name="password" type="password" className="w-full md:w-25rem"*/}
+                                {/*           placeholder="Contraseña" onKeyUp={handleChange}/>*/}
+
+                                <Controller
+                                    name="password"
+                                    control={control}
+                                    rules={{required: 'Se requiere una contraseña.'}}
+                                    render={({field, fieldState}) => (
+                                        <>
+                                            <label htmlFor={field.name}
+                                                   className={classNames({'p-error': errors.password})}></label>
+                                            <span className="p-float-label">
+                                <Password id={field.name} value={field.value}
+                                          className="w-full"
+                                          onChange={(e) => field.onChange(e.target.value)} toggleMask/>
+                                <label htmlFor={field.name}>Contraseña</label>
+                            </span>
+                                            {getFormErrorMessage(field.name)}
+                                        </>
+                                    )}
+                                />
                         </span>
                             <span className="p-input-icon-left w-full mb-4">
                             <i className="pi pi-lock"></i>
-                            <InputText id="confirmPassword" name="confirmPassword" type="password"
-                                       className="w-full md:w-25rem" placeholder="Repite la contraseña"
-                                       onKeyUp={handleChange}/>
+                                {/*<InputText id="confirmPassword" name="confirmPassword" type="password"*/}
+                                {/*           className="w-full md:w-25rem" placeholder="Repite la contraseña"*/}
+                                {/*           onKeyUp={handleChange}/>*/}
+
+                                <Controller
+                                    name="confirmPassword"
+                                    control={control}
+                                    rules={{required: 'Se requiere confirmar la contraseña.'}}
+                                    render={({field, fieldState}) => (
+                                        <>
+                                            <label htmlFor={field.name}
+                                                   className={classNames({'p-error': errors.password})}></label>
+                                            <span className="p-float-label">
+                                <Password id={field.name} value={field.value}
+                                          className="w-full"
+                                          onChange={(e) => field.onChange(e.target.value)} toggleMask feedback={false}/>
+                                <label htmlFor={field.name}>Confirmar Contraseña</label>
+                            </span>
+                                            {getFormErrorMessage(field.name)}
+                                        </>
+                                    )}
+                                />
                         </span>
                             <div className="mb-4 flex flex-wrap">
                                 {/*<Checkbox name="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.checked)} className="mr-2"></Checkbox>*/}

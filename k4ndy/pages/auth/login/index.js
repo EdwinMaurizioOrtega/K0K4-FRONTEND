@@ -2,106 +2,79 @@ import {useRouter} from 'next/router';
 import {Button} from 'primereact/button';
 import {Checkbox} from 'primereact/checkbox';
 import {InputText} from 'primereact/inputtext';
-import React, {useContext, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import AppConfig from '../../../layout/AppConfig';
-import {LayoutContext} from '../../../layout/context/layoutcontext';
 import {useDispatch, useSelector} from "react-redux";
 import {signin} from "../../../demo/actions/auth";
 import {Messages} from "primereact/messages";
 import Head from "next/head";
 import {Divider} from "primereact/divider";
-import {AUTH} from "../../../demo/constants/actionTypes";
-import {GoogleLogin, GoogleOAuthProvider} from "@react-oauth/google";
-
-import decoded from 'jwt-decode';
 import Link from "next/link";
-
-
-const initialState = {firstName: '', lastName: '', email: '', password: '', confirmPassword: ''};
+import {Controller, useForm} from "react-hook-form";
+import {classNames} from 'primereact/utils';
+import {Password} from "primereact/password";
 
 function Login() {
     const [rememberMe, setRememberMe] = useState(false);
-    const router = useRouter();
-    const {layoutConfig} = useContext(LayoutContext);
-    const dark = layoutConfig.colorScheme !== 'light';
+    const history = useRouter();
+    const message = useRef();
+    const dispatch = useDispatch();
 
     let respuestaError = null;
     respuestaError = useSelector((state) => state.auth.authData?.message);
-    console.log("Error: " + respuestaError);
+    //console.log("Error: " + respuestaError);
 
-    const message = useRef();
-    const [form, setForm] = useState(initialState);
-    const [isSignup, setIsSignup] = useState(false);
-    const dispatch = useDispatch();
-    const history = router;
-
-    const [showPassword, setShowPassword] = useState(false);
-    const handleShowPassword = () => setShowPassword(!showPassword);
-
-    const switchMode = () => {
-        setForm(initialState);
-        setIsSignup((prevIsSignup) => !prevIsSignup);
-        setShowPassword(false);
+    const defaultValues = {
+        email: '',
+        password: ''
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const {
+        control,
+        formState: {errors},
+        handleSubmit,
+        reset
+    } = useForm({defaultValues});
 
-        console.log("Botón handleSubmit: " + e);
-
+    const onSubmit = (data) => {
+        //console.log("data: " + JSON.stringify(data));
         //Iniciar sesión
-        console.log("Iniciar sesión: " + form);
-        if (form.email !== '' && form.password !== '') {
-            console.log(form.email);
-            console.log(form.password);
-            dispatch(signin(form, history));
-
+        if (data.email !== '' && data.password !== '') {
+            dispatch(signin(data, history));
             //Validamos los errores
             if (respuestaError !== null) {
 
                 message.current.show({severity: 'warn', content: ' Hola! 👋🏻 ' + respuestaError});
                 //respuestaError = undefined;
-
             }
-
         } else {
             console.log("Verificar el correo y la contraseña.")
             message.current.show({severity: 'warn', content: ' Hola! 👋🏻 Verificar el correo y la contraseña.'});
-
-        }
-
-    };
-
-    const googleSuccess = async (res) => {
-
-        const result = decoded(res.credential);
-        console.log("RESULT: "+JSON.stringify(result));
-        const token = res?.credential;
-        console.log("TOKEN: "+res.credential);
-
-        try {
-            dispatch({type: AUTH, data: {result, token}});
-
-            history.push('/');
-        } catch (error) {
-            console.log(error);
         }
     };
 
-    const googleError = () => console.log('El inicio de sesión de Google no tuvo éxito. Vuelva a intentarlo más tarde');
-
-    const handleChangePassword = (e) => setForm({...form, [e.target.name]: e.target.value});
-
-    //Unicamente para el caso del correo.
-    const handleChangeEmail = (e) => {
-        const lowercaseValue = e.target.value.toLowerCase();
-        setForm({ ...form, [e.target.name]: lowercaseValue });
+    const getFormErrorMessage = (name) => {
+        return errors[name] ? <small className="p-error">{errors[name].message}</small> :
+            <small className="p-error">&nbsp;</small>;
     };
 
-    const handleKeyUpEmail = (e) => {
-        const lowercaseValue = e.target.value.toLowerCase();
-        setForm({ ...form, [e.target.name]: lowercaseValue });
-    };
+    //Google
+    // const googleSuccess = async (res) => {
+    //
+    //     const result = decoded(res.credential);
+    //     console.log("RESULT: " + JSON.stringify(result));
+    //     const token = res?.credential;
+    //     console.log("TOKEN: " + res.credential);
+    //
+    //     try {
+    //         dispatch({type: AUTH, data: {result, token}});
+    //
+    //         history.push('/');
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+    // const googleError = () => console.log('El inicio de sesión de Google no tuvo éxito. Vuelva a intentarlo más tarde');
 
     return (
         <>
@@ -203,19 +176,52 @@ function Login() {
                         <span className="text-600 font-medium">Por favor ingrese sus datos</span>
                     </div>
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex flex-column">
                         <span className="p-input-icon-left w-full mb-4">
                             <i className="pi pi-envelope"></i>
-                            <InputText id="email" type="text" name="email" className="w-full md:w-25rem"
-                                       placeholder="Correo electrónico" value={form.email}
-                                       onChange={handleChangeEmail}
-                                       onKeyUp={handleKeyUpEmail}/>
+                            <Controller
+                                name="email"
+                                control={control}
+                                rules={{required: 'Se requiere un correo.'}}
+                                render={({field, fieldState}) => (
+                                    <>
+                                        <label htmlFor={field.name}
+                                               className={classNames({'p-error': errors.value})}></label>
+                                        <span className="p-float-label">
+                                <InputText id={field.name} type="email" value={field.value}
+                                           className="w-full"
+                                           onKeyUp={(e) => field.onChange(e.target.value.toLowerCase().replace(/\s/g, ''))}
+                                           onChange={(e) => field.onChange(e.target.value.toLowerCase().replace(/\s/g, ''))}
+                                />
+                                <label htmlFor={field.name}>Correo electrónico</label>
+                            </span>
+                                        {getFormErrorMessage(field.name)}
+                                    </>
+                                )}
+                            />
+
                         </span>
                             <span className="p-input-icon-left w-full mb-4">
                             <i className="pi pi-lock"></i>
-                            <InputText id="password" type="password" name="password" className="w-full md:w-25rem"
-                                       placeholder="Contraseña" onChange={handleChangePassword}/>
+                                <Controller
+                                    name="password"
+                                    control={control}
+                                    rules={{required: 'Se requiere una contraseña.'}}
+                                    render={({field, fieldState}) => (
+                                        <>
+                                            <label htmlFor={field.name}
+                                                   className={classNames({'p-error': errors.password})}></label>
+                                            <span className="p-float-label">
+                                <Password id={field.name} value={field.value}
+                                          className="w-full"
+                                          onChange={(e) => field.onChange(e.target.value)} toggleMask feedback={false}/>
+                                <label htmlFor={field.name}>Contraseña</label>
+                            </span>
+                                            {getFormErrorMessage(field.name)}
+                                        </>
+                                    )}
+                                />
                         </span>
                             <div className="mb-4 flex flex-wrap gap-3">
                                 <div>
@@ -232,16 +238,17 @@ function Login() {
                             {/*<Button label="Log In" className="w-full" onClick={() => router.push('/dashboard-banking/')}></Button>*/}
                             <Button type="submit" label="Acceder" className="w-full"></Button>
                             <Divider/>
-                            <div className="mb-4" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <div className="mb-4"
+                                 style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
 
-                            <GoogleOAuthProvider
-                                clientId="657855516344-6h394rg7v9c3ibo9e787ja4v6bckql7s.apps.googleusercontent.com">
-                                <GoogleLogin className="w-full"
-                                    onSuccess={googleSuccess}
-                                    onError={googleError}
-                                    shape="pill"
-                                />
-                            </GoogleOAuthProvider>
+                                {/*<GoogleOAuthProvider*/}
+                                {/*    clientId="657855516344-6h394rg7v9c3ibo9e787ja4v6bckql7s.apps.googleusercontent.com">*/}
+                                {/*    <GoogleLogin className="w-full"*/}
+                                {/*        onSuccess={googleSuccess}*/}
+                                {/*        onError={googleError}*/}
+                                {/*        shape="pill"*/}
+                                {/*    />*/}
+                                {/*</GoogleOAuthProvider>*/}
                             </div>
                             <span className="font-medium text-600" style={{textAlign: "center"}}>
                                 ¿Aún no tienes una cuenta?
