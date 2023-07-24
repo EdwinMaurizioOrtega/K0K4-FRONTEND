@@ -167,9 +167,8 @@ function Register() {
                                                className={classNames({'p-error': errors.value})}></label>
                                         <span className="p-float-label">
                                 <InputText id={field.name} value={field.value}
-                                           className={classNames({'p-invalid': fieldState.error})}
+                                           className="w-full"
                                            onChange={(e) => field.onChange(e.target.value)}
-                                           className="w-full md:w-25rem"
                                 />
                                 <label htmlFor={field.name}>Alias</label>
                             </span>
