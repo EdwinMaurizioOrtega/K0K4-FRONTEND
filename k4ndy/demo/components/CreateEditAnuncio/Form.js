@@ -350,7 +350,7 @@ const FormPublication = ({currentId, setCurrentId}) => {
                                                 name="demo[]"
                                                 multiple
                                                 accept="image/*"
-                                                maxFileSize={1000000}
+                                                maxFileSize={2000000}
                                                 emptyTemplate={<p className="m-0">Arrastre y suelte los archivos aquí
                                                     para cargarlos.</p>}
                                                 onUpload={handleAddImage} // Set the onUpload attribute to the handleAddImage function
