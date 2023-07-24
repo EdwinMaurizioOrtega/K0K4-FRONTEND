@@ -96,7 +96,7 @@ const Anuncio = () => {
             <div className="actions">
                 <Button icon="pi pi-check" className="p-button-rounded p-button-danger mr-2"
                         onClick={() => dispatch(topBannerUploadedIn(rowData._id, navigate))}>
-                    Subir al Top Banner
+                   Primer Lugar
                 </Button>
 
                 {/*Feature Premium*/}

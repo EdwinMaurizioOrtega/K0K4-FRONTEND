@@ -1,26 +1,15 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import FileBase from 'react-file-base64';
-
 import {createPost, updatePost} from '../../actions/posts';
 import {Button} from 'primereact/button';
-
-
-import {Chips} from 'primereact/chips';
-
 import {Dropdown} from 'primereact/dropdown';
-
-import {ListBox} from 'primereact/listbox';
 import {useRouter} from "next/router";
 import {InputText} from "primereact/inputtext";
 import {InputTextarea} from "primereact/inputtextarea";
-import {Message} from "primereact/message";
 import {Controller, useForm} from "react-hook-form";
-
-
 import {classNames} from 'primereact/utils';
 import {InputNumber} from "primereact/inputnumber";
-
+import {FileUpload} from "primereact/fileupload";
 
 const FormPublication = ({currentId, setCurrentId}) => {
         const toast = useRef(null);
@@ -33,13 +22,6 @@ const FormPublication = ({currentId, setCurrentId}) => {
             tags: [],
             selectedFile: []
         });
-
-        const categories = [
-            {name: 'Escorts', code: 'escorts'},
-            {name: 'Trans Y Travestis', code: 'travestis'},
-            {name: 'Escorts Masculinos', code: 'escorts-masculinos'},
-            {name: 'Encuentros Casuales', code: 'encuentros'}
-        ];
 
 
         const defaultValues = {
@@ -102,9 +84,6 @@ const FormPublication = ({currentId, setCurrentId}) => {
             }
             ;
         }, [post, setValue]);
-
-        // const [errors, setErrors] = useState({});
-
 
         const onSubmit = async (data) => {
             console.log(data.category.code);
@@ -180,133 +159,74 @@ const FormPublication = ({currentId, setCurrentId}) => {
         };
 
 
+        const handleAddImage = async (img) => {
+            try {
+                // Verificar si se han seleccionado imágenes
+                if (!img || !img.files || img.files.length === 0) {
+                    console.error('No se han seleccionado imágenes.');
+                    return;
+                }
+
+                // Crear un array para almacenar las imágenes comprimidas
+                const compressedImages = [];
+
+                // Función para comprimir una imagen a JPEG
+                const compressToJpeg = (base64, maxWidth) => {
+                    return new Promise((resolve) => {
+                        const img = new Image(); // Crear un elemento de imagen
+
+                        img.onload = () => {
+                            const aspectRatio = img.width / img.height; // Calcular la proporción de aspecto de la imagen original
+                            const canvas = document.createElement('canvas'); // Crear un elemento de lienzo (canvas)
+                            const ctx = canvas.getContext('2d'); // Obtener el contexto de dibujo del lienzo
+
+                            canvas.width = maxWidth; // Establecer el ancho del lienzo al valor máximo deseado
+                            canvas.height = maxWidth / aspectRatio; // Calcular la altura proporcional en base a la proporción de aspecto
+
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Dibujar la imagen original en el lienzo con las dimensiones ajustadas
+
+                            const quality = 0.7; // Calidad de compresión deseada
+                            const imageData = canvas.toDataURL('image/jpeg', quality); // Obtener los datos de la imagen comprimida en formato base64
+                            resolve(imageData); // Resolver la promesa con los datos de la imagen comprimida
+                        };
+
+                        img.src = base64; // Establecer la fuente de la imagen como los datos base64 de la imagen original
+                    });
+                };
+
+                // Iterar sobre las imágenes seleccionadas y comprimirlas
+                const compressPromises = img.files.map(async (file) => {
+                    const objectURL = file.objectURL;
+                    const response = await fetch(objectURL);
+                    const blob = await response.blob();
+                    const base64Data = await compressToJpeg(URL.createObjectURL(blob), 500); // Comprimir la imagen con ancho máximo de 500 píxeles
+                    compressedImages.push(base64Data); // Agregar la imagen comprimida al array
+                });
+
+                // Esperar a que se completen todas las tareas de compresión
+                await Promise.all(compressPromises);
+
+                // Actualizar el estado con las imágenes comprimidas
+                setPostData({...postData, selectedFile: compressedImages});
+
+                // ... (código adicional si es necesario)
+                console.log(compressedImages);
+                console.log(postData);
+
+            } catch (error) {
+                console.error('Error al convertir o comprimir las imágenes:', error);
+            }
+        };
+
         const getFormErrorMessage = (name) => {
             return errors[name] ? <small className="p-error">{errors[name].message}</small> :
                 <small className="p-error">&nbsp;</small>;
         };
 
+        //En el caso de que se pierda la sesión
         if (!user?.result?.name) {
             return <h3>Inicie sesión para crear sus propios recuerdos y darle me gusta a los recuerdos de otros.</h3>;
         }
-
-        // const handleAddChip = (tag) => {
-        //     console.log(tag);
-        //     setPostData({...postData, tags: [...postData.tags, tag]});
-        // };
-        //
-        // const handleDeleteChip = (chipToDelete) => {
-        //     setPostData({...postData, tags: postData.tags.filter((tag) => tag !== chipToDelete)});
-        // };
-
-// const handleAddImage = (img) => {
-//     //      console.log(img[0].base64);
-//     const pictutes = [];
-//
-//     img.forEach((element) => {
-//         //console.log(element.base64);
-//         pictutes.push(element.base64);
-//         //console.log(pictutes);
-//     });
-//
-//     //console.log(pictutes);
-//     setPostData({...postData, selectedFile: pictutes});
-//     console.log(postData);
-// };
-
-        const handleAddImage = async (img) => {
-            const pictures = []; // Array para almacenar las imágenes comprimidas
-
-            for (const element of img) {
-                const compressedImage = await compressToJpeg(element.base64, 500); // Comprimir la imagen con ancho máximo de 500 píxeles
-                pictures.push(compressedImage); // Agregar la imagen comprimida al array
-            }
-
-            setPostData({...postData, selectedFile: pictures}); // Actualizar el estado con las imágenes comprimidas
-
-            //post['selectedFile'] = pictures
-
-            console.log(post);
-        };
-
-        const compressToJpeg = (base64, maxWidth) => {
-            return new Promise((resolve) => {
-                const img = new Image(); // Crear un elemento de imagen
-
-                img.onload = () => {
-                    const aspectRatio = img.width / img.height; // Calcular la proporción de aspecto de la imagen original
-                    const canvas = document.createElement('canvas'); // Crear un elemento de lienzo (canvas)
-                    const ctx = canvas.getContext('2d'); // Obtener el contexto de dibujo del lienzo
-
-                    canvas.width = maxWidth; // Establecer el ancho del lienzo al valor máximo deseado
-                    canvas.height = maxWidth / aspectRatio; // Calcular la altura proporcional en base a la proporción de aspecto
-
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Dibujar la imagen original en el lienzo con las dimensiones ajustadas
-
-                    const quality = 0.7; // Calidad de compresión deseada
-                    const imageData = canvas.toDataURL('image/jpeg', quality); // Obtener los datos de la imagen comprimida en formato base64
-                    resolve(imageData); // Resolver la promesa con los datos de la imagen comprimida
-                };
-
-                img.src = base64; // Establecer la fuente de la imagen como los datos base64 de la imagen original
-            });
-        };
-
-
-        const cities = [
-            {name: 'Quito', code: 'quito'},
-            {name: 'Guayaquil', code: 'guayaquil'},
-            {name: 'Cuenca', code: 'cuenca'},
-            {name: 'Ambato', code: 'ambato'},
-            {name: 'Durán', code: 'duran'},
-            {name: 'Esmeraldas', code: 'esmeraldas'},
-            {name: 'Ibarra', code: 'ibarra'},
-            {name: 'Latacunga', code: 'latacunga'},
-            {name: 'Loja', code: 'loja'},
-            {name: 'Machala', code: 'machala'},
-            {name: 'Manta', code: 'manta'},
-            {name: 'Portoviejo', code: 'portoviejo'},
-            {name: 'Quevedo', code: 'quevedo'},
-            {name: 'Riobamba', code: 'riobamba'},
-            {name: 'Salinas', code: 'salinas'},
-            {name: 'Sangolqui', code: 'sangolqui'},
-            {name: 'Santo Domingo', code: 'santo-domingo'},
-        ];
-
-        // const onCountryChange = (e) => {
-        //
-        //     setSelectedCountry(e.value)
-        //
-        //     console.log(e.target.value.name);
-        //     const aux = e.target.value.name;
-        //     setPostData({...postData, city: aux})
-        //     console.log(postData);
-        //
-        // }
-
-        const selectedCountryTemplate = (option, props) => {
-            if (option) {
-                return (
-                    <div className="country-item country-item-value">
-                        <div>{option.name}</div>
-                    </div>
-                );
-            }
-
-            return (
-                <span>
-                {props.placeholder}
-            </span>
-            );
-        }
-
-        const countryOptionTemplate = (option) => {
-            return (
-                <div className="country-item">
-                    <div>{option.name}</div>
-                </div>
-            );
-        }
-
         return (
             <div className="card">
                 <span className="block text-900 font-bold text-xl mb-4">¡Publica gratis siguiendo unos pocos pasos!</span>
@@ -418,16 +338,30 @@ const FormPublication = ({currentId, setCurrentId}) => {
 
                                 <div className="mb-4">
                                     <h6>Debes subir al menos una imagen: </h6>
-                                    <FileBase
-                                        type="file"
-                                        multiple={true}
-                                        onDone={(base64) => handleAddImage(base64)}
+                                    {/*<FileBase*/}
+                                    {/*    type="file"*/}
+                                    {/*    multiple={true}*/}
+                                    {/*    onDone={(base64) => handleAddImage(base64)}*/}
+                                    {/*/>*/}
+
+                                    <FileUpload chooseLabel="Elegir"
+                                                cancelLabel="Cancelar"
+                                                uploadLabel="Subir"
+                                                name="demo[]"
+                                                multiple
+                                                accept="image/*"
+                                                maxFileSize={1000000}
+                                                emptyTemplate={<p className="m-0">Arrastre y suelte aquí los archivos aquí
+                                                    para cargarlos.</p>}
+                                                onUpload={handleAddImage} // Set the onUpload attribute to the handleAddImage function
+
                                     />
+
                                 </div>
                             </div>
                             <div className="flex justify-content-between gap-3">
-                                <Button className="p-button-danger flex-1 p-button-outlined" label="Descartar"
-                                        icon="pi pi-fw pi-trash" onClick={clear}></Button>
+                                {/*<Button className="p-button-danger flex-1 p-button-outlined" label="Descartar"*/}
+                                {/*        icon="pi pi-fw pi-trash" onClick={clear}></Button>*/}
 
                                 {isLoading ?
                                     <img src={`../../../layout/images/5db61a9d71fa2c97ffff30c83dcaa6e5.gif`} style={{
@@ -454,3 +388,30 @@ const FormPublication = ({currentId, setCurrentId}) => {
 ;
 
 export default FormPublication;
+
+const categories = [
+    {name: 'Escorts', code: 'escorts'},
+    {name: 'Trans Y Travestis', code: 'travestis'},
+    {name: 'Escorts Masculinos', code: 'escorts-masculinos'},
+    {name: 'Encuentros Casuales', code: 'encuentros'}
+];
+
+const cities = [
+    {name: 'Quito', code: 'quito'},
+    {name: 'Guayaquil', code: 'guayaquil'},
+    {name: 'Cuenca', code: 'cuenca'},
+    {name: 'Ambato', code: 'ambato'},
+    {name: 'Durán', code: 'duran'},
+    {name: 'Esmeraldas', code: 'esmeraldas'},
+    {name: 'Ibarra', code: 'ibarra'},
+    {name: 'Latacunga', code: 'latacunga'},
+    {name: 'Loja', code: 'loja'},
+    {name: 'Machala', code: 'machala'},
+    {name: 'Manta', code: 'manta'},
+    {name: 'Portoviejo', code: 'portoviejo'},
+    {name: 'Quevedo', code: 'quevedo'},
+    {name: 'Riobamba', code: 'riobamba'},
+    {name: 'Salinas', code: 'salinas'},
+    {name: 'Sangolqui', code: 'sangolqui'},
+    {name: 'Santo Domingo', code: 'santo-domingo'},
+];
