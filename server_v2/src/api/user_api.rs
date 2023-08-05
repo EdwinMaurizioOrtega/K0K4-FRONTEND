@@ -15,7 +15,7 @@ use chrono::{prelude::*, Duration};
 
 use actix_web::{
     delete, get, post, put,
-    web::{Data, Json, Path},
+    web,
     HttpResponse,
     cookie,
 };
@@ -34,8 +34,7 @@ struct MyObjMessage {
 }
 
 //Crear un usuario
-#[post("/user/signup")]
-pub async fn signup(db: Data<MongoRepo>, new_user: Json<User>) -> HttpResponse {
+pub async fn signup(db: web::Data<MongoRepo>, new_user: web::Json<User>) -> HttpResponse {
 
 
 
@@ -70,8 +69,7 @@ pub async fn signup(db: Data<MongoRepo>, new_user: Json<User>) -> HttpResponse {
         
                     match user_detail {
                         Ok(user_d) => {
-                            let user_response = serde_json::json!({"status": "success","data": serde_json::json!({
-                                "user": user_d })});
+                            let user_response = serde_json::json!({"status": "success","result": user_d});
                             return HttpResponse::Ok().json(user_response);
                         }
         
@@ -154,8 +152,7 @@ pub async fn signup(db: Data<MongoRepo>, new_user: Json<User>) -> HttpResponse {
 }
 
 //Iniciar sesión con un correo
-#[post("/user/signin")]
-pub async fn signin(db: Data<MongoRepo>, new_user: Json<LoginUserSchema>) -> HttpResponse {
+pub async fn signin(db: web::Data<MongoRepo>, new_user: web::Json<LoginUserSchema>) -> HttpResponse {
     println!("Contenido de data: {:?}", new_user);
 
     if new_user.email.is_empty() {
@@ -213,7 +210,7 @@ pub async fn signin(db: Data<MongoRepo>, new_user: Json<LoginUserSchema>) -> Htt
 }
 
 #[get("/user/{id}")]
-pub async fn get_user(db: Data<MongoRepo>, path: Path<String>) -> HttpResponse {
+pub async fn get_user(db: web::Data<MongoRepo>, path: web::Path<String>) -> HttpResponse {
     let id = path.into_inner();
     if id.is_empty() {
         return HttpResponse::BadRequest().body("invalid ID");
@@ -264,7 +261,7 @@ pub async fn get_user(db: Data<MongoRepo>, path: Path<String>) -> HttpResponse {
 // }
 
 #[delete("/user/{id}")]
-pub async fn delete_user(db: Data<MongoRepo>, path: Path<String>) -> HttpResponse {
+pub async fn delete_user(db: web::Data<MongoRepo>, path: web::Path<String>) -> HttpResponse {
     let id = path.into_inner();
     if id.is_empty() {
         return HttpResponse::BadRequest().body("invalid ID");
@@ -284,13 +281,23 @@ pub async fn delete_user(db: Data<MongoRepo>, path: Path<String>) -> HttpRespons
 }
 
 #[get("/users")]
-pub async fn get_all_users(db: Data<MongoRepo>) -> HttpResponse {
+pub async fn get_all_users(db: web::Data<MongoRepo>) -> HttpResponse {
     let users = db.get_all_users().await;
     println!("hola hola");
     match users {
         Ok(users) => HttpResponse::Ok().json(users),
         Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
     }
+}
+
+
+pub fn config(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::scope("/user") // Agrupamos los servicios bajo la ruta "/api"
+            .service(web::resource("/signup").route(web::post().to(signup)))
+            .service(web::resource("/signin").route(web::post().to(signin))) 
+        
+    );
 }
 
 

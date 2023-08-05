@@ -5,7 +5,8 @@ mod responces;
 use actix_cors::Cors;
 
 use actix_web::{web::Data, App, HttpServer};
-use api::user_api::{signin, signup};
+use api::user_api;
+use api::post_api;
 use repository::mongodb_repo::MongoRepo;
 
 #[actix_web::main]
@@ -13,7 +14,9 @@ async fn main() -> std::io::Result<()> {
     let db = MongoRepo::init().await;
     let db_data = Data::new(db);
 
-    println!("🚀 Server started successfully");
+    let port = 8080;
+
+    println!("🚀 Server started successfully at http://0.0.0.0:{}", port);
 
     HttpServer::new(move || {
         App::new()
@@ -21,14 +24,10 @@ async fn main() -> std::io::Result<()> {
             .wrap(
                 Cors::permissive()
             )
-            .service(signin) //Iniciar sesión 
-            .service(signup) //Crear usuario
-            // .service(get_user)
-            // .service(update_user)
-            // .service(delete_user)
-            // .service(get_all_users)
+            .configure(user_api::config)
+            .configure(post_api::config)
     })
-    .bind(("0.0.0.0", 8080))?
+    .bind(("0.0.0.0", port))?
     .run()
     .await
 }
