@@ -5,9 +5,8 @@ mod responces;
 use actix_cors::Cors;
 
 use actix_web::{web::Data, App, HttpServer};
-use api::user_api::{create_user};
+use api::user_api::{signin, signup};
 use repository::mongodb_repo::MongoRepo;
-use crate::api::user_api::signup;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -22,8 +21,8 @@ async fn main() -> std::io::Result<()> {
             .wrap(
                 Cors::permissive()
             )
-            .service(create_user)
-            .service(signup)
+            .service(signin) //Iniciar sesión 
+            .service(signup) //Crear usuario
             // .service(get_user)
             // .service(update_user)
             // .service(delete_user)

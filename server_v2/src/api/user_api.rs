@@ -33,55 +33,82 @@ struct MyObjMessage {
     message: String,
 }
 
-#[post("/user")]
-pub async fn create_user(db: Data<MongoRepo>, new_user: Json<User>) -> HttpResponse {
-    let mut data = User {
-        id: None,
-        name: new_user.name.to_owned(),
-        email: new_user.email.to_owned(),
-        password: new_user.password.to_owned(),
-        photo: new_user.photo.to_owned(),
-        role: new_user.role.to_owned(),
-        verified: new_user.verified,
-        created_at: None,
-        updated_at: None,
+//Crear un usuario
+#[post("/user/signup")]
+pub async fn signup(db: Data<MongoRepo>, new_user: Json<User>) -> HttpResponse {
 
-    };
 
-    // Asignar la fecha y hora actual antes de guardar el documento
-    data.created_at = Some(DateTime::now());
-    data.updated_at = Some(DateTime::now());
 
-    let user_id = db.create_user(data).await;
+    let query_result =  db.get_user_by_email(&new_user.email).await;
 
-    match user_id {
-        Ok(user) => {
-            println!("Contenido de data: {:?}", user.inserted_id.as_object_id().unwrap());
-            let id_insertado = user.inserted_id.as_object_id().unwrap().to_hex();
-            println!("Contenido de data: {:?}", id_insertado);
+    match query_result {
 
-            let user_detail = db.get_user(&id_insertado).await;
+        None => {
 
-            match user_detail {
-                Ok(user_d) => {
-                    let user_response = serde_json::json!({"status": "success","data": serde_json::json!({
-                        "user": user_d })});
-                    return HttpResponse::Ok().json(user_response);
+
+            let mut data = User {
+                id: None,
+                name: new_user.name.to_owned(),
+                email: new_user.email.to_owned(),
+                password: new_user.password.to_owned(),
+                created_at: None
+        
+            };
+        
+            // Asignar la fecha y hora actual antes de guardar el documento
+            data.created_at = Some(DateTime::now());
+        
+            let user_id = db.create_user(data).await;
+        
+            match user_id {
+                Ok(user) => {
+                    //println!("Contenido de data: {:?}", user.inserted_id.as_object_id().unwrap());
+                    let id_insertado = user.inserted_id.as_object_id().unwrap().to_hex();
+                    println!("Contenido de data: {:?}", id_insertado);
+        
+                    let user_detail = db.get_user(&id_insertado).await;
+        
+                    match user_detail {
+                        Ok(user_d) => {
+                            let user_response = serde_json::json!({"status": "success","data": serde_json::json!({
+                                "user": user_d })});
+                            return HttpResponse::Ok().json(user_response);
+                        }
+        
+                        Err(e) => {
+                            return HttpResponse::InternalServerError()
+                                .json(serde_json::json!({"status": "error","message": format!("{:?}", e)}));
+                        }
+                    }
+        
                 }
-
                 Err(e) => {
                     return HttpResponse::InternalServerError()
                         .json(serde_json::json!({"status": "error","message": format!("{:?}", e)}));
                 }
             }
+        
+
+
+
+
+
+        },
+        Some(user) => {
+
+            HttpResponse::NotFound().json(json!({"status": "fail", "message": "El usuario ya existe"}))
 
         }
-        Err(e) => {
-            return HttpResponse::InternalServerError()
-                .json(serde_json::json!({"status": "error","message": format!("{:?}", e)}));
-        }
-    }
 
+
+
+
+
+
+
+
+
+    
 
     //
     // let salt = SaltString::generate(&mut OsRng);
@@ -124,15 +151,16 @@ pub async fn create_user(db: Data<MongoRepo>, new_user: Json<User>) -> HttpRespo
     //     }
     // }
 }
+}
 
-#[post("/user/signup")]
-pub async fn signup(db: Data<MongoRepo>, new_user: Json<LoginUserSchema>) -> HttpResponse {
+//Iniciar sesión con un correo
+#[post("/user/signin")]
+pub async fn signin(db: Data<MongoRepo>, new_user: Json<LoginUserSchema>) -> HttpResponse {
     println!("Contenido de data: {:?}", new_user);
 
     if new_user.email.is_empty() {
         return HttpResponse::BadRequest().body("invalid Email");
     }
-
 
     let query_result =  db.get_user_by_email(&new_user.email).await;
 
@@ -141,13 +169,14 @@ pub async fn signup(db: Data<MongoRepo>, new_user: Json<LoginUserSchema>) -> Htt
 
 
             println!("Contenido de data: {:?}", user);
+            
 
             // Compare the passwords directly
             let is_valid = new_user.password == user.password;
 
             if !is_valid {
                 return HttpResponse::BadRequest()
-                    .json(json!({"status": "fail", "message": "Invalid email or password"}));
+                    .json(json!({"status": "fail", "message": "Correo electrónico o contraseña no válidos"}));
             }
 
             // Generate JWT token and set it in the cookie
@@ -163,7 +192,7 @@ pub async fn signup(db: Data<MongoRepo>, new_user: Json<LoginUserSchema>) -> Htt
 
             let token = encode(
                 &Header::default(), &claims,
-                &EncodingKey::from_secret( "hols".as_ref()),
+                &EncodingKey::from_secret( ",2023;MongoDB".as_ref()),
             )
                 .unwrap();
 
@@ -175,10 +204,10 @@ pub async fn signup(db: Data<MongoRepo>, new_user: Json<LoginUserSchema>) -> Htt
 
             HttpResponse::Ok()
                 .cookie(cookie_a)
-                .json(json!({"status": "success", "token": token}))
+                .json(json!({"status": "success", "result": claims.sub, "token": token}))
         },
         None => {
-            HttpResponse::NotFound().json(json!({"status": "fail", "message": "User not found"}))
+            HttpResponse::NotFound().json(json!({"status": "fail", "message": "El usuario no existe"}))
         }
     }
 }

@@ -36,11 +36,7 @@ impl MongoRepo {
             name: new_user.name,
             email: new_user.email,
             password: new_user.password,
-            role: new_user.role,
-            photo: new_user.photo,
-            verified: false,
             created_at:  new_user.created_at,
-            updated_at: new_user.updated_at,
         };
 
         println!("Contenido de data: {:?}", new_doc);

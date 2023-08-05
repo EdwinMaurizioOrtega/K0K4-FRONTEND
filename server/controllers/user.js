@@ -39,9 +39,9 @@ export const signup = async (req, res) => {
     // Encriptar contraseña
     //const hashedPassword = await bcrypt.hash(password, 12);
 
-    const hashedPassword = password;
+    //const hashedPassword = password;
 
-    const result = await UserModal.create({ email, password: hashedPassword, name: username });
+    const result = await UserModal.create({ email, password: password, name: username });
 
     const token = jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
 
