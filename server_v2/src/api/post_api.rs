@@ -1,23 +1,28 @@
 use std::{env, fs};
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 use actix_multipart::Multipart;
-use actix_web::{web, HttpResponse, get, Responder, post, patch, put, delete};
+use actix_web::{web, HttpResponse, get, Responder, post, patch, put, delete, HttpRequest, HttpMessage};
 use actix_web::web::Data;
 use argon2::Error;
 use chrono::{Datelike, Utc};
 use dotenv::dotenv;
 use futures::StreamExt;
+use jsonwebtoken::{decode, Algorithm, DecodingKey, Validation};
 use mongodb::bson::{DateTime, doc};
 use mongodb::bson::oid::ObjectId;
 use rand::{Rng, thread_rng};
 use rand::distributions::Alphanumeric;
+use serde::{Deserialize, Serialize};
 use serde_json::json;
 use crate::middleware::auth_middleware;
+use crate::middleware::auth_middleware::{JwtMiddleware};
 
 use crate::repository::mongodb_repo::MongoRepo;
 use crate::models::post_model::{GetPostsInCarousel, ImageFile, Post, QueryParams};
+use crate::models::user_model::{TokenClaims, UserIdentifier};
 
 #[get("/in_carousel")]
 async fn get_posts_in_carousel(query_params: web::Query<GetPostsInCarousel>, db: Data<MongoRepo>) -> HttpResponse {
@@ -37,7 +42,6 @@ async fn get_posts_in_carousel(query_params: web::Query<GetPostsInCarousel>, db:
         Ok(user) => HttpResponse::Ok().json(user),
         Err(err) => HttpResponse::InternalServerError().body(err.to_string())
     }
-
 }
 
 #[get("/in_carousel_by_city")]
@@ -104,7 +108,21 @@ async fn get_post(query_params: web::Query<QueryParams>, db: Data<MongoRepo>) ->
 }
 
 #[post("/")]
-pub async fn create_post(mut payload: Multipart, db: web::Data<MongoRepo>) -> Result<HttpResponse, actix_web::Error> {
+pub async fn create_post(
+    mut payload: Multipart,
+    db: web::Data<MongoRepo>,
+    req: HttpRequest, // Agregar HttpRequest como argumento
+    _: JwtMiddleware, // Agregar JwtMiddleware como argumento
+) -> Result<HttpResponse, actix_web::Error> {
+
+    // Obtener el user_id y user_name del middleware
+    let user_identifier = req.extensions().get::<UserIdentifier>().unwrap().to_owned();
+
+    println!("user_id: {:?}", user_identifier.user_id);
+    println!("user_name: {:?}", user_identifier.user_name);
+
+    //Lo demas del codigo
+
     dotenv().ok(); // Cargar las variables de entorno desde el archivo .env
 
     let mut form = Post {
@@ -169,14 +187,6 @@ pub async fn create_post(mut payload: Multipart, db: web::Data<MongoRepo>) -> Re
                     let bytes = field.next().await.unwrap().unwrap();
                     form.message = String::from_utf8_lossy(&bytes).to_string();
                 }
-                "name" => {
-                    let bytes = field.next().await.unwrap().unwrap();
-                    form.name = String::from_utf8_lossy(&bytes).to_string();
-                }
-                "creator" => {
-                    let bytes = field.next().await.unwrap().unwrap();
-                    form.creator = String::from_utf8_lossy(&bytes).to_string();
-                }
                 "cellphone" => {
                     let bytes = field.next().await.unwrap().unwrap();
                     form.cellphone = String::from_utf8_lossy(&bytes).to_string();
@@ -208,8 +218,6 @@ pub async fn create_post(mut payload: Multipart, db: web::Data<MongoRepo>) -> Re
                         format!("{}.{}", rand_filename, file_ext)
                     };
 
-                    //Concatenamos num_pedido dn full filename
-                    //let filename_power = format!("{}-{}-{}", form.pedido_proveedor, form.dn, full_filename);
 
                     //No mover de aqui -_-
                     let selected_file = ImageFile {
@@ -243,8 +251,8 @@ pub async fn create_post(mut payload: Multipart, db: web::Data<MongoRepo>) -> Re
         title: form.title,
         category: form.category,
         message: form.message,
-        name: form.name,
-        creator: form.creator,
+        name: user_identifier.user_name,
+        creator: user_identifier.user_id,
         cellphone: form.cellphone,
         city: form.city,
         tags: vec![],
@@ -326,7 +334,7 @@ pub fn config(cfg: &mut web::ServiceConfig) {
         .service(get_posts_by_search)
         .service(get_posts)
         .service(get_post)
-        .service(create_post.wrap(auth_middleware::AuthMiddleware))
+        .service(create_post)
         .service(update_post)
         .service(top_post)
         .service(delete_post)
@@ -334,4 +342,34 @@ pub fn config(cfg: &mut web::ServiceConfig) {
         .service(comment_post);
 
     cfg.service(scope);
+}
+
+
+#[derive(Debug, Deserialize, Serialize)]
+struct TokenData {
+    sub: SubClaims,
+    iat: i64,
+    exp: i64,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct SubClaims {
+    #[serde(rename = "_id")]
+    id: Id,
+    username: String,
+    email: String,
+    password: String,
+    created_at: HashMap<String, DateLong>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Id {
+    #[serde(rename = "$oid")]
+    oid: String,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct DateLong {
+    #[serde(rename = "$numberLong")]
+    number_long: String,
 }

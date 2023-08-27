@@ -5,10 +5,10 @@ use crate::{
 };
 use mongodb::bson::DateTime;
 use serde::{Deserialize, Serialize};
-use jsonwebtoken::{encode, Algorithm, EncodingKey, Header, TokenData};
+use jsonwebtoken::{encode, Algorithm, EncodingKey, Header, TokenData, DecodingKey, Validation, decode};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use serde_json::json;
+use serde_json::{json, Value};
 
 use chrono::{prelude::*, Duration};
 
@@ -25,7 +25,7 @@ use argon2::{
     password_hash::{rand_core::OsRng, PasswordHash, PasswordHasher, PasswordVerifier, SaltString},
     Argon2,
 };
-use crate::models::user_model::LoginUserSchema;
+use crate::models::user_model::{LoginUserSchema, TokenClaims};
 
 
 #[derive(Serialize)]
@@ -70,8 +70,9 @@ pub async fn signup(db: web::Data<MongoRepo>, new_user: web::Json<User>) -> Http
                             let iat = now.timestamp() as usize;
                             let exp = (now + Duration::minutes(60)).timestamp() as usize;
 
-                            let claims: TokenClaims = TokenClaims {
-                                sub: user_d,
+                            let claims = TokenClaims {
+                                _id: user_d.id.unwrap().to_string(),
+                                username: user_d.username.to_string(),
                                 exp,
                                 iat,
                             };
@@ -83,7 +84,7 @@ pub async fn signup(db: web::Data<MongoRepo>, new_user: web::Json<User>) -> Http
                             )
                                 .unwrap();
 
-                            let user_response = json!({"status": "success", "result": claims.sub, "token": token});
+                            let user_response = json!({"status": "success", "result": claims, "token": token});
                             return HttpResponse::Ok().json(user_response);
                         }
 
@@ -175,27 +176,68 @@ pub async fn signin(db: web::Data<MongoRepo>, new_user: web::Json<LoginUserSchem
             let iat = now.timestamp() as usize;
             let exp = (now + Duration::minutes(60)).timestamp() as usize;
 
-            let claims: TokenClaims = TokenClaims {
-                sub: user,
+            let claims = TokenClaims {
+                _id: user.id.unwrap().to_string(),
+                username: user.username.to_string(),
                 exp,
                 iat,
             };
 
+            let secret = ",2023;MongoDB";
+
+
             let token = encode(
-                &Header::default(), &claims,
-                &EncodingKey::from_secret(",2023;MongoDB".as_ref()),
+                &Header::default(),
+                &claims,
+                &EncodingKey::from_secret(secret.as_ref()),
             )
                 .unwrap();
 
-            let cookie_a = cookie::Cookie::build("token", token.to_owned())
-                .path("/")
-                .max_age(cookie::time::Duration::new(60 * 60, 0))
-                .http_only(true)
-                .finish();
+            // Muy importante
+            //
+            // // Imprimir el token generado
+            // println!("Generated Token: {}", token);
+            //
+            // // Decodificar el token JWT
+            // let decoding_key = DecodingKey::from_secret(secret.as_ref());
+            //
+            // // Imprime el contenido del token antes de intentar decodificarlo
+            // println!("Token Content: {}", token);
+            //
+            // let validation = Validation::default();
+            //
+            // // Decodifica el token
+            // let decoded_token_result = decode::<TokenClaims>(&token, &decoding_key, &validation);
+            //
+            // match decoded_token_result {
+            //     Ok(token_data) => {
+            //         // Accede a las reclamaciones directamente y las imprime
+            //         println!("Decoded Token: {:?}", token_data);
+            //         println!("Decoded Token Claims: {:?}", token_data.claims);
+            //
+            //         // Accede a las reclamaciones directamente y las imprime
+            //         match token_data.claims {
+            //             TokenClaims {
+            //                 _id,
+            //                 username,
+            //                 iat,
+            //                 exp,
+            //             } => {
+            //                 println!("_id: {}", _id);
+            //                 println!("Username: {}", username);
+            //                 println!("iat: {}", iat);
+            //                 println!("exp: {}", exp);
+            //             }
+            //         }
+            //     }
+            //     Err(err) => {
+            //         // Imprime el error directamente
+            //         println!("Token decoding error: {:?}", err);
+            //     }
+            // }
 
             HttpResponse::Ok()
-                .cookie(cookie_a)
-                .json(json!({"status": "success", "result": claims.sub, "token": token}))
+                .json(json!({"status": "success", "result": claims, "token": token}))
         }
         None => {
             HttpResponse::NotFound().json(json!({"status": "fail", "message": "El usuario no existe"}))
@@ -292,15 +334,7 @@ pub fn config(cfg: &mut web::ServiceConfig) {
             .service(web::resource("/signup").route(web::post().to(signup)))
             // Iniciar sesión
             .service(web::resource("/signin").route(web::post().to(signin)))
-
-
     );
 }
 
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct TokenClaims {
-    pub sub: User,
-    pub iat: usize,
-    pub exp: usize,
-}

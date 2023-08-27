@@ -19,3 +19,18 @@ pub struct LoginUserSchema {
     pub password: String,
 }
 
+//Muy importante
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TokenClaims {
+    pub _id: String,
+    pub username: String,
+    pub iat: usize,
+    pub exp: usize,
+}
+
+#[derive(Debug, Clone)]
+pub struct UserIdentifier {
+    pub user_id: String,
+    pub user_name: String,
+}
+

@@ -24,7 +24,37 @@ export const fetchPostsByIdCreator = (creator) => API.get(`/posts/id_creator?cre
 export const fetchPostsByCity = (city) => API.get(`/posts/city?city=${city}`);
 
 export const fetchPostsBySearch = (searchQuery) => API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
-export const createPost = (newPost) => API.post('/posts', newPost);
+export const createPost = async (newPostFormData) => {
+//API.post('/posts', newPost)
+
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data', // Usar 'multipart/form-data' para form-data
+            },
+        };
+
+        console.log('Request data:', newPostFormData);
+        console.log('Request headers:', config.headers);
+
+        if (localStorage.getItem('profile')) {
+            const token = JSON.parse(localStorage.getItem('profile')).token;
+            config.headers.Authorization = `Bearer ${token}`;
+            console.log('Request headers with Authorization:', config.headers); // Imprimir encabezado con Authorization
+        }
+
+        const response = await API.post('/posts/', newPostFormData, config);
+
+        console.log('Response data:', response.data);
+
+        return response.data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+
+
+};
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 export const comment = (value, id) => API.post(`/posts/${id}/commentPost`, { value });
 export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updatedPost);
