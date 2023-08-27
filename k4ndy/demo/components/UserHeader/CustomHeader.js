@@ -55,7 +55,7 @@ function CustomHeader() {
 
                         <li>
                             <a className="p-ripple flex m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3">
-                                <span>{user?.result.name}</span>
+                                <span>{user?.result.username}</span>
                             </a>
                             <Ripple/>
                         </li>

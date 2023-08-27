@@ -6,7 +6,7 @@ import CarouselPosts from '../demo/service/CarouselPosts';
 import {Carousel} from "primereact/carousel";
 import {Galleria} from "primereact/galleria";
 import Posts from '../demo/components/Posts/Posts';
-import {getPostsBySearch, getPostsInCarousel} from '../demo/actions/posts';
+import {get_posts_by_search, get_posts_in_carousel} from '../demo/actions/posts';
 import Pagination from '../demo/components/paginacion/Pagination';
 import {useRouter} from 'next/router';
 import {useDispatch} from "react-redux";
@@ -68,7 +68,7 @@ function LandingPage() {
 
     // const searchPost = () => {
     //     if (search.trim() || tags) {
-    //         dispatch(getPostsBySearch({search, tags: tags.join(',')}));
+    //         dispatch(get_posts_by_search({search, tags: tags.join(',')}));
     //         history(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
     //     } else {
     //         history('/');

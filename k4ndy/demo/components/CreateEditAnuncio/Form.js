@@ -109,7 +109,7 @@ const FormPublication = ({currentId, setCurrentId}) => {
 
                     console.log("postData: " + JSON.stringify(createPostData));
 
-                    await dispatch(createPost({...createPostData, name: user?.result?.name}, history));
+                    await dispatch(createPost({...createPostData, name: user?.result?.username}, history));
                     clear();
                 } else {
 
@@ -132,7 +132,7 @@ const FormPublication = ({currentId, setCurrentId}) => {
                     console.log("updatedPostData: " + JSON.stringify(post));
 
                     // Actualizar
-                    await dispatch(updatePost(currentId, {...post, name: user?.result?.name}));
+                    await dispatch(updatePost(currentId, {...post, name: user?.result?.username}));
 
                     if (toast.current) {
                         toast.current.show({
@@ -224,7 +224,7 @@ const FormPublication = ({currentId, setCurrentId}) => {
         };
 
         //En el caso de que se pierda la sesión
-        if (!user?.result?.name) {
+        if (!user?.result?.username) {
             return <h3>Inicie sesión para crear sus propios recuerdos y darle me gusta a los recuerdos de otros.</h3>;
         }
         return (

@@ -35,120 +35,116 @@ struct MyObjMessage {
 
 //Crear un usuario
 pub async fn signup(db: web::Data<MongoRepo>, new_user: web::Json<User>) -> HttpResponse {
-
-
-
-    let query_result =  db.get_user_by_email(&new_user.email).await;
+    let query_result = db.get_user_by_email(&new_user.email).await;
 
     match query_result {
-
         None => {
-
-
             let mut data = User {
                 id: None,
-                name: new_user.name.to_owned(),
+                username: new_user.username.to_owned(),
                 email: new_user.email.to_owned(),
                 password: new_user.password.to_owned(),
-                created_at: None
-        
+                created_at: None,
             };
-        
+
             // Asignar la fecha y hora actual antes de guardar el documento
             data.created_at = Some(DateTime::now());
-        
+
             let user_id = db.create_user(data).await;
-        
+
             match user_id {
                 Ok(user) => {
                     //println!("Contenido de data: {:?}", user.inserted_id.as_object_id().unwrap());
                     let id_insertado = user.inserted_id.as_object_id().unwrap().to_hex();
                     println!("Contenido de data: {:?}", id_insertado);
-        
+
+                    //Buscamos el usuario insertado
                     let user_detail = db.get_user(&id_insertado).await;
-        
+
+
                     match user_detail {
                         Ok(user_d) => {
-                            let user_response = serde_json::json!({"status": "success","result": user_d});
+
+                            //Generamos el Token
+                            let now = Utc::now();
+                            let iat = now.timestamp() as usize;
+                            let exp = (now + Duration::minutes(60)).timestamp() as usize;
+
+                            let claims: TokenClaims = TokenClaims {
+                                sub: user_d,
+                                exp,
+                                iat,
+                            };
+
+                            let token = encode(
+                                &Header::default(),
+                                &claims,
+                                &EncodingKey::from_secret(",2023;MongoDB".as_ref()),
+                            )
+                                .unwrap();
+
+                            let user_response = json!({"status": "success", "result": claims.sub, "token": token});
                             return HttpResponse::Ok().json(user_response);
                         }
-        
+
                         Err(e) => {
                             return HttpResponse::InternalServerError()
                                 .json(serde_json::json!({"status": "error","message": format!("{:?}", e)}));
                         }
                     }
-        
                 }
                 Err(e) => {
                     return HttpResponse::InternalServerError()
                         .json(serde_json::json!({"status": "error","message": format!("{:?}", e)}));
                 }
             }
-        
-
-
-
-
-
-        },
+        }
         Some(user) => {
-
             HttpResponse::NotFound().json(json!({"status": "fail", "message": "El usuario ya existe"}))
-
         }
 
 
-
-
-
-
-
-
-
-    
-
-    //
-    // let salt = SaltString::generate(&mut OsRng);
-    // let hashed_password = Argon2::default()
-    //     .hash_password(new_user.password.as_bytes(), &salt)
-    //     .expect("Error while hashing password")
-    //     .to_string();
-    //
-    //
-    //
-    // let mut data = User {
-    //     id: None,
-    //     name: new_user.name.to_owned(),
-    //     email: new_user.email.to_owned(),
-    //     password: new_user.password.to_owned(),
-    //     created_at: None,
-    // };
-    //
-    // // Asignar la fecha y hora actual antes de guardar el documento
-    // data.created_at = Some(DateTime::now());
-    //
-    // let user_detail = db.create_user(data).await;
-    //
-    // // match user_detail {
-    // //     Ok(user) => HttpResponse::Ok().json(user),
-    // //     Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
-    // // }
-    //
-    // match user_detail {
-    //     Ok(user) => {
-    //         let user_response = serde_json::json!({"status": "success","data": serde_json::json!({
-    //             "user": filter_user_record(&user)
-    //         })});
-    //
-    //         return HttpResponse::Ok().json(user_response);
-    //     }
-    //     Err(e) => {
-    //         return HttpResponse::InternalServerError()
-    //             .json(serde_json::json!({"status": "error","message": format!("{:?}", e)}));
-    //     }
-    // }
-}
+        //
+        // let salt = SaltString::generate(&mut OsRng);
+        // let hashed_password = Argon2::default()
+        //     .hash_password(new_user.password.as_bytes(), &salt)
+        //     .expect("Error while hashing password")
+        //     .to_string();
+        //
+        //
+        //
+        // let mut data = User {
+        //     id: None,
+        //     name: new_user.name.to_owned(),
+        //     email: new_user.email.to_owned(),
+        //     password: new_user.password.to_owned(),
+        //     created_at: None,
+        // };
+        //
+        // // Asignar la fecha y hora actual antes de guardar el documento
+        // data.created_at = Some(DateTime::now());
+        //
+        // let user_detail = db.create_user(data).await;
+        //
+        // // match user_detail {
+        // //     Ok(user) => HttpResponse::Ok().json(user),
+        // //     Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
+        // // }
+        //
+        // match user_detail {
+        //     Ok(user) => {
+        //         let user_response = serde_json::json!({"status": "success","data": serde_json::json!({
+        //             "user": filter_user_record(&user)
+        //         })});
+        //
+        //         return HttpResponse::Ok().json(user_response);
+        //     }
+        //     Err(e) => {
+        //         return HttpResponse::InternalServerError()
+        //             .json(serde_json::json!({"status": "error","message": format!("{:?}", e)}));
+        //     }
+        // }
+    }
 }
 
 //Iniciar sesión con un correo
@@ -159,14 +155,12 @@ pub async fn signin(db: web::Data<MongoRepo>, new_user: web::Json<LoginUserSchem
         return HttpResponse::BadRequest().body("invalid Email");
     }
 
-    let query_result =  db.get_user_by_email(&new_user.email).await;
+    let query_result = db.get_user_by_email(&new_user.email).await;
 
     match query_result {
         Some(user) => {
-
-
             println!("Contenido de data: {:?}", user);
-            
+
 
             // Compare the passwords directly
             let is_valid = new_user.password == user.password;
@@ -189,7 +183,7 @@ pub async fn signin(db: web::Data<MongoRepo>, new_user: web::Json<LoginUserSchem
 
             let token = encode(
                 &Header::default(), &claims,
-                &EncodingKey::from_secret( ",2023;MongoDB".as_ref()),
+                &EncodingKey::from_secret(",2023;MongoDB".as_ref()),
             )
                 .unwrap();
 
@@ -202,7 +196,7 @@ pub async fn signin(db: web::Data<MongoRepo>, new_user: web::Json<LoginUserSchem
             HttpResponse::Ok()
                 .cookie(cookie_a)
                 .json(json!({"status": "success", "result": claims.sub, "token": token}))
-        },
+        }
         None => {
             HttpResponse::NotFound().json(json!({"status": "fail", "message": "El usuario no existe"}))
         }
@@ -293,10 +287,13 @@ pub async fn get_all_users(db: web::Data<MongoRepo>) -> HttpResponse {
 
 pub fn config(cfg: &mut web::ServiceConfig) {
     cfg.service(
-        web::scope("/user") // Agrupamos los servicios bajo la ruta "/api"
+        web::scope("/user")
+            // Crear Usuario
             .service(web::resource("/signup").route(web::post().to(signup)))
-            .service(web::resource("/signin").route(web::post().to(signin))) 
-        
+            // Iniciar sesión
+            .service(web::resource("/signin").route(web::post().to(signin)))
+
+
     );
 }
 
