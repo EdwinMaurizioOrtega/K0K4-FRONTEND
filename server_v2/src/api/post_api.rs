@@ -1,6 +1,6 @@
 use std::{env, fs};
 use std::collections::HashMap;
-use std::fs::File;
+use std::fs::{File, read};
 use std::io::Write;
 use std::path::Path;
 use actix_multipart::Multipart;
@@ -224,7 +224,7 @@ pub async fn create_post(
                         id: None,
                         file_name: full_filename.to_string(),
                         file_type: file_ext.to_string(),
-                        file_url: format!("{}/api/mogo-db-wms/uploads/{}/{}/{}", url, year, month, full_filename),
+                        file_url: format!("{}/posts/uploads/{}/{}/{}", url, year, month, full_filename),
                     };
 
                     let file_path = month_dir.join(full_filename);
@@ -284,6 +284,34 @@ pub async fn create_post(
 }
 
 
+#[get("/uploads/{year}/{month}/{filename:.+}")]
+async fn serve_file(path: web::Path<(String, String, String)>) -> Result<HttpResponse, actix_web::Error> {
+    let (year, month, filename) = path.into_inner();
+
+    let uploads_path = env::var("UPLOADS_PATH").unwrap();
+    let base_path = Path::new(&uploads_path);
+
+    let folder_path = base_path.join(&year).join(&month);
+    let file_path = folder_path.join(&filename);
+
+    if let Ok(file_data) = read(file_path.clone()) {
+        let content_type = match file_path.extension() {
+            Some(ext) if ext == "jpg" => "image/jpeg",
+            Some(ext) if ext == "png" => "image/png",
+            Some(ext) if ext == "pdf" => "application/pdf",
+            _ => "application/octet-stream", // Tipo genérico si no se reconoce la extensión
+        };
+
+        Ok(HttpResponse::Ok()
+            .content_type(content_type)
+            .body(file_data))
+    } else {
+        Ok(HttpResponse::NotFound().body("Archivo no encontrado"))
+    }
+}
+
+
+
 #[patch("/:id")]
 async fn update_post(query_params: web::Query<QueryParams>, db: Data<MongoRepo>) -> HttpResponse {
     println!("creator: {}", query_params.creator);
@@ -326,6 +354,8 @@ pub fn config(cfg: &mut web::ServiceConfig) {
     let scope = web::scope("/posts")
         // Crear un post
         //Listar por el id del creador del los post
+        .service(serve_file)
+
         .service(get_posts_in_carousel)
         .service(get_posts_in_carousel_by_city)
         .service(get_posts_by_creator)

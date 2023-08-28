@@ -91,7 +91,7 @@ export const createPost = (post, history) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
 
-    console.log(post);
+    console.log("post_post: "+JSON.stringify( post));
 
     const { data } = await api.createPost(post);
 

@@ -43,6 +43,8 @@ export const createPost = async (newPostFormData) => {
             console.log('Request headers with Authorization:', config.headers); // Imprimir encabezado con Authorization
         }
 
+        console.log('newPostFormData:', JSON.stringify(newPostFormData));
+
         const response = await API.post('/posts/', newPostFormData, config);
 
         console.log('Response data:', response.data);

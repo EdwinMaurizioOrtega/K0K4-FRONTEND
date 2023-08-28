@@ -213,6 +213,35 @@ const FormPublication = ({currentId, setCurrentId}) => {
                 console.log(compressedImages);
                 console.log(postData);
 
+                // Mostrar información de las imágenes seleccionadas
+                // console.log('Archivos seleccionados:', img.files);
+                //
+                // const formData = new FormData();
+                // formData.append('title', 'cccc');
+                // formData.append('category', 'aaaaa');
+                // formData.append('message', 'dddd');
+                // formData.append('cellphone', 'eeeee');
+                // formData.append('city', 'bbbb');
+                //
+                // for (const file of img.files) {
+                //     formData.append('selectedFile', file);
+                // }
+                //
+                // try {
+                //     const response = await axios.post('http://localhost/posts/', formData, {
+                //         headers: {
+                //             'Content-Type': 'multipart/form-data',
+                //             // You can also add other headers like Authorization if needed
+                //             'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2NGViODRhZjkyMjEzNDk5MTExZDdkNTIiLCJ1c2VybmFtZSI6IlRlc3QxIiwiaWF0IjoxNjkzMTk0MTg0LCJleHAiOjE2OTMxOTc3ODR9.rF8Gl1bcIHWkyWNmKBN-O-TMh9LITQnraXHcXaQG5gQ',
+                //         },
+                //     });
+                //
+                //     console.log('Respuesta del servidor:', response.data);
+                // } catch (error) {
+                //     console.error('Error al cargar archivos:', error);
+                // }
+
+
             } catch (error) {
                 console.error('Error al convertir o comprimir las imágenes:', error);
             }
