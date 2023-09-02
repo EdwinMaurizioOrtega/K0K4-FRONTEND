@@ -274,13 +274,41 @@ pub async fn create_post(
 
     let pre_files = db.create_post(new_document_bson).await;
 
-    // match pre_files {
-    //     Ok(preregistro) => HttpResponse::Ok().json(preregistro),
-    //     Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
-    // }
+    match pre_files {
+        Ok(data) => {
+            let id_insertado = data.inserted_id.as_object_id().unwrap().to_hex();
 
+            println!("Contenido de data: {:?}", id_insertado);
+
+            //Buscamos el usuario insertado
+            let post_detail = db.get_post_by_id(&id_insertado).await;
+
+            match post_detail {
+                Ok(post) => {
+                    let user_response = json!({"status": "success", "result": post});
+
+                    Ok::<HttpResponse, actix_web::Error>(HttpResponse::Ok().json(user_response)).expect("TODO: panic message");
+                }
+
+                Err(e) => {
+                    Ok::<HttpResponse, actix_web::Error>(HttpResponse::InternalServerError()
+                        .json(serde_json::json!({"status": "error","message": format!("{:?}", e)}))).expect("TODO: panic message");
+                }
+            }
+            // HttpResponse::Ok().json(data)
+        }
+        Err(err) => {
+            // HttpResponse::InternalServerError().body(err.to_string())
+
+            println!("Error Error");
+
+            Ok::<HttpResponse, actix_web::Error>(HttpResponse::InternalServerError()
+                .json(serde_json::json!({"status": "error","message": format!("{:?}", err)}))).expect("TODO: panic message");
+        }
+    }
 
     Ok(HttpResponse::Ok().json("Archivos recibidos y guardados correctamente"))
+
 }
 
 
@@ -309,7 +337,6 @@ async fn serve_file(path: web::Path<(String, String, String)>) -> Result<HttpRes
         Ok(HttpResponse::NotFound().body("Archivo no encontrado"))
     }
 }
-
 
 
 #[patch("/:id")]

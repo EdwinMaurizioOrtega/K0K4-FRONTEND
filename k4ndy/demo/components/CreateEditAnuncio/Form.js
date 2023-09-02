@@ -23,6 +23,7 @@ const FormPublication = ({currentId, setCurrentId}) => {
             selectedFile: []
         });
 
+        const [uploadedImages, setUploadedImages] = useState([]); // Estado para almacenar las imágenes cargadas
 
         const defaultValues = {
             category: '',
@@ -98,19 +99,44 @@ const FormPublication = ({currentId, setCurrentId}) => {
                 if (currentId === 0) {
                     // Nuevo
 
-                    const createPostData = {
-                        category: data.category.code,
-                        city: data.city.code,
-                        title: data.title,
-                        message: data.message,
-                        cellphone: data.cellphone,
-                        selectedFile: postData.selectedFile
-                    };
+                    // Verificar si se han seleccionado imágenes
+                    if (!uploadedImages || uploadedImages.length === 0) {
+                        console.error('No se han seleccionado imágenes.');
+                        return;
+                    }
 
-                    console.log("postData: " + JSON.stringify(createPostData));
+                    // Crear un array para almacenar las imágenes comprimidas
+                    const compressedImages = [];
 
-                    await dispatch(createPost({...createPostData, name: user?.result?.username}, history));
+                    // Iterar sobre las imágenes seleccionadas y comprimirlas
+                    const compressPromises = uploadedImages.map(async (image) => {
+                        const compressedBlob = await compressToJpeg(image.data, 500);
+                        compressedImages.push(compressedBlob);
+                    });
+
+                    // Esperar a que se completen todas las tareas de compresión
+                    await Promise.all(compressPromises);
+
+                    // Ahora 'compressedImages' contiene las imágenes comprimidas como Blobs
+                    console.log('Imágenes comprimidas:', compressedImages);
+
+                    // Resto del código de manejo del formulario, como el envío de datos al servidor
+
+                    const formData = new FormData();
+                    formData.append('title', data.title);
+                    formData.append('category', data.category.code);
+                    formData.append('message', data.message);
+                    formData.append('cellphone', data.cellphone);
+                    formData.append('city', data.city.code);
+
+                    for (let i = 0; i < compressedImages.length; i++) {
+                        formData.append('selectedFile', compressedImages[i], `image_${i}.jpg`);
+                    }
+
+                    await dispatch(createPost(formData, history));
+
                     clear();
+
                 } else {
 
                     post['category'] = data.category.code;
@@ -159,92 +185,47 @@ const FormPublication = ({currentId, setCurrentId}) => {
         };
 
 
-        const handleAddImage = async (img) => {
-            try {
-                // Verificar si se han seleccionado imágenes
-                if (!img || !img.files || img.files.length === 0) {
-                    console.error('No se han seleccionado imágenes.');
-                    return;
-                }
+        // Función para comprimir una imagen a JPEG
+        const compressToJpeg = (base64, maxWidth) => {
+            return new Promise((resolve) => {
+                const img = new Image();
 
-                // Crear un array para almacenar las imágenes comprimidas
-                const compressedImages = [];
+                img.onload = () => {
+                    const aspectRatio = img.width / img.height;
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
 
-                // Función para comprimir una imagen a JPEG
-                const compressToJpeg = (base64, maxWidth) => {
-                    return new Promise((resolve) => {
-                        const img = new Image(); // Crear un elemento de imagen
+                    canvas.width = maxWidth;
+                    canvas.height = maxWidth / aspectRatio;
 
-                        img.onload = () => {
-                            const aspectRatio = img.width / img.height; // Calcular la proporción de aspecto de la imagen original
-                            const canvas = document.createElement('canvas'); // Crear un elemento de lienzo (canvas)
-                            const ctx = canvas.getContext('2d'); // Obtener el contexto de dibujo del lienzo
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                            canvas.width = maxWidth; // Establecer el ancho del lienzo al valor máximo deseado
-                            canvas.height = maxWidth / aspectRatio; // Calcular la altura proporcional en base a la proporción de aspecto
-
-                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Dibujar la imagen original en el lienzo con las dimensiones ajustadas
-
-                            const quality = 0.7; // Calidad de compresión deseada
-                            const imageData = canvas.toDataURL('image/jpeg', quality); // Obtener los datos de la imagen comprimida en formato base64
-                            resolve(imageData); // Resolver la promesa con los datos de la imagen comprimida
-                        };
-
-                        img.src = base64; // Establecer la fuente de la imagen como los datos base64 de la imagen original
-                    });
+                    const quality = 0.7;
+                    canvas.toBlob((blob) => {
+                        resolve(blob);
+                    }, 'image/jpeg', quality);
                 };
 
-                // Iterar sobre las imágenes seleccionadas y comprimirlas
-                const compressPromises = img.files.map(async (file) => {
-                    const objectURL = file.objectURL;
-                    const response = await fetch(objectURL);
-                    const blob = await response.blob();
-                    const base64Data = await compressToJpeg(URL.createObjectURL(blob), 500); // Comprimir la imagen con ancho máximo de 500 píxeles
-                    compressedImages.push(base64Data); // Agregar la imagen comprimida al array
-                });
-
-                // Esperar a que se completen todas las tareas de compresión
-                await Promise.all(compressPromises);
-
-                // Actualizar el estado con las imágenes comprimidas
-                setPostData({...postData, selectedFile: compressedImages});
-
-                // ... (código adicional si es necesario)
-                console.log(compressedImages);
-                console.log(postData);
-
-                // Mostrar información de las imágenes seleccionadas
-                // console.log('Archivos seleccionados:', img.files);
-                //
-                // const formData = new FormData();
-                // formData.append('title', 'cccc');
-                // formData.append('category', 'aaaaa');
-                // formData.append('message', 'dddd');
-                // formData.append('cellphone', 'eeeee');
-                // formData.append('city', 'bbbb');
-                //
-                // for (const file of img.files) {
-                //     formData.append('selectedFile', file);
-                // }
-                //
-                // try {
-                //     const response = await axios.post('http://localhost/posts/', formData, {
-                //         headers: {
-                //             'Content-Type': 'multipart/form-data',
-                //             // You can also add other headers like Authorization if needed
-                //             'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI2NGViODRhZjkyMjEzNDk5MTExZDdkNTIiLCJ1c2VybmFtZSI6IlRlc3QxIiwiaWF0IjoxNjkzMTk0MTg0LCJleHAiOjE2OTMxOTc3ODR9.rF8Gl1bcIHWkyWNmKBN-O-TMh9LITQnraXHcXaQG5gQ',
-                //         },
-                //     });
-                //
-                //     console.log('Respuesta del servidor:', response.data);
-                // } catch (error) {
-                //     console.error('Error al cargar archivos:', error);
-                // }
+                img.src = base64;
+            });
+        };
 
 
-            } catch (error) {
-                console.error('Error al convertir o comprimir las imágenes:', error);
-            }
+        const handleAddImage = async (event) => {
+
+            // Manejar la carga de imágenes aquí
+            const newImages = event.files.map((file) => {
+                return {
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    data: URL.createObjectURL(file), // URL temporal para la imagen
+                };
+            });
+
+            // Agregar las nuevas imágenes al estado
+            setUploadedImages([...uploadedImages, ...newImages]);
+
         };
 
         const getFormErrorMessage = (name) => {
@@ -376,13 +357,15 @@ const FormPublication = ({currentId, setCurrentId}) => {
                                     <FileUpload chooseLabel="Elegir"
                                                 cancelLabel="Cancelar"
                                                 uploadLabel="Subir"
-                                                name="demo[]"
+                                                name="filesAux"
+                                                control={control}
                                                 multiple
                                                 accept="image/*"
                                                 maxFileSize={2000000}
                                                 emptyTemplate={<p className="m-0">Arrastre y suelte los archivos aquí
                                                     para cargarlos.</p>}
                                                 onUpload={handleAddImage} // Set the onUpload attribute to the handleAddImage function
+
 
                                     />
 

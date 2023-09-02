@@ -178,6 +178,20 @@ impl MongoRepo {
     }
 
 
+    pub async fn get_post_by_id(&self, id: &String) -> Result<Post, Error> {
+        let obj_id = ObjectId::parse_str(id).unwrap();
+        let filter = doc! {"_id": obj_id};
+        let post_detail = self
+            .post_col
+            .find_one(filter, None)
+            .await
+            .ok()
+            .expect("Error getting user's detail");
+
+        Ok(post_detail.unwrap())
+    }
+
+
     pub async fn get_all_posts_by_creator(&self, id: &String) -> Result<Vec<Post>, Error> {
 
         let filter = doc! {"creator": id};
