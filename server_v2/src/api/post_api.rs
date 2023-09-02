@@ -287,6 +287,8 @@ pub async fn create_post(
                 Ok(post) => {
                     let user_response = json!({"status": "success", "result": post});
 
+                    println!("user_response: {}", user_response);
+
                     Ok::<HttpResponse, actix_web::Error>(HttpResponse::Ok().json(user_response)).expect("TODO: panic message");
                 }
 
