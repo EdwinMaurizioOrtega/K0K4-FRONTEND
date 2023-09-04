@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-//const API = axios.create({ baseURL: 'https://coral-app-bsb86.ondigitalocean.app' });
-
 const API = axios.create({ baseURL: 'https://imgs.k4ndy.com' });
 //const API = axios.create({ baseURL: 'http://localhost' });
 

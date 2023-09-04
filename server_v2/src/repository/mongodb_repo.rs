@@ -1,4 +1,5 @@
 use std::env;
+use std::io::ErrorKind;
 use actix_web::web::BufMut;
 
 extern crate dotenv;
@@ -336,6 +337,16 @@ impl MongoRepo {
 
 
         Ok(total_result)
+    }
+
+    pub async fn delete_post_by_id(&self, id: &String) -> Result<(), ()> {
+        let obj_id = ObjectId::parse_str(id).unwrap();
+        let filter = doc! {"_id": obj_id};
+
+        match self.post_col.delete_one(filter, None).await {
+            Ok(_) => Ok(()), // Éxito, el documento se eliminó correctamente
+            Err(e) => Err(()), // Ocurrió un error al eliminar el documento
+        }
     }
 
 }

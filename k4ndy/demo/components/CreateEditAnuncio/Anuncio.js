@@ -104,10 +104,10 @@ const Anuncio = () => {
                 {/*    Telegram*/}
                 {/*</Button>*/}
 
-                <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2"
-                        onClick={() => setCurrentId(rowData._id.$oid)}>
-                    Editar
-                </Button>
+                {/*<Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2"*/}
+                {/*        onClick={() => setCurrentId(rowData._id.$oid)}>*/}
+                {/*    Editar*/}
+                {/*</Button>*/}
 
                 <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mr-2"
                         onClick={()=>handleDelete(rowData._id.$oid)}>

@@ -405,11 +405,27 @@ async fn top_post(query_params: web::Query<QueryParams>, db: Data<MongoRepo>) ->
 }
 
 
-#[delete("/:id")]
-async fn delete_post(query_params: web::Query<QueryParams>, db: Data<MongoRepo>) -> HttpResponse {
-    println!("creator: {}", query_params.creator);
+#[delete("/{id}")]
+async fn delete_post(path: web::Path<String>, db: Data<MongoRepo>) -> Result<HttpResponse, actix_web::Error> {
+    let (id) = path.into_inner();
+    println!("id: {}", id);
 
-    HttpResponse::Ok().json("hola")
+    //Buscamos el usuario insertado
+    let delete_post = db.delete_post_by_id(&id).await;
+
+    match delete_post {
+        Ok(post) => {
+            let user_response = json!({"message": "Post eliminado"});
+
+            Ok(HttpResponse::Ok().json(user_response)) // Retorna la variante Ok aquí
+        }
+
+        Err(err) => {
+            // Retorna una respuesta de error en caso de un error
+            Ok(HttpResponse::InternalServerError()
+                .json(serde_json::json!({"status": "error", "message": format!("{:?}", err)})))
+        }
+    }
 }
 
 #[patch("/:id/likePost")]
@@ -447,6 +463,7 @@ pub fn config(cfg: &mut web::ServiceConfig) {
         .service(create_post)
         .service(update_post)
         .service(top_post)
+        //Eliminar one post by id
         .service(delete_post)
         .service(like_post)
         .service(comment_post);
