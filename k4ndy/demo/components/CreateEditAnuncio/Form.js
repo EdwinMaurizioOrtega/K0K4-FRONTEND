@@ -99,6 +99,7 @@ const FormPublication = ({currentId, setCurrentId}) => {
                 if (currentId === 0) {
                     // Nuevo
 
+                    console.log("uploadedImages: "+ uploadedImages);
                     // Verificar si se han seleccionado imágenes
                     if (!uploadedImages || uploadedImages.length === 0) {
                         console.error('No se han seleccionado imágenes.');
@@ -225,6 +226,8 @@ const FormPublication = ({currentId, setCurrentId}) => {
 
             // Agregar las nuevas imágenes al estado
             setUploadedImages([...uploadedImages, ...newImages]);
+
+            //console.log("uploadedImages: "+uploadedImages)
 
         };
 
@@ -358,7 +361,6 @@ const FormPublication = ({currentId, setCurrentId}) => {
                                                 cancelLabel="Cancelar"
                                                 uploadLabel="Subir"
                                                 name="filesAux"
-                                                control={control}
                                                 multiple
                                                 accept="image/*"
                                                 maxFileSize={2000000}
