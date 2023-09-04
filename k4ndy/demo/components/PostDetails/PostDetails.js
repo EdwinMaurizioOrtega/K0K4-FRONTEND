@@ -25,11 +25,11 @@ const PostDetails = () => {
         dispatch(getPost(anuncio));
     }, [anuncio]);
 
-    useEffect(() => {
-        if (post) {
-            dispatch(getPostsBySearch({search: 'none', tags: post?.tags.join(',')}));
-        }
-    }, [post]);
+    // useEffect(() => {
+    //     if (post) {
+    //         dispatch(getPostsBySearch({search: 'none', tags: post?.tags.join(',')}));
+    //     }
+    // }, [post]);
 
     // useEffect(() => {
     //     galleriaService.getImages().then(data => setImages(data));
@@ -113,8 +113,8 @@ const PostDetails = () => {
 
             <div className="p-fluid grid formgrid">
                 {
-                    post.selectedFile.map((picture, index) => {
-                        let imgEl = <Image src={picture} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}
+                    post.selected_file.map((picture, index) => {
+                        let imgEl = <Image src={picture.file_url} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'}
                                            width="100%" preview/>
 
                         return (

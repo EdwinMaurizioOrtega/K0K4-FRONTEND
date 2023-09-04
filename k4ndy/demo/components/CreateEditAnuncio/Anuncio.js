@@ -95,7 +95,7 @@ const Anuncio = () => {
         return (
             <div className="actions">
                 <Button icon="pi pi-check" className="p-button-rounded p-button-danger mr-2"
-                        onClick={() => dispatch(topBannerUploadedIn(rowData._id, navigate))}>
+                        onClick={() => dispatch(topBannerUploadedIn(rowData._id.$oid, navigate))}>
                    Primer Lugar
                 </Button>
 
@@ -105,12 +105,12 @@ const Anuncio = () => {
                 {/*</Button>*/}
 
                 <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2"
-                        onClick={() => setCurrentId(rowData._id)}>
+                        onClick={() => setCurrentId(rowData._id.$oid)}>
                     Editar
                 </Button>
 
                 <Button icon="pi pi-trash" className="p-button-rounded p-button-warning mr-2"
-                        onClick={()=>handleDelete(rowData._id)}>
+                        onClick={()=>handleDelete(rowData._id.$oid)}>
                     Borrar
                 </Button>
 
@@ -124,10 +124,10 @@ const Anuncio = () => {
             <FormPublication currentId={currentId} setCurrentId={setCurrentId}/>
 
             <div className="card">
-                <DataTable value={postsByUser} responsiveLayout="scroll" dataKey="_id">
+                <DataTable value={postsByUser} responsiveLayout="scroll" dataKey="_id.$oid">
                     <Column field="title" header="Título del anuncio"></Column>
-                    <Column field="createdAt" header="Fecha de creacion"></Column>
-                    <Column field="_id" body={filaPostseleccionado} header="Acciones"></Column>
+                    {/*<Column field="created_at.$date" header="Fecha de creacion"></Column>*/}
+                    <Column field="_id.$oid" body={filaPostseleccionado} header="Acciones"></Column>
 
                 </DataTable>
             </div>

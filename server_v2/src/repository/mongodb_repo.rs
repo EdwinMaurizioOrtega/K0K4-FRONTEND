@@ -1,4 +1,6 @@
 use std::env;
+use actix_web::web::BufMut;
+
 extern crate dotenv;
 use dotenv::dotenv;
 
@@ -219,8 +221,8 @@ impl MongoRepo {
     pub async fn get_posts_in_carousel(&self, category: &String, city: &String) -> Result<Vec<Post>, Error> {
 
         let mut query = doc! {
-            "inCarousel": true,
-            "topBannerUploadedIn": { "$exists": true }
+            "in_carousel": true,
+            "top_banner_uploaded_in": { "$exists": true }
         };
 
         if category != "undefined" {
@@ -232,7 +234,7 @@ impl MongoRepo {
         }
 
         let options = FindOptions::builder()
-            .sort(doc! {"topBannerUploadedIn": -1})
+            .sort(doc! {"top_banner_uploaded_in": -1})
             .limit(10)
             .build();
 
@@ -254,6 +256,86 @@ impl MongoRepo {
             posts.push(user)
         }
         Ok(posts)
+    }
+
+    pub async fn get_posts(&self, page: i64, category: Option<&String>, city: Option<&String>) -> Result<Vec<Post>, Error> {
+
+        println!("Número de página: {}", page);
+
+        const LIMIT: i64 = 30;
+
+        // Calcular el índice de inicio para la página actual
+        let start_index = (page - 1) * LIMIT;
+
+        println!("start_index: {}", start_index);
+
+        let mut query = doc! {};
+
+        if let Some(cat) = category {
+            if cat != "undefined" {
+                query.insert("category", cat);
+            }
+        }
+
+        if let Some(cit) = city {
+            if cit != "undefined" {
+                query.insert("city", cit);
+            }
+        }
+
+        let options = FindOptions::builder()
+            .sort(doc! {"_id": -1})
+            .skip(u64::try_from((page - 1) * LIMIT).unwrap())
+            .limit(LIMIT)
+            .build();
+
+        let mut cursor = self
+            .post_col
+            .find(query.clone(), options)
+            .await
+            .ok()
+            .expect("Error getting list of users");
+
+
+        let mut posts: Vec<Post> = Vec::new();
+
+        while let Some(user) = cursor
+            .try_next()
+            .await
+            .ok()
+            .expect("Error mapping through cursor")
+        {
+            posts.push(user)
+        }
+        Ok(posts)
+    }
+    pub async fn get_count_documents_posts(&self, page: i64, category: Option<&String>, city: Option<&String>) -> Result<u64, Error> {
+
+        let mut query = doc! {};
+
+        if let Some(cat) = category {
+            if cat != "undefined" {
+                query.insert("category", cat);
+            }
+        }
+
+        if let Some(cit) = city {
+            if cit != "undefined" {
+                query.insert("city", cit);
+            }
+        }
+
+
+        let total_result = self
+            .post_col
+            .count_documents(query.clone(), None)
+            .await
+            .ok()
+            .expect("Error getting list of users");
+
+
+
+        Ok(total_result)
     }
 
 }

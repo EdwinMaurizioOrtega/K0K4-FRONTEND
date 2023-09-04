@@ -44,3 +44,11 @@ pub struct GetPostsInCarousel {
     pub category: String,
     pub city: String,
 }
+
+
+#[derive(serde::Deserialize)]
+pub struct GetPostsPerPage {
+    pub page: Option<i64>,
+    pub category: Option<String>,
+    pub city: Option<String>,
+}

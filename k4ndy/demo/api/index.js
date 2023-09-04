@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 //const API = axios.create({ baseURL: 'https://coral-app-bsb86.ondigitalocean.app' });
-const API = axios.create({ baseURL: 'http://localhost' });
+const API = axios.create({ baseURL: 'https://rest.api.k4ndy.com' });
+//const API = axios.create({ baseURL: 'http://localhost' });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
@@ -12,7 +13,7 @@ API.interceptors.request.use((req) => {
 });
 
 export const fetchPost = (id) => API.get(`/posts/${id}`);
-export const fetchPosts = (page, category, city) => API.get(`/posts?page=${page}&category=${category}&city=${city}`);
+export const fetchPosts = (page, category, city) => API.get(`/posts/paginated?page=${page}&category=${category}&city=${city}`);
 
 //Listar los Post que van en el Carousel / Slider
 export const fetchPostsInCarouselSlider = (category, city) => API.get(`/posts/in_carousel?category=${category}&city=${city}`).then((res) => res.data.data);

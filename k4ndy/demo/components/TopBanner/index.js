@@ -108,7 +108,7 @@ const HotBanner = ({category, city}) => {
                 <div className="m-1 text-center py-5">
                     <div className="mb-3" onClick={() => openPost(postsInCarousel)}>
                         {/*<img src={`images/product/${product.image}`} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={product.name} className="product-image" />*/}
-                        <Galleria value={postsInCarousel.selectedFile.map((pic) => (pic))}
+                        <Galleria value={postsInCarousel.selected_file.map((pic) => (pic.file_url))}
                                   responsiveOptions={galleriaResponsiveOptions} numVisible={10} circular
                                   style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay
                                   transitionInterval={2000} showThumbnails={false}

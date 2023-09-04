@@ -21,7 +21,7 @@ use crate::middleware::auth_middleware;
 use crate::middleware::auth_middleware::{JwtMiddleware};
 
 use crate::repository::mongodb_repo::MongoRepo;
-use crate::models::post_model::{GetPostsInCarousel, ImageFile, Post, QueryParams};
+use crate::models::post_model::{GetPostsInCarousel, GetPostsPerPage, ImageFile, Post, QueryParams};
 use crate::models::user_model::{TokenClaims, UserIdentifier};
 
 #[get("/in_carousel")]
@@ -36,11 +36,17 @@ async fn get_posts_in_carousel(query_params: web::Query<GetPostsInCarousel>, db:
         return HttpResponse::BadRequest().body("invalid ID");
     }
 
-    let user_detail = db.get_posts_in_carousel(&category, &city).await;
+    let in_carousel = db.get_posts_in_carousel(&category, &city).await;
 
-    match user_detail {
-        Ok(user) => HttpResponse::Ok().json(user),
-        Err(err) => HttpResponse::InternalServerError().body(err.to_string())
+    match in_carousel {
+        Ok(posts) => {
+            let carousel_response = json!({"data": posts});
+            HttpResponse::Ok().json(carousel_response)
+        }
+        Err(err) => {
+            HttpResponse::InternalServerError()
+                .json(serde_json::json!({"status": "error", "message": format!("{:?}", err)}))
+        }
     }
 }
 
@@ -74,13 +80,12 @@ async fn get_posts_by_id_creator(query_params: web::Query<QueryParams>, db: Data
         return HttpResponse::BadRequest().body("invalid ID");
     }
 
-    let user_detail = db.get_all_posts_by_creator(&id).await;
+    let posts_detail = db.get_all_posts_by_creator(&id).await;
 
-    match user_detail {
-        Ok(user) => {
-            println!("{:?}", json!(user));
-
-            HttpResponse::Ok().json(user)
+    match posts_detail {
+        Ok(posts) => {
+            let posts_by_user = json!({"data": posts});
+            HttpResponse::Ok().json( posts_by_user)
         }
         Err(err) => HttpResponse::InternalServerError().body(err.to_string()),
     }
@@ -93,18 +98,63 @@ async fn get_posts_by_search(query_params: web::Query<QueryParams>, db: Data<Mon
     HttpResponse::Ok().json("hola")
 }
 
-#[get("/")]
-async fn get_posts(query_params: web::Query<QueryParams>, db: Data<MongoRepo>) -> HttpResponse {
-    println!("creator: {}", query_params.creator);
+#[get("/paginated")]
+async fn get_posts(query_params: web::Query<GetPostsPerPage>, db: Data<MongoRepo>) -> HttpResponse {
+    println!("page: {:?}", query_params.page);
+    println!("category: {:?}", query_params.category);
+    println!("city: {:?}", query_params.city);
 
-    HttpResponse::Ok().json("hola")
+    let page = query_params.page.unwrap_or(1);
+    let category = query_params.category.to_owned();
+    let city = query_params.city.to_owned();
+
+    let count_documents = db.get_count_documents_posts(page, Option::from(&category), Option::from(&city)).await;
+
+    match count_documents {
+        Ok(count) => {
+
+            let posts_per_page = db.get_posts(page, Option::from(&category), Option::from(&city)).await;
+            match posts_per_page {
+                Ok(posts) => {
+                    let carousel_response = json!({"data": posts, "currentPage": page, "numberOfPages": count});
+                    HttpResponse::Ok().json(carousel_response)
+                }
+                Err(err) => {
+                    HttpResponse::InternalServerError()
+                        .json(serde_json::json!({"status": "error", "message": format!("{:?}", err)}))
+                }
+            }
+        }
+        Err(err) => {
+            HttpResponse::InternalServerError()
+                .json(serde_json::json!({"status": "error", "message": format!("{:?}", err)}))
+        }
+    }
 }
 
-#[get("/:id")]
-async fn get_post(query_params: web::Query<QueryParams>, db: Data<MongoRepo>) -> HttpResponse {
-    println!("creator: {}", query_params.creator);
+#[get("/{id}")]
+async fn get_post(path: web::Path<String>, db: Data<MongoRepo>) -> Result<HttpResponse, actix_web::Error> {
+    let (id) = path.into_inner();
+    println!("id: {}", id);
 
-    HttpResponse::Ok().json("hola")
+    //Buscamos el usuario insertado
+    let post_detail = db.get_post_by_id(&id).await;
+
+    match post_detail {
+        Ok(post) => {
+            let user_response = json!(post);
+
+            println!("user_response: {}", user_response);
+
+            Ok(HttpResponse::Ok().json(user_response)) // Retorna la variante Ok aquí
+        }
+
+        Err(err) => {
+            // Retorna una respuesta de error en caso de un error
+            Ok(HttpResponse::InternalServerError()
+                .json(serde_json::json!({"status": "error", "message": format!("{:?}", err)})))
+        }
+    }
 }
 
 #[post("/")]
@@ -285,32 +335,30 @@ pub async fn create_post(
 
             match post_detail {
                 Ok(post) => {
-                    let user_response = json!({"status": "success", "result": post});
+                    let user_response = json!({"status": "success", "data": post});
 
                     println!("user_response: {}", user_response);
 
-                    Ok::<HttpResponse, actix_web::Error>(HttpResponse::Ok().json(user_response)).expect("TODO: panic message");
+                    Ok(HttpResponse::Ok().json(user_response)) // Retorna la variante Ok aquí
                 }
 
-                Err(e) => {
-                    Ok::<HttpResponse, actix_web::Error>(HttpResponse::InternalServerError()
-                        .json(serde_json::json!({"status": "error","message": format!("{:?}", e)}))).expect("TODO: panic message");
+                Err(err) => {
+                    // Retorna una respuesta de error en caso de un error
+                    Ok(HttpResponse::InternalServerError()
+                        .json(serde_json::json!({"status": "error", "message": format!("{:?}", err)})))
                 }
             }
-            // HttpResponse::Ok().json(data)
         }
         Err(err) => {
-            // HttpResponse::InternalServerError().body(err.to_string())
-
             println!("Error Error");
 
-            Ok::<HttpResponse, actix_web::Error>(HttpResponse::InternalServerError()
-                .json(serde_json::json!({"status": "error","message": format!("{:?}", err)}))).expect("TODO: panic message");
+            // Retorna una respuesta de error en caso de un error
+            Ok(HttpResponse::InternalServerError()
+                .json(serde_json::json!({"status": "error", "message": format!("{:?}", err)})))
         }
     }
 
-    Ok(HttpResponse::Ok().json("Archivos recibidos y guardados correctamente"))
-
+    //Ok(HttpResponse::Ok().json("Archivos recibidos y guardados correctamente"))
 }
 
 
@@ -384,15 +432,18 @@ pub fn config(cfg: &mut web::ServiceConfig) {
         // Crear un post
         //Listar por el id del creador del los post
         .service(serve_file)
-
+        //Get posts in carousel
         .service(get_posts_in_carousel)
         .service(get_posts_in_carousel_by_city)
         .service(get_posts_by_creator)
         .service(get_posts_by_city)
         .service(get_posts_by_id_creator)
         .service(get_posts_by_search)
+        // Get all post per page 30
         .service(get_posts)
+        // Get post by id detail
         .service(get_post)
+        // Create one post more detail
         .service(create_post)
         .service(update_post)
         .service(top_post)

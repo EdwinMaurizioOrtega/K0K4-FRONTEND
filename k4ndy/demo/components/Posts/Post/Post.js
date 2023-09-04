@@ -73,7 +73,7 @@ const Post = ({post, setCurrentId}) => {
 
     const openPost = (e) => {
         // dispatch(getPost(post._id, history));
-        history.push(`/${post.category}/${post.city}/${post._id}`);
+        history.push(`/${post.category}/${post.city}/${post._id.$oid}`);
     };
 
     const openInNewTab = url => {
@@ -87,7 +87,7 @@ const Post = ({post, setCurrentId}) => {
     return (
         <div key={post._id}>
             <div className="relative" onClick={openPost}>
-                <Galleria value={post.selectedFile.map((pic) => (pic))} responsiveOptions={galleriaResponsiveOptions}
+                <Galleria value={post.selected_file.map((pic) => (pic.file_url))} responsiveOptions={galleriaResponsiveOptions}
                           numVisible={7} circular style={{maxWidth: '800px', margin: 'auto'}}
                           item={galleriaItemTemplate} autoPlay transitionInterval={2000} showThumbnails={false}
                           showIndicators></Galleria>
