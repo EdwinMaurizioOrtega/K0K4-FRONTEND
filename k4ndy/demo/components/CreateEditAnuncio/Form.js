@@ -98,7 +98,6 @@ const FormPublication = ({currentId, setCurrentId}) => {
             try {
                 if (currentId === 0) {
                     // Nuevo
-
                     console.log("uploadedImages: "+ uploadedImages);
                     console.log("uploadedImages: "+ JSON.stringify(uploadedImages));
                     // Verificar si se han seleccionado imágenes
@@ -215,6 +214,9 @@ const FormPublication = ({currentId, setCurrentId}) => {
 
         const handleAddImage = async (event) => {
 
+            console.log("event.files: "+event.files)
+            console.log("event.files: "+JSON.stringify(event.files))
+
             // Manejar la carga de imágenes aquí
             const newImages = event.files.map((file) => {
                 return {
@@ -228,7 +230,7 @@ const FormPublication = ({currentId, setCurrentId}) => {
             // Agregar las nuevas imágenes al estado
             setUploadedImages([...uploadedImages, ...newImages]);
 
-            //console.log("uploadedImages: "+uploadedImages)
+            console.log("uploadedImages: "+uploadedImages)
 
         };
 
