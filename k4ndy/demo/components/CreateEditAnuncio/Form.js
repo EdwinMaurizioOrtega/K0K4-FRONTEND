@@ -218,19 +218,19 @@ const FormPublication = ({currentId, setCurrentId}) => {
             console.log("event.files: "+JSON.stringify(event.files))
 
             // Manejar la carga de imágenes aquí
-            const newImages = event.files.map((file) => {
-                return {
-                    name: file.name,
-                    size: file.size,
-                    type: file.type,
-                    data: URL.createObjectURL(file), // URL temporal para la imagen
-                };
-            });
-
-            // Agregar las nuevas imágenes al estado
-            setUploadedImages([...uploadedImages, ...newImages]);
-
-            console.log("uploadedImages: "+uploadedImages)
+            // const newImages = event.files.map((file) => {
+            //     return {
+            //         name: file.name,
+            //         size: file.size,
+            //         type: file.type,
+            //         data: URL.createObjectURL(file), // URL temporal para la imagen
+            //     };
+            // });
+            //
+            // // Agregar las nuevas imágenes al estado
+            // setUploadedImages([...uploadedImages, ...newImages]);
+            //
+            // console.log("uploadedImages: "+uploadedImages)
 
         };
 
