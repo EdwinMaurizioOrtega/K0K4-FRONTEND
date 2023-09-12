@@ -352,29 +352,7 @@ const FormPublication = ({currentId, setCurrentId}) => {
                                     />
                                 </div>
 
-                                <div className="mb-4">
-                                    <h6>Debes subir al menos una imagen: </h6>
-                                    {/*<FileBase*/}
-                                    {/*    type="file"*/}
-                                    {/*    multiple={true}*/}
-                                    {/*    onDone={(base64) => handleAddImage(base64)}*/}
-                                    {/*/>*/}
 
-                                    <FileUpload chooseLabel="Elegir"
-                                                cancelLabel="Cancelar"
-                                                uploadLabel="Subir"
-                                                name="filesAux"
-                                                multiple
-                                                accept="image/*"
-                                                maxFileSize={2000000}
-                                                emptyTemplate={<p className="m-0">Arrastre y suelte los archivos aquí
-                                                    para cargarlos.</p>}
-                                                onUpload={handleAddImage} // Set the onUpload attribute to the handleAddImage function
-
-
-                                    />
-
-                                </div>
                             </div>
                             <div className="flex justify-content-between gap-3">
                                 {/*<Button className="p-button-danger flex-1 p-button-outlined" label="Descartar"*/}
@@ -397,6 +375,30 @@ const FormPublication = ({currentId, setCurrentId}) => {
 
                             </div>
                         </form>
+
+                        <div className="mb-4">
+                            <h6>Debes subir al menos una imagen: </h6>
+                            {/*<FileBase*/}
+                            {/*    type="file"*/}
+                            {/*    multiple={true}*/}
+                            {/*    onDone={(base64) => handleAddImage(base64)}*/}
+                            {/*/>*/}
+
+                            <FileUpload chooseLabel="Elegir"
+                                        cancelLabel="Cancelar"
+                                        uploadLabel="Subir"
+                                        name="filesAux"
+                                        multiple
+                                        accept="image/*"
+                                        maxFileSize={2000000}
+                                        emptyTemplate={<p className="m-0">Arrastre y suelte los archivos aquí
+                                            para cargarlos.</p>}
+                                        onUpload={handleAddImage} // Set the onUpload attribute to the handleAddImage function
+
+
+                            />
+
+                        </div>
                     </div>
                 </div>
             </div>
