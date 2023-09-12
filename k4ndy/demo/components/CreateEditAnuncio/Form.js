@@ -100,43 +100,44 @@ const FormPublication = ({currentId, setCurrentId}) => {
                     // Nuevo
 
                     console.log("uploadedImages: "+ uploadedImages);
+                    console.log("uploadedImages: "+ JSON.stringify(uploadedImages));
                     // Verificar si se han seleccionado imágenes
-                    if (!uploadedImages || uploadedImages.length === 0) {
-                        console.error('No se han seleccionado imágenes.');
-                        return;
-                    }
-
-                    // Crear un array para almacenar las imágenes comprimidas
-                    const compressedImages = [];
-
-                    // Iterar sobre las imágenes seleccionadas y comprimirlas
-                    const compressPromises = uploadedImages.map(async (image) => {
-                        const compressedBlob = await compressToJpeg(image.data, 500);
-                        compressedImages.push(compressedBlob);
-                    });
-
-                    // Esperar a que se completen todas las tareas de compresión
-                    await Promise.all(compressPromises);
-
-                    // Ahora 'compressedImages' contiene las imágenes comprimidas como Blobs
-                    console.log('Imágenes comprimidas:', compressedImages);
-
-                    // Resto del código de manejo del formulario, como el envío de datos al servidor
-
-                    const formData = new FormData();
-                    formData.append('title', data.title);
-                    formData.append('category', data.category.code);
-                    formData.append('message', data.message);
-                    formData.append('cellphone', data.cellphone);
-                    formData.append('city', data.city.code);
-
-                    for (let i = 0; i < compressedImages.length; i++) {
-                        formData.append('selectedFile', compressedImages[i], `image_${i}.jpg`);
-                    }
-
-                    await dispatch(createPost(formData, history));
-
-                    clear();
+                    // if (!uploadedImages || uploadedImages.length === 0) {
+                    //     console.error('No se han seleccionado imágenes.');
+                    //     return;
+                    // }
+                    //
+                    // // Crear un array para almacenar las imágenes comprimidas
+                    // const compressedImages = [];
+                    //
+                    // // Iterar sobre las imágenes seleccionadas y comprimirlas
+                    // const compressPromises = uploadedImages.map(async (image) => {
+                    //     const compressedBlob = await compressToJpeg(image.data, 500);
+                    //     compressedImages.push(compressedBlob);
+                    // });
+                    //
+                    // // Esperar a que se completen todas las tareas de compresión
+                    // await Promise.all(compressPromises);
+                    //
+                    // // Ahora 'compressedImages' contiene las imágenes comprimidas como Blobs
+                    // console.log('Imágenes comprimidas:', compressedImages);
+                    //
+                    // // Resto del código de manejo del formulario, como el envío de datos al servidor
+                    //
+                    // const formData = new FormData();
+                    // formData.append('title', data.title);
+                    // formData.append('category', data.category.code);
+                    // formData.append('message', data.message);
+                    // formData.append('cellphone', data.cellphone);
+                    // formData.append('city', data.city.code);
+                    //
+                    // for (let i = 0; i < compressedImages.length; i++) {
+                    //     formData.append('selectedFile', compressedImages[i], `image_${i}.jpg`);
+                    // }
+                    //
+                    // await dispatch(createPost(formData, history));
+                    //
+                    // clear();
 
                 } else {
 
