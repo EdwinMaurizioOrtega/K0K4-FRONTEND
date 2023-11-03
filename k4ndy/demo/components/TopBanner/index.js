@@ -87,7 +87,11 @@ const HotBanner = ({category, city}) => {
             numVisible: 1
         }
     ];
-    const galleriaItemTemplate = (item) => <img src={item} style={{width: '100%', display: 'block'}}/>;
+    const galleriaItemTemplate = (item) => <img
+        src={item}
+        alt="Descripción de la imagen"
+        style={{ width: 'auto', height: '300px', display: 'block', maxWidth: '100%' }}
+    />;
 
 
     const openPost = (e) => {
@@ -152,7 +156,7 @@ const HotBanner = ({category, city}) => {
                              width: "50%"
                          }}/>
                 ) : (
-                        <Carousel value={postsInCarousel} numVisible={4} numScroll={1}
+                        <Carousel value={postsInCarousel} numVisible={6} numScroll={1}
                                   responsiveOptions={responsiveOptions}
                                   itemTemplate={productTemplate} circular
                                   header={<h5 style={{textAlign: "center"}}>🍭K4NDY ♥️ 🍑PARÁ CUMPLIR
