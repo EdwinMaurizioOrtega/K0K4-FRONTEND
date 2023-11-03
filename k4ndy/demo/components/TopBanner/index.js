@@ -154,7 +154,7 @@ const HotBanner = ({category, city}) => {
                 ) : (
                         <Carousel value={postsInCarousel} numVisible={4} numScroll={1}
                                   responsiveOptions={responsiveOptions}
-                                  itemTemplate={productTemplate}
+                                  itemTemplate={productTemplate} circular
                                   header={<h5 style={{textAlign: "center"}}>🍭K4NDY ♥️ 🍑PARÁ CUMPLIR
                                       🔥😈🍑TUS FANTASÍAS 🍭💯🍓</h5>}/>
                     )
