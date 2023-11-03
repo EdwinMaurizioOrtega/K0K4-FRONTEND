@@ -43,23 +43,37 @@ const HotBanner = ({category, city}) => {
 
     }, [category, city]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const responsiveOptions = [
-        {
-            breakpoint: '1024px',
-            numVisible: 3,
-            numScroll: 3
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 2,
-            numScroll: 2
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1,
-            numScroll: 1
-        }
-    ];
+    const [numVisible, setNumVisible] = useState(6);
+
+    useEffect(() => {
+        const handleResize = () => {
+            // Lógica para ajustar numVisible según el tamaño de la pantalla
+            const screenWidth = window.innerWidth;
+
+            if (screenWidth < 480) {
+                setNumVisible(1); // Muy pequeño
+            } else if (screenWidth < 768) {
+                setNumVisible(2); // Pequeño
+            } else if (screenWidth < 992) {
+                setNumVisible(4); // Mediano
+            } else if (screenWidth < 1200) {
+                setNumVisible(5); // Grande
+            } else {
+                setNumVisible(6); // Muy grande
+            }
+        };
+
+        // Agregar un listener para el evento resize
+        window.addEventListener('resize', handleResize);
+
+        // Llamar a handleResize inicialmente para establecer el valor inicial
+        handleResize();
+
+        // Limpiar el listener cuando el componente se desmonta
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     //Ejemplo utilizar Redux React || Revisar inconvenientes.
     // const {postsInCarousel, isLoading} = useSelector((state) => state.posts);
@@ -69,24 +83,6 @@ const HotBanner = ({category, city}) => {
     //     dispatch(getPostsInCarousel());
     // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const galleriaResponsiveOptions = [
-        {
-            breakpoint: '1024px',
-            numVisible: 5
-        },
-        {
-            breakpoint: '960px',
-            numVisible: 4
-        },
-        {
-            breakpoint: '768px',
-            numVisible: 3
-        },
-        {
-            breakpoint: '560px',
-            numVisible: 1
-        }
-    ];
     const galleriaItemTemplate = (item) => <img
         src={item}
         alt="Descripción de la imagen"
@@ -97,7 +93,7 @@ const HotBanner = ({category, city}) => {
     const openPost = (e) => {
         //dispatch(getPost(post._id, history));
         console.log(e._id);
-        history.push(`/${e.category}/${e.city}/${e._id}`);
+        history.push(`/${e.category}/${e.city}/${e._id.$oid}`);
     };
 
     //Número de teléfono WhatsApp
@@ -113,7 +109,7 @@ const HotBanner = ({category, city}) => {
                     <div className="mb-3" onClick={() => openPost(postsInCarousel)}>
                         {/*<img src={`images/product/${product.image}`} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={product.name} className="product-image" />*/}
                         <Galleria value={postsInCarousel.selected_file.map((pic) => (pic.file_url))}
-                                  responsiveOptions={galleriaResponsiveOptions} numVisible={10} circular
+                                  numVisible={10} circular
                                   style={{maxWidth: '800px', margin: 'auto'}} item={galleriaItemTemplate} autoPlay
                                   transitionInterval={2000} showThumbnails={false}
                                   showIndicators></Galleria>
@@ -156,8 +152,7 @@ const HotBanner = ({category, city}) => {
                              width: "50%"
                          }}/>
                 ) : (
-                        <Carousel value={postsInCarousel} numVisible={6} numScroll={1}
-                                  responsiveOptions={responsiveOptions}
+                        <Carousel value={postsInCarousel} numVisible={numVisible} numScroll={1}
                                   itemTemplate={productTemplate} circular
                                   header={<h5 style={{textAlign: "center"}}>🍭K4NDY ♥️ 🍑PARÁ CUMPLIR
                                       🔥😈🍑TUS FANTASÍAS 🍭💯🍓</h5>}/>
