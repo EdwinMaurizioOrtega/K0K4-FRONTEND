@@ -145,8 +145,9 @@ export const commentPost = (value, id) => async (dispatch) => {
 
 export const deletePost = (id) => async (dispatch) => {
     try {
-        await api.deletePost(id);
+        const response =  await api.deletePost(id);
         dispatch({type: DELETE, payload: id});
+        return response;
     } catch (error) {
         console.log(error);
     }

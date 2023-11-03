@@ -84,9 +84,28 @@ const Anuncio = () => {
     };
 
 
-    const handleDelete = (id) => {
-        dispatch(deletePost(id));
-        navigate.reload(); // Recargar la página
+    const handleDelete = async (id) => {
+        //dispatch(deletePost(id));
+        //navigate.reload(); // Recargar la página
+
+        try {
+            const response = await dispatch(deletePost(id));
+            console.log('Respuesta de la API:', response);
+
+            // Aquí puedes realizar más acciones según la respuesta de la API
+            if (response && response.status === 200) {
+                console.log('Respuesta de la API:', response);
+
+                // Recargar la página solo si el código de estado es 200
+                window.location.reload();
+            } else {
+                console.error('Error al eliminar la publicación:', response);
+                // Aquí puedes manejar el error de alguna manera si es necesario
+            }
+
+        } catch (error) {
+            console.error('Error al eliminar la publicación:', error);
+        }
     };
 
 
