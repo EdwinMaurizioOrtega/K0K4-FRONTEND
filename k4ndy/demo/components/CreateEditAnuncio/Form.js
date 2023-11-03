@@ -98,45 +98,45 @@ const FormPublication = ({currentId, setCurrentId}) => {
             try {
                 if (currentId === 0) {
                     // Nuevo
+
                     console.log("uploadedImages: "+ uploadedImages);
-                    console.log("uploadedImages: "+ JSON.stringify(uploadedImages));
                     // Verificar si se han seleccionado imágenes
-                    // if (!uploadedImages || uploadedImages.length === 0) {
-                    //     console.error('No se han seleccionado imágenes.');
-                    //     return;
-                    // }
-                    //
-                    // // Crear un array para almacenar las imágenes comprimidas
-                    // const compressedImages = [];
-                    //
-                    // // Iterar sobre las imágenes seleccionadas y comprimirlas
-                    // const compressPromises = uploadedImages.map(async (image) => {
-                    //     const compressedBlob = await compressToJpeg(image.data, 500);
-                    //     compressedImages.push(compressedBlob);
-                    // });
-                    //
-                    // // Esperar a que se completen todas las tareas de compresión
-                    // await Promise.all(compressPromises);
-                    //
-                    // // Ahora 'compressedImages' contiene las imágenes comprimidas como Blobs
-                    // console.log('Imágenes comprimidas:', compressedImages);
-                    //
-                    // // Resto del código de manejo del formulario, como el envío de datos al servidor
-                    //
-                    // const formData = new FormData();
-                    // formData.append('title', data.title);
-                    // formData.append('category', data.category.code);
-                    // formData.append('message', data.message);
-                    // formData.append('cellphone', data.cellphone);
-                    // formData.append('city', data.city.code);
-                    //
-                    // for (let i = 0; i < compressedImages.length; i++) {
-                    //     formData.append('selectedFile', compressedImages[i], `image_${i}.jpg`);
-                    // }
-                    //
-                    // await dispatch(createPost(formData, history));
-                    //
-                    // clear();
+                    if (!uploadedImages || uploadedImages.length === 0) {
+                        console.error('No se han seleccionado imágenes.');
+                        return;
+                    }
+
+                    // Crear un array para almacenar las imágenes comprimidas
+                    const compressedImages = [];
+
+                    // Iterar sobre las imágenes seleccionadas y comprimirlas
+                    const compressPromises = uploadedImages.map(async (image) => {
+                        const compressedBlob = await compressToJpeg(image.data, 500);
+                        compressedImages.push(compressedBlob);
+                    });
+
+                    // Esperar a que se completen todas las tareas de compresión
+                    await Promise.all(compressPromises);
+
+                    // Ahora 'compressedImages' contiene las imágenes comprimidas como Blobs
+                    console.log('Imágenes comprimidas:', compressedImages);
+
+                    // Resto del código de manejo del formulario, como el envío de datos al servidor
+
+                    const formData = new FormData();
+                    formData.append('title', data.title);
+                    formData.append('category', data.category.code);
+                    formData.append('message', data.message);
+                    formData.append('cellphone', data.cellphone);
+                    formData.append('city', data.city.code);
+
+                    for (let i = 0; i < compressedImages.length; i++) {
+                        formData.append('selectedFile', compressedImages[i], `image_${i}.jpg`);
+                    }
+
+                    await dispatch(createPost(formData, history));
+
+                    clear();
 
                 } else {
 
@@ -214,23 +214,20 @@ const FormPublication = ({currentId, setCurrentId}) => {
 
         const handleAddImage = async (event) => {
 
-            console.log("event.files: "+event.files)
-            console.log("event.files: "+JSON.stringify(event.files))
-
             // Manejar la carga de imágenes aquí
-            // const newImages = event.files.map((file) => {
-            //     return {
-            //         name: file.name,
-            //         size: file.size,
-            //         type: file.type,
-            //         data: URL.createObjectURL(file), // URL temporal para la imagen
-            //     };
-            // });
-            //
-            // // Agregar las nuevas imágenes al estado
-            // setUploadedImages([...uploadedImages, ...newImages]);
-            //
-            // console.log("uploadedImages: "+uploadedImages)
+            const newImages = event.files.map((file) => {
+                return {
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    data: URL.createObjectURL(file), // URL temporal para la imagen
+                };
+            });
+
+            // Agregar las nuevas imágenes al estado
+            setUploadedImages([...uploadedImages, ...newImages]);
+
+            //console.log("uploadedImages: "+uploadedImages)
 
         };
 
@@ -352,7 +349,30 @@ const FormPublication = ({currentId, setCurrentId}) => {
                                     />
                                 </div>
 
+                                <div className="mb-4">
+                                    <h6>Debes subir al menos una imagen: </h6>
+                                    {/*<FileBase*/}
+                                    {/*    type="file"*/}
+                                    {/*    multiple={true}*/}
+                                    {/*    onDone={(base64) => handleAddImage(base64)}*/}
+                                    {/*/>*/}
 
+                                    <FileUpload chooseLabel="Elegir"
+                                                cancelLabel="Cancelar"
+                                                uploadLabel="Subir"
+                                                name="filesAux"
+                                                multiple
+                                                accept="image/*"
+                                                url="/api/fake-upload"
+                                                maxFileSize={2000000}
+                                                emptyTemplate={<p className="m-0">Arrastre y suelte los archivos aquí
+                                                    para cargarlos.</p>}
+                                                onUpload={handleAddImage} // Set the onUpload attribute to the handleAddImage function
+
+
+                                    />
+
+                                </div>
                             </div>
                             <div className="flex justify-content-between gap-3">
                                 {/*<Button className="p-button-danger flex-1 p-button-outlined" label="Descartar"*/}
@@ -375,30 +395,6 @@ const FormPublication = ({currentId, setCurrentId}) => {
 
                             </div>
                         </form>
-
-                        <div className="mb-4">
-                            <h6>Debes subir al menos una imagen: </h6>
-                            {/*<FileBase*/}
-                            {/*    type="file"*/}
-                            {/*    multiple={true}*/}
-                            {/*    onDone={(base64) => handleAddImage(base64)}*/}
-                            {/*/>*/}
-
-                            <FileUpload chooseLabel="Elegir"
-                                        cancelLabel="Cancelar"
-                                        uploadLabel="Subir"
-                                        name="filesAux"
-                                        multiple
-                                        accept="image/*"
-                                        maxFileSize={2000000}
-                                        emptyTemplate={<p className="m-0">Arrastre y suelte los archivos aquí
-                                            para cargarlos.</p>}
-                                        onUpload={handleAddImage} // Set the onUpload attribute to the handleAddImage function
-
-
-                            />
-
-                        </div>
                     </div>
                 </div>
             </div>

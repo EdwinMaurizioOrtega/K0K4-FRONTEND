@@ -1,0 +1,9 @@
+============REMOTO============
+MONGOURI=mongodb://localhost:27017/rustDB
+UPLOADS_PATH=/home/app/uploads
+HOST=https://imgs.k4ndy.com
+
+============LOCAL============
+MONGOURI=mongodb://localhost:27017/rustDB
+UPLOADS_PATH=/Users/edwinortega/Desktop/uploads
+HOST=http://localhost
