@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://imgs.k4ndy.com' });
+const API = axios.create({ baseURL: 'https://imgs.k0k4.com' });
 //const API = axios.create({ baseURL: 'http://localhost' });
 
 API.interceptors.request.use((req) => {
