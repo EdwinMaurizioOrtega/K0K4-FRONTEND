@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://imgs.k0k4.com' });
-//const API = axios.create({ baseURL: 'http://localhost' });
+const API = axios.create({ baseURL: process.env.NEXT_PUBLIC_SERVER_URL });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
