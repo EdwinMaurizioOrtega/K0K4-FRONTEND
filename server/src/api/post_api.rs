@@ -223,7 +223,7 @@ pub async fn create_post(
         let mut field = item?;
         let content_type = field.content_disposition();
 
-        if let Some(name) = content_type.get_name() {
+        if let Some(name) = content_type.expect("REASON").get_name() {
             match name {
                 "title" => {
                     let bytes = field.next().await.unwrap().unwrap(); // Obtiene Bytes
@@ -246,7 +246,7 @@ pub async fn create_post(
                     form.city = String::from_utf8_lossy(&bytes).to_string();
                 }
                 "selectedFile" => {
-                    let filename = content_type.get_filename().unwrap();
+                    let filename = content_type.expect("REASON").get_filename().unwrap();
 
                     // Obtener la extensión del archivo
                     let file_ext = Path::new(filename)
