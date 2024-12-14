@@ -85,7 +85,7 @@ function Help() {
                                         <a className="text-color-secondary hover:text-primary cursor-pointer">Tu participación en nuestro exclusivo grupo privado de soporte en Telegram es invaluable. Te invitamos a informarnos de cualquier error que encuentres en nuestra plataforma, para poder abordarlo y mejorar la experiencia de todos. Agradecemos sinceramente tu colaboración en el crecimiento y perfeccionamiento de nuestra comunidad. </a>
                                     </li>
                                     <li className="line-height-3 mb-3">
-                                        <a className="text-color-secondary hover:text-primary cursor-pointer">Con gratitud, El Equipo de Soporte K4NDY</a>
+                                        <a className="text-color-secondary hover:text-primary cursor-pointer">Con gratitud, El Equipo de Soporte K0K4</a>
                                     </li>
                                     <li>
                                         {/*<Link href="https://t.me/+ngCrW98FWCw3ZWYx">Abrir Canal</Link>*/}

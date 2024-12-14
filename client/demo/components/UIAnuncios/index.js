@@ -91,7 +91,7 @@ const UIAnuncios = () => {
     return (
         <>
             <Head>
-                <title>Anuncios clasificados gratis para adultos en Ecuador - k4ndy</title>
+                <title>Anuncios clasificados gratis para adultos en Ecuador - K0K4</title>
             </Head>
             <HotBanner/>
             <div className="relative overflow-hidden flex flex-column justify-content-center">

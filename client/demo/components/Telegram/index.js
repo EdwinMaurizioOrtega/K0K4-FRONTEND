@@ -36,7 +36,7 @@ export default async function EnviarMensaje(props) {
 
     //Body message
     const mensaje = title;
-    const linkUrl = 'https://ec.k4ndy.com/'+ category + '/' + city + "/" + _id;
+    const linkUrl = 'https://ec.k0k4.com/'+ category + '/' + city + "/" + _id;
     const textCity = city;
     const linkText = 'Ha actualizado su perfil';
 

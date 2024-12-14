@@ -124,7 +124,7 @@ const Post = ({post, setCurrentId}) => {
                         className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">
                         <i className="pi pi-whatsapp mr-2"></i>
                         <Link className="font-semibold" target="_blank" style={{color: "white"}}
-                              href={`https://wa.me/593${post.cellphone}?text=Hola, acabo de ver tu anuncio en K4ndy, "${post.title.substring(0, 25)}(…)", y me gustaría quedar contigo.`}>WhatsApp</Link>
+                              href={`https://wa.me/593${post.cellphone}?text=Hola, acabo de ver tu anuncio en K0K4, "${post.title.substring(0, 25)}(…)", y me gustaría quedar contigo.`}>WhatsApp</Link>
                     </span>
                     <span className="flex align-items-center text-900">
                         <Button icon="pi pi-fw pi-thumbs-up-fill"

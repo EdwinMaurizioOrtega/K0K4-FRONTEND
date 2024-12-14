@@ -121,7 +121,7 @@ const HotBanner = ({category, city}) => {
                             className="inline-flex align-items-center py-2 px-3 font-medium border-1 surface-border border-round">
                             <i className="pi pi-whatsapp mr-2"></i>
                             <span className="font-semibold"
-                                  onClick={() => openInNewTab(`https://wa.me/593${postsInCarousel.cellphone}?text=Hola, acabo de ver tu anuncio en K4ndy, "${postsInCarousel.title.substring(0, 25)}(…)", y me gustaría quedar contigo.`)}>WhatsApp
+                                  onClick={() => openInNewTab(`https://wa.me/593${postsInCarousel.cellphone}?text=Hola, acabo de ver tu anuncio en K0K4, "${postsInCarousel.title.substring(0, 25)}(…)", y me gustaría quedar contigo.`)}>WhatsApp
                             </span>
                         </span>
                         <div className="text-900 font-semibold text-xl mb-3">{postsInCarousel.title}</div>
@@ -154,7 +154,7 @@ const HotBanner = ({category, city}) => {
                 ) : (
                         <Carousel value={postsInCarousel} numVisible={numVisible} numScroll={1}
                                   itemTemplate={productTemplate} circular
-                                  header={<h5 style={{textAlign: "center"}}>🍭K4NDY ♥️ 🍑PARÁ CUMPLIR
+                                  header={<h5 style={{textAlign: "center"}}>🍭K0K4 ♥️ 🍑PARÁ CUMPLIR
                                       🔥😈🍑TUS FANTASÍAS 🍭💯🍓</h5>}/>
                     )
 

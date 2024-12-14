@@ -97,7 +97,7 @@ function LandingPage() {
     return (
         <>
             <Head>
-                <title>Anuncios clasificados gratis para adultos en Ecuador - k4ndy</title>
+                <title>Anuncios clasificados gratis para adultos en Ecuador - K0K4</title>
             </Head>
 
             <HotBanner/>

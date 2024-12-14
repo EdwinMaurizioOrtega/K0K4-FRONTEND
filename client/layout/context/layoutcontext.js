@@ -77,15 +77,15 @@ export const LayoutProvider = (props) => {
         <LayoutContext.Provider value={value}>
             <>
                 <Head>
-                    {/*<title>K4NDY</title>*/}
+                    {/*<title>K0K4</title>*/}
                     <meta charSet="UTF-8" />
                     <meta name="theme-color" content="#000000" />
                     <meta name="description" content="Encuentros, Noviazgo y Citas: Anuncios gratis para adultos." />
                     <meta name="robots" content="index, follow" />
                     <meta name="viewport" content="initial-scale=1, width=device-width" />
                     <meta property="og:type" content="website"></meta>
-                    <meta property="og:title" content="K4NDY"></meta>
-                    <meta property="og:url" content="https://ec.k4ndy.com/"></meta>
+                    <meta property="og:title" content="K0K4"></meta>
+                    <meta property="og:url" content="https://ec.k0k4.com/"></meta>
                     <meta property="og:description" content="Encuentros, Noviazgo y Citas: Anuncios gratis para adultos." />
                     <meta property="og:image" content={`/k4ndy.png`}></meta>
                     <meta property="og:ttl" content="604800"></meta>
