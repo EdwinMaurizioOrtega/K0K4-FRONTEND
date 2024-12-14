@@ -5,5 +5,5 @@ HOST=https://imgs.k0k4.com
 
 ============LOCAL============
 MONGOURI=mongodb://localhost:27017/rustDB
-UPLOADS_PATH=/Users/edwinortega/Desktop/uploads
+UPLOADS_PATH=/Users/maurice/Desktop/uploads
 HOST=http://localhost
